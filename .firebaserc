@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "angular-pwa-98394": {
+      "hosting": {
+        "company-assistant-pwa": [
+          "angular-pwa-98394"
+        ]
+      }
+    }
+  }
+}

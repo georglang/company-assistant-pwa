@@ -21,10 +21,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'angular-starter'`, () => {
+  it(`should have as title 'company-assistant-pwa'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-starter');
+    expect(app.title).toEqual('company-assistant-pwa');
   });
 
   it('should render title', () => {
@@ -33,7 +33,7 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     expect(compiled.querySelector('.content span').textContent).toContain(
-      'angular-starter app is running!'
+      'company-assistant-pwa app is running!'
     );
   });
 });

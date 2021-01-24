@@ -41,7 +41,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({
-      name: 'angular-starter App DevTools',
+      name: 'company-assistant-pwa App DevTools',
       maxAge: 25,
       logOnly: environment.production
     }),

@@ -3,37 +3,37 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-starter": {
+    "company-assistant-pwa": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/angular-starter",
-      "sourceRoot": "projects/angular-starter/src",
+      "root": "projects/company-assistant-pwa",
+      "sourceRoot": "projects/company-assistant-pwa/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-starter",
-            "index": "projects/angular-starter/src/index.html",
-            "main": "projects/angular-starter/src/main.ts",
-            "polyfills": "projects/angular-starter/src/polyfills.ts",
-            "tsConfig": "projects/angular-starter/tsconfig.app.json",
+            "outputPath": "dist/company-assistant-pwa",
+            "index": "projects/company-assistant-pwa/src/index.html",
+            "main": "projects/company-assistant-pwa/src/main.ts",
+            "polyfills": "projects/company-assistant-pwa/src/polyfills.ts",
+            "tsConfig": "projects/company-assistant-pwa/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "projects/angular-starter/src/favicon.ico",
-              "projects/angular-starter/src/assets",
-              "projects/angular-starter/src/manifest.webmanifest"
+              "projects/company-assistant-pwa/src/favicon.ico",
+              "projects/company-assistant-pwa/src/assets",
+              "projects/company-assistant-pwa/src/manifest.webmanifest"
             ],
             "styles": [
-              "projects/angular-starter/src/styles.scss"
+              "projects/company-assistant-pwa/src/styles.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "projects/angular-starter/src/styles"
+                "projects/company-assistant-pwa/src/styles"
               ]
             },
             "scripts": []
@@ -42,8 +42,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "projects/angular-starter/src/environments/environment.ts",
-                  "with": "projects/angular-starter/src/environments/environment.prod.ts"
+                  "replace": "projects/company-assistant-pwa/src/environments/environment.ts",
+                  "with": "projects/company-assistant-pwa/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -66,41 +66,41 @@
                 }
               ],
               "serviceWorker": true,
-              "ngswConfigPath": "projects/angular-starter/ngsw-config.json"
+              "ngswConfigPath": "projects/company-assistant-pwa/ngsw-config.json"
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-starter:build"
+            "browserTarget": "company-assistant-pwa:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-starter:build:production"
+              "browserTarget": "company-assistant-pwa:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-starter:build"
+            "browserTarget": "company-assistant-pwa:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/angular-starter/src/test.ts",
-            "polyfills": "projects/angular-starter/src/polyfills.ts",
-            "tsConfig": "projects/angular-starter/tsconfig.spec.json",
-            "karmaConfig": "projects/angular-starter/karma.conf.js",
+            "main": "projects/company-assistant-pwa/src/test.ts",
+            "polyfills": "projects/company-assistant-pwa/src/polyfills.ts",
+            "tsConfig": "projects/company-assistant-pwa/tsconfig.spec.json",
+            "karmaConfig": "projects/company-assistant-pwa/karma.conf.js",
             "assets": [
-              "projects/angular-starter/src/favicon.ico",
-              "projects/angular-starter/src/assets",
-              "projects/angular-starter/src/manifest.webmanifest"
+              "projects/company-assistant-pwa/src/favicon.ico",
+              "projects/company-assistant-pwa/src/assets",
+              "projects/company-assistant-pwa/src/manifest.webmanifest"
             ],
             "styles": [
-              "projects/angular-starter/src/styles.scss"
+              "projects/company-assistant-pwa/src/styles.scss"
             ],
             "scripts": []
           }
@@ -109,27 +109,27 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "projects/angular-starter/**/*.ts",
-              "projects/angular-starter/**/*.html"
+              "projects/company-assistant-pwa/**/*.ts",
+              "projects/company-assistant-pwa/**/*.html"
             ]
           }
         },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "projects/angular-starter/e2e/protractor.conf.js",
-            "devServerTarget": "angular-starter:serve"
+            "protractorConfig": "projects/company-assistant-pwa/e2e/protractor.conf.js",
+            "devServerTarget": "company-assistant-pwa:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-starter:serve:production"
+              "devServerTarget": "company-assistant-pwa:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "angular-starter",
+  "defaultProject": "company-assistant-pwa",
   "schematics": {
     "@schematics/angular:component": {
       "styleext": "scss"

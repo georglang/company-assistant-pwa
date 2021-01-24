@@ -16,7 +16,7 @@ const AUTH_KEY = 'Auth';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'angular-starter';
+  title = 'company-assistant-pwa';
   navigation = [
     { link: 'home', label: 'Home' },
     { link: 'about', label: 'Über Uns' }

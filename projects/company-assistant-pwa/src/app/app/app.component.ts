@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private localStorageService: LocalStorageService
   ) {
-    this.authService.bootstrapOAuthService();
+    // this.authService.bootstrapOAuthService();
   }
 
   ngOnInit(): void {
@@ -67,9 +67,5 @@ export class AppComponent implements OnInit {
 
   doBeforeUnload(): void {
     this.localStorageService.removeItem(AUTH_KEY);
-  }
-
-  get claims(): Record<string, unknown> {
-    return this.authService.claims;
   }
 }

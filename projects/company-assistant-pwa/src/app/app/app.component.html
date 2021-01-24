@@ -1,5 +1,3 @@
-<p (window:beforeunload)="doBeforeUnload()">
-
 <div style="height: 85vh">
   <mat-toolbar class="toolbar">
     <mat-toolbar-row>
@@ -73,17 +71,9 @@
           Is Authenticated: {{isAuthenticated$ | async}}
         </h1>
 
-        <h2 *ngIf="claims">Your Claims:</h2>
-
-
-
-        <pre *ngIf="claims">
-        {{claims | json}}
-        </pre>
         <br />
 
         <h1>Login</h1>
-        Has valid accesstoken: {{this.hasValidAccessToken()}}
         <button (click)="logout()">logout</button>
 
         <router-outlet></router-outlet>

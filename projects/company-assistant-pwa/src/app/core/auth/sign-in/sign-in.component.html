@@ -1,0 +1,60 @@
+<div id="sign-in-component-wrapper" class="row no-gutter">
+  <div class="col-12">
+    <mat-card id="sign-in-form-wrapper" class="row no-gutter">
+      <div>
+        <form [formGroup]="signInForm" (ngSubmit)="submit()">
+          <p>
+            <mat-form-field>
+              <input
+                matInput
+                type="email"
+                formControlName="email"
+                placeholder="Bitte Email Adresse eingeben"
+                autocomplete="on"
+                required
+              />
+              <mat-hint *ngIf="!emailInput.value"
+                >Email Adresse eingeben</mat-hint
+              >
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Bitte Passwort eingeben"
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password"
+                autocomplete="on"
+                required
+              />
+              <mat-icon matSuffix (click)="hide = !hide">{{
+                hide ? 'visibility_off' : 'visibility'
+              }}</mat-icon>
+              <mat-hint *ngIf="!passwordInput.value"
+                >Passwort eingeben</mat-hint
+              >
+            </mat-form-field>
+          </p>
+
+          <p *ngIf="error" class="error">
+            {{ error }}
+          </p>
+
+          <div id="passwordForgotten">
+            <span>
+              <a id="passwordForgottenLink" routerLink="/password-reset"
+                >Passwort vergessen ?</a
+              >
+            </span>
+          </div>
+
+          <div id="login-btn-wrapper">
+            <button mat-raised-button type="submit" mat-button>Login</button>
+          </div>
+        </form>
+      </div>
+    </mat-card>
+  </div>
+</div>

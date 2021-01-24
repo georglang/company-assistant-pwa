@@ -1,0 +1,26 @@
+#sign-in-form-wrapper {
+  width: 50%;
+  margin: auto;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+#login-btn-wrapper {
+  margin-top: 20px;
+}
+
+#redirectToLogin {
+  margin-top: 20px;
+}
+
+#passwordForgotten {
+  text-align: right;
+}
+
+#passwordForgottenLink {
+  &:hover {
+    color: grey;
+  }
+}

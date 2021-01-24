@@ -1,0 +1,45 @@
+<div id="forgot-password-wrapper">
+  <div class="col-12">
+    <mat-card id="forgot-password">
+      <div>
+        <h3>Passwort zurücksetzen</h3>
+
+        <p class="text-center">
+          Bitte Email Adresse eingeben, um neues Passwort anzufordern
+        </p>
+        <form
+          [formGroup]="forgotPasswortForm"
+          (ngSubmit)="submit(passwordResetEmail.value)"
+        >
+          <p>
+            <mat-form-field>
+              <input
+                matInput
+                formControlName="email"
+                type="email"
+                placeholder="Email Adresse eingeben"
+                #passwordResetEmail
+                required
+              />
+              <mat-hint *ngIf="!emailInput.value"
+                >Email Adresse eingeben</mat-hint
+              >
+            </mat-form-field>
+          </p>
+
+          <p *ngIf="error" class="error">
+            {{ error }}
+          </p>
+
+          <div id="redirectToLogin">
+            <span class="redirect" routerLink="/sign-in">Zurück zum Login</span>
+          </div>
+
+          <button type="submit" mat-raised-button value="Passwort zurücksetzen">
+            Passwort zurücksetzen
+          </button>
+        </form>
+      </div>
+    </mat-card>
+  </div>
+</div>

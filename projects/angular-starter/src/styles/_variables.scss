@@ -1,0 +1,17 @@
+@import '~@angular/material/theming';
+@import './themes/theme.scss';
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+$primary-color: $primary;
+$accent-color: $accent;
+$warn-color: $warn;
+
+$color-white: #fff;
+$hover-color: #79a5c4;

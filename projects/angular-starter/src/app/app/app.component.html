@@ -1,0 +1,100 @@
+<p (window:beforeunload)="doBeforeUnload()">
+
+<div style="height: 85vh">
+  <mat-toolbar class="toolbar">
+    <mat-toolbar-row>
+      <div class="branding"></div>
+      <button
+        mat-icon-button
+        (click)="sidenav.toggle()"
+        fxShow="true"
+        fxHide.gt-sm
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="menu-spacer"></span>
+      <div fxShow="true" fxHide.lt-md>
+        <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+        <a class="main-nav-link" href="#" mat-button>Menu Item 1</a>
+        <a class="main-nav-link" href="#" mat-button>Menu Item 2</a>
+        <a class="main-nav-link" href="#" mat-button>Menu Item 3</a>
+        <a class="main-nav-link" href="#" mat-button>Menu Item 4</a>
+        <a class="main-nav-link" href="#" mat-button>Menu Item 5</a>
+      </div>
+
+      <div id="auth-wrapper">
+        <button mat-icon-button *ngIf="(isAuthenticated$ | async) === false" (click)="login()">
+          Login
+        </button>
+
+        <mat-menu #loginMenu="matMenu" id="login-menu">
+          <button mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Profil anzeigen</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>power_settings_new</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+        <button
+        *ngIf="(isAuthenticated$ | async)"
+        [matMenuTriggerFor]="loginMenu"
+        mat-icon-button>
+          <fa-icon id="user-circle-icon" icon="user-circle"></fa-icon>
+      </button>
+      </div>
+
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <!-- sidbar left -->
+  <mat-sidenav-container
+    fxFlexFill
+    id="sidenav"
+  >
+    <mat-sidenav #sidenav fxShow="true" fxHide.gt-sm>
+      <mat-nav-list>
+        <button (click)="sidenav.toggle()" href="" mat-list-item>
+          <fa-icon>times</fa-icon>
+        </button>
+        <a href="#" mat-list-item>Menu Item 1</a>
+        <a href="#" mat-list-item>Menu Item 2</a>
+        <a href="#" mat-list-item>Menu Item 3</a>
+        <a href="#" mat-list-item>Menu Item 4</a>
+        <a href="#" mat-list-item>Menu Item 5</a>
+        <a href="#" mat-list-item>Menu Item 6</a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content fx>
+      <div class="content" #main>
+        <h1>
+          Is Authenticated: {{isAuthenticated$ | async}}
+        </h1>
+
+        <h2 *ngIf="claims">Your Claims:</h2>
+
+
+
+        <pre *ngIf="claims">
+        {{claims | json}}
+        </pre>
+        <br />
+
+        <h1>Login</h1>
+        Has valid accesstoken: {{this.hasValidAccessToken()}}
+        <button (click)="logout()">logout</button>
+
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <footer class="text-center">
+    <article>
+      <p >
+        Georg Lang | Angular Starter | Bavaria, Germany
+      </p>
+    </article>
+  </footer>
+</div>

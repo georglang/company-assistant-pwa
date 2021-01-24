@@ -1,0 +1,46 @@
+@use 'variables';
+
+mat-sidenav {
+  width: 200px;
+  a {
+    color: variables.$color-white;
+  }
+}
+
+.branding {
+  img {
+    width: 76px;
+  }
+}
+
+#user-circle-icon {
+  font-size: 22px;
+}
+
+.toolbar {
+  color: variables.$color-white;
+  background-color: variables.$primary-color;
+  .main-nav-link {
+    &:hover {
+      color: variables.$hover-color;
+      text-decoration: none;
+    }
+  }
+}
+
+footer {
+  background-color: variables.$primary-color;
+  height: 95px;
+  color: variables.$color-white;
+  article {
+    padding-top: 32px;
+    text-align: center;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: map-get(variables.$grid-breakpoints, md)) {
+  .mat-drawer-transition .mat-drawer-backdrop {
+    display: none;
+  }
+}

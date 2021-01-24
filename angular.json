@@ -25,7 +25,8 @@
             "aot": true,
             "assets": [
               "projects/angular-starter/src/favicon.ico",
-              "projects/angular-starter/src/assets"
+              "projects/angular-starter/src/assets",
+              "projects/angular-starter/src/manifest.webmanifest"
             ],
             "styles": [
               "projects/angular-starter/src/styles.scss"
@@ -63,7 +64,9 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "projects/angular-starter/ngsw-config.json"
             }
           }
         },
@@ -93,7 +96,8 @@
             "karmaConfig": "projects/angular-starter/karma.conf.js",
             "assets": [
               "projects/angular-starter/src/favicon.ico",
-              "projects/angular-starter/src/assets"
+              "projects/angular-starter/src/assets",
+              "projects/angular-starter/src/manifest.webmanifest"
             ],
             "styles": [
               "projects/angular-starter/src/styles.scss"

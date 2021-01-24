@@ -19,6 +19,7 @@ import { HomeComponent } from './features/home/home.component';
 import { reducers, metaReducers } from './state/app.state';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './core/auth/state/auth.effects';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -43,7 +44,8 @@ import { AuthEffects } from './core/auth/state/auth.effects';
       name: 'angular-starter App DevTools',
       maxAge: 25,
       logOnly: environment.production
-    })
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
 
   //ngrx

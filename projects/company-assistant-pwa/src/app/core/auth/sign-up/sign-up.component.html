@@ -1,0 +1,60 @@
+<div id="sign-up-component-wrapper" class="row no-gutter">
+  <div class="col-12">
+    <mat-card id="sign-up-form-wrapper" class="row no-gutter">
+      <div>
+        <h2>Anmelden</h2>
+        <form [formGroup]="signUpForm" (ngSubmit)="submit()">
+          <p>
+            <mat-form-field>
+              <input
+                type="email"
+                matInput
+                placeholder="Bitte Email Adresse eingeben"
+                formControlName="email"
+                autocomplete="on"
+                required
+              />
+              <mat-hint *ngIf="!emailInput.value"
+                >Email Adresse eingeben</mat-hint
+              >
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Bitte Passwort eingeben"
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password"
+                autocomplete="on"
+                required
+              />
+              <mat-icon matSuffix (click)="hide = !hide">{{
+                hide ? 'visibility_off' : 'visibility'
+              }}</mat-icon>
+              <mat-hint *ngIf="!passwordInput.value"
+                >Passwort eingeben</mat-hint
+              >
+            </mat-form-field>
+          </p>
+
+          <p *ngIf="error" class="error">
+            {{ error }}
+          </p>
+
+          <div id="redirectToLogin">
+            <span
+              >Bist du schon angemeldet ?
+              <a id="redirect" routerLink="/sign-in">Zum Login</a>
+            </span>
+          </div>
+
+          <div id="register-btn-wrapper">
+            <button mat-raised-button type="submit" mat-button>Anmelden</button>
+          </div>
+        </form>
+      </div>
+    </mat-card>
+  </div>
+</div>

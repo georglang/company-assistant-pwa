@@ -6,16 +6,19 @@
 
 ## Stack
 
-- Angular 
+- Angular
 - ngrx
 - Angular Material
 - Bootstrap 4
+- Firebase
 
 ## Features
+
 - progressive web app
 - lazy-loading of feature modules
-- angular-oauth2-oidc
 - localStorage ui state persistence
+- firebase auth
+- firebase firestore
 
 ## Git commit message convention:
 

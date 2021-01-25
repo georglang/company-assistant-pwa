@@ -27,7 +27,7 @@ import { firebaseConfig } from 'firebaseConfig';
 import { AuthService } from './core/auth/auth.service';
 import { SignInComponent } from './core/auth/sign-in/sign-in.component';
 import { SignUpComponent } from './core/auth/sign-up/sign-up.component';
-import { ForgotPasswortComponent } from './core/auth/forgot-passwort/forgot-passwort.component';
+import { ForgotpasswordComponent } from './core/auth/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import { ForgotPasswortComponent } from './core/auth/forgot-passwort/forgot-pass
     HomeComponent,
     SignInComponent,
     SignUpComponent,
-    ForgotPasswortComponent
+    ForgotpasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -21,9 +21,16 @@
       </div>
 
       <div id="auth-wrapper">
-        <button mat-icon-button *ngIf="(isAuthenticated$ | async) === false" (click)="login()">
+        <button
+          mat-icon-button
+          *ngIf="(isAuthenticated$ | async) === false"
+          [routerLink]="['/sign-in']"
+          routerLinkActive="router-link-active"
+        >
           Login
         </button>
+
+        <button mat-icon-button (click)="signUp()">Anmelden</button>
 
         <mat-menu #loginMenu="matMenu" id="login-menu">
           <button mat-menu-item>
@@ -36,21 +43,18 @@
           </button>
         </mat-menu>
         <button
-        *ngIf="(isAuthenticated$ | async)"
-        [matMenuTriggerFor]="loginMenu"
-        mat-icon-button>
+          *ngIf="isAuthenticated$ | async"
+          [matMenuTriggerFor]="loginMenu"
+          mat-icon-button
+        >
           <fa-icon id="user-circle-icon" icon="user-circle"></fa-icon>
-      </button>
+        </button>
       </div>
-
     </mat-toolbar-row>
   </mat-toolbar>
 
   <!-- sidbar left -->
-  <mat-sidenav-container
-    fxFlexFill
-    id="sidenav"
-  >
+  <mat-sidenav-container fxFlexFill id="sidenav">
     <mat-sidenav #sidenav fxShow="true" fxHide.gt-sm>
       <mat-nav-list>
         <button (click)="sidenav.toggle()" href="" mat-list-item>
@@ -67,14 +71,7 @@
 
     <mat-sidenav-content fx>
       <div class="content" #main>
-        <h1>
-          Is Authenticated: {{isAuthenticated$ | async}}
-        </h1>
-
-        <br />
-
-        <h1>Login</h1>
-        <button (click)="logout()">logout</button>
+        <h1>Is Authenticated: {{ isAuthenticated$ | async }}</h1>
 
         <router-outlet></router-outlet>
       </div>
@@ -82,9 +79,7 @@
   </mat-sidenav-container>
   <footer class="text-center">
     <article>
-      <p >
-        Georg Lang | Angular Starter | Bavaria, Germany
-      </p>
+      <p>Georg Lang | Angular Starter | Bavaria, Germany</p>
     </article>
   </footer>
 </div>

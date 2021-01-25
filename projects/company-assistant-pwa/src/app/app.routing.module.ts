@@ -3,13 +3,13 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { SignUpComponent } from './core/auth/sign-up/sign-up.component';
 import { SignInComponent } from './core/auth/sign-in/sign-in.component';
-import { ForgotPasswortComponent } from './core/auth/forgot-passwort/forgot-passwort.component';
+import { ForgotpasswordComponent } from './core/auth/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'password-reset', component: ForgotPasswortComponent },
+  { path: 'password-reset', component: ForgotpasswordComponent },
   { path: 'home', component: HomeComponent }
 ];
 

@@ -23,11 +23,13 @@ import { HomeComponent } from './features/home/home.component';
 import { reducers, metaReducers } from './state/app.state';
 import { AuthEffects } from './core/auth/state/auth.effects';
 
-import { firebaseConfig } from 'firebaseConfig';
 import { AuthService } from './core/auth/auth.service';
 import { SignInComponent } from './core/auth/sign-in/sign-in.component';
 import { SignUpComponent } from './core/auth/sign-up/sign-up.component';
 import { ForgotpasswordComponent } from './core/auth/forgot-password/forgot-password.component';
+import { firebaseConfig } from './firebaseConfig';
+import { ToastrModule } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { ForgotpasswordComponent } from './core/auth/forgot-password/forgot-pass
     ForgotpasswordComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -46,6 +49,7 @@ import { ForgotpasswordComponent } from './core/auth/forgot-password/forgot-pass
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot(),
     // Auth
     AngularFireModule.initializeApp(firebaseConfig.firebase),
     AngularFireAuthModule,

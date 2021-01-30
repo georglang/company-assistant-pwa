@@ -39,11 +39,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
-    if (this.authService.hasValidAccessToken()) {
-      this.store.dispatch(authLogin());
-    } else {
-      this.localStorageService.removeItem(AUTH_KEY);
-    }
+    // if (this.authService.hasValidAccessToken()) {
+    //   this.store.dispatch(authLogin());
+    // } else {
+    //   this.localStorageService.removeItem(AUTH_KEY);
+    // }
 
     this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
       if (isLoggedIn) {
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
   }
 
   login(): void {
-    this.authService.login();
+    // this.authService.signUp();
   }
 
   logout(): void {
@@ -61,9 +61,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(authLogout());
   }
 
-  hasValidAccessToken(): boolean {
-    return this.authService.hasValidAccessToken();
-  }
+  hasValidAccessToken(): void {}
 
   doBeforeUnload(): void {
     this.localStorageService.removeItem(AUTH_KEY);

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { OrderRoutingModule } from './order.routing';
 import { SharedModule } from '../../shared/shared.module';
 import { OrderListComponent } from './order-list/order-list.component';
+import { EditOrderComponent } from './edit-order/edit-order.component';
 import { SettingsDialogComponent } from '../../shared/components/settings-dialog/settings-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDeleteDialogComponent } from '../../shared/components/confirm-delete-dialog/confirm-delete-dialog.component';
@@ -18,8 +19,10 @@ import { MessageService } from '../../shared/services/message-service/message.se
   ],
   declarations: [
     OrderListComponent,
+    EditOrderComponent,
     SettingsDialogComponent,
-    ConfirmDeleteDialogComponent
+    ConfirmDeleteDialogComponent,
+    SettingsDialogComponent
   ],
   providers: [MessageService]
 })

@@ -8,6 +8,8 @@ import { SettingsDialogComponent } from '../../shared/components/settings-dialog
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDeleteDialogComponent } from '../../shared/components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MessageService } from '../../shared/services/message-service/message.service';
+import { MaterialModule } from '../../shared/material/material.module';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 @NgModule({
   imports: [
@@ -15,10 +17,12 @@ import { MessageService } from '../../shared/services/message-service/message.se
     SharedModule,
     OrderRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterialModule
   ],
   declarations: [
     OrderListComponent,
+    OrderDetailComponent,
     EditOrderComponent,
     SettingsDialogComponent,
     ConfirmDeleteDialogComponent,

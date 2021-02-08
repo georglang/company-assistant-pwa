@@ -55,7 +55,7 @@ export class OrderListComponent implements OnInit {
   }
 
   public editOrder(order: IOrder) {
-    this.router.navigate(['orders/edit-order/' + order.id]);
+    this.router.navigate(['orders/' + order.id + '/edit-order']);
   }
 
   public getOrdersFromCloudDatabase(): void {
@@ -76,7 +76,7 @@ export class OrderListComponent implements OnInit {
   }
 
   public navigateToOrder(order: IOrder): void {
-    this.router.navigate(['orders/order-details/' + order.id]);
+    this.router.navigate(['orders/' + order.id]);
   }
 
   public navigateToCreateOrder(): void {

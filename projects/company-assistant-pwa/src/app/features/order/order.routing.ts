@@ -11,12 +11,17 @@ const routes: Routes = [
     component: OrderListComponent
   },
   {
-    path: 'order-details/:id',
-    component: OrderDetailComponent
-  },
-  {
-    path: 'edit-order',
-    component: EditOrderComponent
+    path: ':id',
+    children: [
+      {
+        path: '',
+        component: OrderDetailComponent
+      },
+      {
+        path: 'edit-order',
+        component: EditOrderComponent
+      }
+    ]
   },
   {
     path: 'create-order',

@@ -10,6 +10,7 @@ import { ConfirmDeleteDialogComponent } from '../../shared/components/confirm-de
 import { MessageService } from '../../shared/services/message-service/message.service';
 import { MaterialModule } from '../../shared/material/material.module';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { CreateOrderComponent } from './create-order/create-order.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
   declarations: [
     OrderListComponent,
     OrderDetailComponent,
+    CreateOrderComponent,
     EditOrderComponent,
     SettingsDialogComponent,
     ConfirmDeleteDialogComponent,

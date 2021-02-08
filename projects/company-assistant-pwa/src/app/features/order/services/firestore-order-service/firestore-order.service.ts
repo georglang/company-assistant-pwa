@@ -28,7 +28,8 @@ import {
   expand,
   takeWhile,
 } from 'rxjs/operators';
-import { loadash as _ } from 'lodash';
+import * as _ from 'lodash';
+
 
 @Injectable({
   providedIn: 'root',

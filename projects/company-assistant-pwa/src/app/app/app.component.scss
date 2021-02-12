@@ -32,16 +32,6 @@ mat-sidenav {
   }
 }
 
-footer {
-  background-color: variables.$primary-color;
-  height: 95px;
-  color: variables.$color-white;
-  article {
-    padding-top: 32px;
-    text-align: center;
-  }
-}
-
 // Medium devices (tablets, 768px and up)
 @media (min-width: map-get(variables.$grid-breakpoints, md)) {
   .mat-drawer-transition .mat-drawer-backdrop {

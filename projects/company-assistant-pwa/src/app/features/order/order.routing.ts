@@ -11,6 +11,10 @@ const routes: Routes = [
     component: OrderListComponent
   },
   {
+    path: 'create-order',
+    component: CreateOrderComponent
+  },
+  {
     path: ':id',
     children: [
       {
@@ -23,10 +27,6 @@ const routes: Routes = [
       }
     ]
   },
-  {
-    path: 'create-order',
-    component: CreateOrderComponent
-  }
 ];
 
 @NgModule({

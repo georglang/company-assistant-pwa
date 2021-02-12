@@ -28,3 +28,15 @@
     }
   }
 }
+
+// bootstrap reset
+
+.button:active,
+button:active,
+.button:focus,
+button:focus,
+.button:hover,
+button:hover {
+  border: none !important;
+  outline: none !important;
+}

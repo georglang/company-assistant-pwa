@@ -29,6 +29,8 @@
 
 @include app-styles-reset-theme($app-theme);
 
+@import '~ngx-toastr/toastr.css';
+
 .menu-spacer {
   flex: 1 1 auto;
 }

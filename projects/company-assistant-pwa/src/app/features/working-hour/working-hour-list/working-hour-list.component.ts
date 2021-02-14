@@ -126,9 +126,9 @@ export class WorkingHourListComponent implements OnInit {
     this.router.navigate([
       'orders/' +
         this.paramOrderId +
-        'working-hours' +
-        '/edit-working-hour/' +
-        workingHour.id
+        '/working-hours/' +
+        workingHour.id +
+        '/edit/'
     ]);
   }
 

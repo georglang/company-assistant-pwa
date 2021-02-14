@@ -3,6 +3,7 @@ import { Timestamp } from '@firebase/firestore-types';
 export interface IWorkingHour {
   date: Timestamp;
   description: string;
+  employee: string;
   workingHours: number;
   id?: string; // is necessary when deleting local working hour after synchronization
   orderId?: string;
@@ -12,6 +13,7 @@ export interface IWorkingHour {
 export class WorkingHour implements IWorkingHour {
   public date: Timestamp;
   public description: string;
+  public employee: string;
   public workingHours: number;
   public location: string;
   public id: string;
@@ -21,6 +23,7 @@ export class WorkingHour implements IWorkingHour {
   constructor(
     date: Timestamp,
     description: string,
+    employee: string,
     workingHours: number,
     id?: string,
     orderId?: string,
@@ -28,6 +31,7 @@ export class WorkingHour implements IWorkingHour {
   ) {
     this.date = date;
     this.description = description;
+    this.employee = employee;
     this.workingHours = workingHours;
     this.id = id;
     this.orderId = orderId;

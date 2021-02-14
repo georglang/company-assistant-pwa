@@ -29,9 +29,16 @@ const routes: Routes = [
       {
         path: 'working-hours',
         loadChildren: () =>
-          import('./../working-hour/working-hour.module').then(
+          import('../working-hour/working-hour.module').then(
             (m) => m.WorkingHourModule
-          )
+          ),
+      },
+      {
+        path: 'notes',
+        loadChildren: () =>
+          import('../note/note.module').then(
+          (m) => m.NoteModule
+        )
       }
     ]
   }

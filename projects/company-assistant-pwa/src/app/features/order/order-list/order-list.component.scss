@@ -1,20 +1,24 @@
+@import './../../../../styles/variables';
 .sub-nav {
   height: 55px;
-  background: #fff;
+  background: $color-white;
   box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12);
-  position: fixed;
-  width: 100%;
   top: 50px;
-  z-index: 1030;
 }
 
 .settings-btn {
   text-align: right;
   margin-top: 15px;
+  margin-right: 15px;
 }
 
 #order-list-component-wrapper {
-  margin-top: 120px;
+  margin-top: 40px;
+}
+
+#search-wrapper {
+  margin-top: -42px;
+  margin-left: 4px;
 }
 
 #search {
@@ -23,12 +27,13 @@
   border: 0;
   font-size: 16px;
   color: #696969;
-  margin-left: 12px;
+  margin-left: 30px;
   padding-top: 3px;
 }
 
 .search-icon {
   margin-top: 15px;
+  margin-left: 6px;
 }
 
 table {
@@ -58,7 +63,7 @@ table {
 }
 
 #bottom-nav {
-  background-color: #fff;
+  background-color: $color-white;
   height: 50px;
   position: fixed;
   bottom: 0;
@@ -68,57 +73,63 @@ table {
 }
 
 #create-order-btn {
-  background-color: #5fb345;
+  background-color: $primary-color;
+  color: $color-white;
   position: absolute;
   right: 16px;
   bottom: 16px;
 }
 
 #create-order-delete-btn {
-  background-color: #5fb345;
+  background-color: $primary-color;
+  color: $color-white;
   position: absolute;
   right: 16px;
   bottom: 78px;
 }
 
 #create-order-edit-btn {
-  background-color: #5fb345;
+  background-color: $primary-color;
+  color: $color-white;
   position: absolute;
   right: 16px;
   bottom: 141px;
 }
 
 .create-order-edit-btn-if-delete-btn-is-active {
-  background-color: #5fb345;
+  background-color: $primary-color;
+  color: $color-white;
   position: absolute;
   right: 16px;
   bottom: 141px;
 }
 
 .create-order-edit-btn {
-  background-color: #5fb345;
+  background-color: $primary-color;
+  color: $color-white;
   position: absolute;
   right: 16px;
   bottom: 78px;
 }
 
 .create-watch-btn-if-delete-btn-is-active {
-  background-color: #5fb345;
+  background-color: $primary-color;
   position: absolute;
   right: 16px;
   bottom: 204px;
 }
 
 .create-order-watch-btn {
-  background-color: #5fb345;
+  background-color: $primary-color;
+  color: $color-white;
   position: absolute;
   right: 16px;
   bottom: 141px;
 }
 
 .mat-row.highlighted {
-  background: #59804d;
-  color: #fff;
+  background: $primary-color;
+  color: $color-white;
 }
 
 @media (min-width: 576px) {
@@ -126,7 +137,3 @@ table {
     width: 90%;
   }
 }
-
-// Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {
-} // Large devices (desktops, 992px and up) @media (min-width: 992px) // Extra large devices (large desktops, 1200px and up) @media (min-width: 1200px);

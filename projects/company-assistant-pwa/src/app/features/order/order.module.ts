@@ -8,9 +8,11 @@ import { SettingsDialogComponent } from '../../shared/components/settings-dialog
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDeleteDialogComponent } from '../../shared/components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MessageService } from '../../shared/services/message-service/message.service';
-import { MaterialModule } from '../../shared/material/material.module';
+import { AngularMaterialModule } from '../../shared/material/angular-material.module';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { CreateOrderComponent } from './create-order/create-order.component';
+import { LazyLoadedTabNavigationComponent } from './lazy-loaded-tab-navigation/lazy-loaded-tab-navigation.component';
+import { WorkingHourModule } from '../working-hour/working-hour.module';
 
 @NgModule({
   imports: [
@@ -19,7 +21,8 @@ import { CreateOrderComponent } from './create-order/create-order.component';
     OrderRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    AngularMaterialModule,
+    WorkingHourModule
   ],
   declarations: [
     OrderListComponent,
@@ -28,7 +31,8 @@ import { CreateOrderComponent } from './create-order/create-order.component';
     EditOrderComponent,
     SettingsDialogComponent,
     ConfirmDeleteDialogComponent,
-    SettingsDialogComponent
+    SettingsDialogComponent,
+    LazyLoadedTabNavigationComponent
   ],
   providers: [MessageService]
 })

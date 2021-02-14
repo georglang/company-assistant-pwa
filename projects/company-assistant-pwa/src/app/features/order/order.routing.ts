@@ -19,14 +19,22 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        pathMatch: 'full',
         component: OrderDetailComponent
       },
       {
         path: 'edit-order',
         component: EditOrderComponent
+      },
+      {
+        path: 'working-hours',
+        loadChildren: () =>
+          import('./../working-hour/working-hour.module').then(
+            (m) => m.WorkingHourModule
+          )
       }
     ]
-  },
+  }
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Timestamp } from '@firebase/firestore-types';
-import { IWorkingHour } from '../working-hour/services/firestore-working-hour-service/WorkingHour';
+import { IWorkingHour } from '../working-hour/WorkingHour';
 
 export interface IOrder {
   companyName: string;

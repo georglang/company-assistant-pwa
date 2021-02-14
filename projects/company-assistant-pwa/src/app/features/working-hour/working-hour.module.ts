@@ -5,6 +5,7 @@ import { WorkingHourListComponent } from './working-hour-list/working-hour-list.
 import { AngularMaterialModule } from '../../shared/material/angular-material.module';
 import { CreateWorkingHourComponent } from './create-working-hour/create-working-hour.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditWorkingHourComponent } from './edit-working-hour/edit-working-hour.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AngularMaterialModule,
     WorkingHourRoutingModule
   ],
-  declarations: [WorkingHourListComponent, CreateWorkingHourComponent]
+  declarations: [
+    WorkingHourListComponent,
+    CreateWorkingHourComponent,
+    EditWorkingHourComponent
+  ]
 })
 export class WorkingHourModule {}

@@ -31,14 +31,17 @@ const routes: Routes = [
         loadChildren: () =>
           import('../working-hour/working-hour.module').then(
             (m) => m.WorkingHourModule
-          ),
+          )
       },
       {
         path: 'notes',
         loadChildren: () =>
-          import('../note/note.module').then(
-          (m) => m.NoteModule
-        )
+          import('../note/note.module').then((m) => m.NoteModule)
+      },
+      {
+        path: 'material',
+        loadChildren: () =>
+          import('./../material/material.module').then((m) => m.MaterialModule)
       }
     ]
   }

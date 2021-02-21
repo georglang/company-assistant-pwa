@@ -7,11 +7,7 @@
     </div>
   </div>
   <div class="col-2">
-    <div
-      type="button"
-      class="save-btn"
-      (click)="documentCreateWorkingHourForm.ngSubmit.emit()"
-    >
+    <div type="button" class="save-btn" (click)="onSubmit()">
       <mat-icon>save</mat-icon>
     </div>
   </div>
@@ -21,12 +17,7 @@
   <div class="col-12">
     <div id="create-working-hour-form-wrapper" class="row no-gutter">
       <div class="col-12">
-        <form
-          id="create-working-hour-form"
-          [formGroup]="createWorkingHourForm"
-          #documentCreateWorkingHourForm="ngForm"
-          (ngSubmit)="onSubmit()"
-        >
+        <form id="create-working-hour-form" [formGroup]="createWorkingHourForm">
           <fieldset class="form-group">
             <mat-form-field>
               <input
@@ -116,7 +107,7 @@
               >
                 <mat-option
                   *ngFor="let employee of employees"
-                  [value]="employee.value"
+                  [value]="employee.viewValue"
                 >
                   {{ employee.viewValue }}
                 </mat-option>

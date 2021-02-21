@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { WorkingHour } from '../WorkingHour';
 import { FirestoreWorkingHourService } from '../services/firestore-working-hour-service/firestore-working-hour.service';
 import { MessageService } from '../../../shared/services/message-service/message.service';
+import { employees } from '../../../shared/config-data/employees';
 
 @Component({
   selector: 'app-create-working-hour',
@@ -15,70 +16,7 @@ export class CreateWorkingHourComponent implements OnInit {
   public createWorkingHourForm: FormGroup;
   private routeParamOrderId;
   public submitted = false;
-  public employees = [
-    {
-      value: 'Erle Wastl',
-      viewValue: 'Erle Wastl'
-    },
-    {
-      value: 'Greisl Martin',
-      viewValue: 'Greisl Martin'
-    },
-    {
-      value: 'Martin Johann',
-      viewValue: 'Martin Johann'
-    },
-    {
-      value: 'Speer Leonhard',
-      viewValue: 'Speer Leonhard'
-    },
-    {
-      value: 'Strobel Michael',
-      viewValue: 'Strobel Michael'
-    },
-    {
-      value: 'Tschabi Matthias',
-      viewValue: 'Tschabi Matthias'
-    }
-  ];
-  public tools = [
-    {
-      value: 'Mann',
-      viewValue: 'Mann'
-    },
-    {
-      value: 'Mann mit Motorsäge',
-      viewValue: 'Mann mit Motorsäge'
-    },
-    {
-      value: 'Seilschlepper',
-      viewValue: 'Seilschlepper'
-    },
-    {
-      value: 'Schlepper + Rückewagen',
-      viewValue: 'Schlepper + Rückewagen'
-    },
-    {
-      value: 'HSM',
-      viewValue: 'HSM'
-    },
-    {
-      value: 'HSM + Woody',
-      viewValue: 'HSM + Woody'
-    },
-    {
-      value: 'Rückezug',
-      viewValue: 'Rückezug'
-    },
-    {
-      value: 'Rückezug + Winde + Bänder',
-      viewValue: 'Rückezug + Winde + Bänder'
-    },
-    {
-      value: 'Harvester',
-      viewValue: 'Harvester'
-    }
-  ];
+  public employees = employees;
 
   constructor(
     private router: Router,
@@ -106,7 +44,7 @@ export class CreateWorkingHourComponent implements OnInit {
     this.location.back();
   }
 
-  public createWorkingHour(formInput: any, orderId: string): void {
+  private createWorkingHour(formInput: any, orderId: string): void {
     const workingHour = new WorkingHour(
       formInput.date,
       formInput.description,
@@ -149,7 +87,6 @@ export class CreateWorkingHourComponent implements OnInit {
   }
 
   public onSubmit() {
-    this.submitted = true;
     if (this.createWorkingHourForm.invalid) {
       return;
     } else {
@@ -157,6 +94,7 @@ export class CreateWorkingHourComponent implements OnInit {
         this.createWorkingHourForm.value,
         this.routeParamOrderId
       );
+      this.submitted = true;
     }
   }
 }

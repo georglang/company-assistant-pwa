@@ -24,10 +24,10 @@
                 type="text"
                 placeholder="Material auswählen"
                 matInput
-                formControlName="description"
+                formControlName="material"
                 [matAutocomplete]="auto"
                 [ngClass]="{
-                  'is-invalid': submitted && getFormControl.description.errors
+                  'is-invalid': submitted && getFormControl.material.errors
                 }"
               />
               <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
@@ -39,10 +39,10 @@
                 </mat-option>
               </mat-autocomplete>
               <div
-                *ngIf="submitted && getFormControl.description.errors"
+                *ngIf="submitted && getFormControl.material.errors"
                 class="invalid-feedback"
               >
-                <div *ngIf="getFormControl.description.errors.required">
+                <div *ngIf="getFormControl.material.errors.required">
                   Bitte <strong>Material</strong> eingeben
                 </div>
               </div>
@@ -73,12 +73,13 @@
 
           <fieldset>
             <mat-form-field>
-              <input
-                matInput
-                formControlName="unit"
-                type="text"
-                placeholder="Einheit auswählen"
-              />
+              <mat-label>Einheit</mat-label>
+              <mat-select formControlName="unit" name="materials">
+                <mat-option *ngFor="let unit of units" [value]="unit.value">
+                  {{ unit.viewValue }}
+                </mat-option>
+              </mat-select>
+
               <div
                 *ngIf="submitted && getFormControl.unit.errors"
                 class="invalid-feedback"

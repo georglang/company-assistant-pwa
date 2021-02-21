@@ -11,6 +11,8 @@ import { Location } from '@angular/common';
 import { Material } from '../Material';
 import { FirestoreMaterialService } from '../services/firestore-material-service/firestore-material.service';
 import { MessageService } from '../../../shared/services/message-service/message.service';
+import { materialUnits } from '../material-list/material-units';
+import { IMaterial } from '../material-list/IMaterial';
 
 @Component({
   selector: 'app-create-material',
@@ -26,6 +28,7 @@ export class CreateMaterialComponent implements OnInit {
   options: string[] = materials;
 
   filteredOptions: Observable<string[]>;
+  units = materialUnits;
 
   constructor(
     private router: Router,
@@ -39,7 +42,7 @@ export class CreateMaterialComponent implements OnInit {
   ngOnInit() {
     this.createMaterialForm = this.formBuilder.group({
       material: ['', Validators.required],
-      numberOfPieces: ['', Validators.required],
+      amount: ['', Validators.required],
       unit: ['', Validators.required]
     });
 
@@ -47,8 +50,6 @@ export class CreateMaterialComponent implements OnInit {
       startWith(''),
       map((value) => this._filter(value))
     );
-
-    /// Weiter description wird nicht gesetzt
 
     this.route.params.subscribe((params) => {
       this.routeParamOrderId = params.id;
@@ -77,7 +78,7 @@ export class CreateMaterialComponent implements OnInit {
     this.addMaterialToFirebaseMaterialsTable(material);
   }
 
-  public addMaterialToFirebaseMaterialsTable(material: any): void {
+  public addMaterialToFirebaseMaterialsTable(material: IMaterial): void {
     if (this.firestoreMaterialService !== undefined) {
       // check if material is already in firestore
 
@@ -99,12 +100,7 @@ export class CreateMaterialComponent implements OnInit {
   }
 
   public onSubmit() {
-    const materialValues = this.createMaterialForm.value;
-    debugger;
-
-    this.createMaterialForm.get('description').setValue(this.myControl.value);
     this.submitted = true;
-
     if (this.createMaterialForm.invalid) {
       return;
     } else {

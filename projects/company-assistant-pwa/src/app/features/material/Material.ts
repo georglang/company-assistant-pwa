@@ -1,12 +1,4 @@
-import { Timestamp } from '@firebase/firestore-types';
-
-export interface IMaterial {
-  id?: string;
-  material: string;
-  amount: number;
-  unit: string;
-  orderId: string;
-}
+import { IMaterial } from './material-list/IMaterial';
 
 export class Material implements IMaterial {
   public material: string;

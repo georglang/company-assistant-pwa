@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 
 // import { ConfirmDeleteDialogComponent } from '../../working-hour/confirm-delete-dialog/confirm-delete-dialog.component';
-import { IMaterial } from '../Material';
+import { IMaterial } from './IMaterial';
 
 @Component({
   selector: 'app-material-list',

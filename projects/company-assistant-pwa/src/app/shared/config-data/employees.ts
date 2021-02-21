@@ -1,26 +1,28 @@
-export const employees = [
+import { IEmployeeSelect } from '../data-classes/IEmployeeSelect';
+
+export const employees: IEmployeeSelect[] = [
   {
-    value: 'Erle Wastl',
-    viewValue: 'Erle Wastl'
+    value: 'bollenmuellerMaria',
+    viewValue: 'Bollenmüller Maria'
   },
   {
-    value: 'Greisl Martin',
-    viewValue: 'Greisl Martin'
+    value: 'langSarah',
+    viewValue: 'Lang Sarah'
   },
   {
-    value: 'Martin Johann',
-    viewValue: 'Martin Johann'
+    value: 'saidAlayan',
+    viewValue: 'Said Alayan'
   },
   {
-    value: 'Speer Leonhard',
-    viewValue: 'Speer Leonhard'
+    value: 'straubFranz',
+    viewValue: 'Straub Franz'
   },
   {
-    value: 'Strobel Michael',
-    viewValue: 'Strobel Michael'
+    value: 'viewegerAndreas',
+    viewValue: 'Vieweger Andreas'
   },
   {
-    value: 'Tschabi Matthias',
-    viewValue: 'Tschabi Matthias'
+    value: 'vieweger',
+    viewValue: 'Vieweger Maxi'
   }
 ];

@@ -118,7 +118,7 @@ export class WorkingHourListComponent implements OnInit {
 
   public createNewWorkingHour() {
     this.router.navigate([
-      'orders/' + this.paramOrderId + '/working-hours' + '/create-working-hour/'
+      'orders/' + this.paramOrderId + '/working-hours' + '/create'
     ]);
   }
 

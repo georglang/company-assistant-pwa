@@ -1,3 +1,5 @@
+@import './../../../../styles/_variables.scss'
+
 .col-12
   padding-left: 0px
   padding-right: 0px
@@ -62,19 +64,21 @@ td
   margin-bottom: 52px
 
 #create-working-hour-btn
-  background-color: #5fb345
+  background-color: $primary-color
   position: absolute
   right: 16px
   bottom: 16px
+  .material-icons
+    color: #fff
 
 #create-working-hour-print-btn
   position: absolute
-  background-color: #5fb345
+  background-color: $primary-color
   right: 16px
   bottom: 78px
 
 #create-working-hour-delete-btn
-  background-color: #5fb345
+  background-color: $primary-color
   position: absolute
   right: 16px
   bottom: 141px
@@ -83,19 +87,25 @@ td
   position: absolute
   right: 16px
   bottom: 141px
+  .material-icons
+    color: #fff
 
 .create-working-hour-edit-btn-if-delete-is-not-active
   position: absolute
   right: 16px
   bottom: 78px
+  .material-icons
+    color: #fff
 
 .create-working-hour-edit-btn
   position: absolute
   right: 16px
   bottom: 204px
+  .material-icons
+    color: #fff
 
 #edit-working-hour-btn
-   background-color: #5fb345
+   background-color: $primary-color
 
 #contact-person
   margin-left: 20px
@@ -118,6 +128,7 @@ td
   box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12)
   z-index: 1030
 
+
 .no-working-hours-found
   text-align: center
   font-size: 120%
@@ -127,7 +138,7 @@ td
   background-color: red!important
 
 .mat-row.highlighted
-  background: #59804d
+  background: $primary-color
 
 .mat-column-hasBeenPrinted
   display: none

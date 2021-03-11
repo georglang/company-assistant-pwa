@@ -1,8 +1,8 @@
 import { IUnit } from './IUnit';
 
 export const materialUnits: IUnit[] = [
-  { value: 'unit-0', viewValue: 'kg' },
-  { value: 'unit-0', viewValue: 'Meter' },
-  { value: 'unit-0', viewValue: 'qm' },
-  { value: 'unit-0', viewValue: 'Stück' }
+  { value: 'material-0', viewValue: 'kg' },
+  { value: 'material-1', viewValue: 'Meter' },
+  { value: 'material-2', viewValue: 'qm' },
+  { value: 'material-3', viewValue: 'Stück' }
 ];

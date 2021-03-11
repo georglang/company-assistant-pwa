@@ -71,7 +71,7 @@ export class CreateMaterialComponent implements OnInit {
   public createMaterial(formInput: any, orderId: string): void {
     const material = new Material(
       formInput.material,
-      formInput.numberOfPieces,
+      formInput.amount,
       formInput.unit,
       orderId
     );
@@ -104,6 +104,9 @@ export class CreateMaterialComponent implements OnInit {
     if (this.createMaterialForm.invalid) {
       return;
     } else {
+      const test = this.createMaterialForm.value;
+      debugger;
+
       this.createMaterial(
         this.createMaterialForm.value,
         this.routeParamOrderId

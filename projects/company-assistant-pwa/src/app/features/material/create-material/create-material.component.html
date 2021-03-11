@@ -75,7 +75,7 @@
             <mat-form-field>
               <mat-label>Einheit</mat-label>
               <mat-select formControlName="unit" name="materials">
-                <mat-option *ngFor="let unit of units" [value]="unit.value">
+                <mat-option *ngFor="let unit of units" [value]="unit.viewValue">
                   {{ unit.viewValue }}
                 </mat-option>
               </mat-select>

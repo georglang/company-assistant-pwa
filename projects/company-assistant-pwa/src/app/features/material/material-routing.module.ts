@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MaterialListComponent } from './material-list/material-list.component';
 import { CreateMaterialComponent } from './create-material/create-material.component';
+import { EditMaterialComponent } from './edit-material/edit-material.component';
 const routes: Routes = [
   {
     path: '',
@@ -10,6 +11,15 @@ const routes: Routes = [
   {
     path: 'create',
     component: CreateMaterialComponent
+  },
+  {
+    path: ':id',
+    children: [
+      {
+        path: 'edit',
+        component: EditMaterialComponent
+      }
+    ]
   }
 ];
 

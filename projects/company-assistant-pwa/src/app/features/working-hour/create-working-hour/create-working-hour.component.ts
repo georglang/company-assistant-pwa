@@ -69,7 +69,10 @@ export class CreateWorkingHourComponent implements OnInit {
               .addWorkingHour(woringHour)
               .then((id: string) => {
                 this.messageService.workingHourCreatedSuccessfully();
-                this.router.navigate(['order-details', woringHour.orderId]);
+                this.router.navigate([
+                  'order-details',
+                  woringHour.orderId + '/create'
+                ]);
                 woringHour.id = id;
               })
               .catch((e) => {

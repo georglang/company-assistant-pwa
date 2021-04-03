@@ -6,11 +6,13 @@ import { AngularMaterialModule } from '../../shared/material/angular-material.mo
 import { CreateWorkingHourComponent } from './create-working-hour/create-working-hour.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditWorkingHourComponent } from './edit-working-hour/edit-working-hour.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    SharedModule,
     ReactiveFormsModule,
     AngularMaterialModule,
     WorkingHourRoutingModule

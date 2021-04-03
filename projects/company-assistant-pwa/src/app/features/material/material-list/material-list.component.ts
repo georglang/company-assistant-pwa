@@ -10,6 +10,10 @@ import { SelectionModel } from '@angular/cdk/collections';
 
 // import { ConfirmDeleteDialogComponent } from '../../working-hour/confirm-delete-dialog/confirm-delete-dialog.component';
 import { IMaterial } from './IMaterial';
+import { ITabItem } from '../../order/lazy-loaded-tab-navigation/ITabItem';
+import { tabs } from '../../order/lazy-loaded-tab-navigation/TabData';
+import { IOrder } from '../../order/Order';
+import { FirestoreOrderService } from '../../order/services/firestore-order-service/firestore-order.service';
 
 @Component({
   selector: 'app-material-list',
@@ -27,9 +31,13 @@ export class MaterialListComponent implements OnInit {
   public showButtonsIfMaterialIsSelected: boolean = false;
   public showPrintButton: boolean = false;
   public showDeleteButton: boolean = false;
+  public tabs: ITabItem[] = tabs;
+  public tabsWithRoutes = [];
+  public order: IOrder;
 
   constructor(
     private firestoreMaterialService: FirestoreMaterialService,
+    private firestoreOrderService: FirestoreOrderService,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
@@ -40,6 +48,40 @@ export class MaterialListComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.paramOrderId = params['id'];
       this.getMaterialsFromCloudDatabase(this.paramOrderId);
+      this.getOrderByIdFromCloudDatabase(this.paramOrderId);
+    });
+
+    this.initTabNavigation();
+  }
+
+  private initTabNavigation() {
+    tabs.forEach((tab) => {
+      switch (tab.feature) {
+        case 'workingHours': {
+          this.tabsWithRoutes.push({
+            label: tab.label,
+            icon: tab.icon,
+            route: '/orders/' + this.paramOrderId + '/working-hours'
+          });
+          break;
+        }
+        case 'materials': {
+          this.tabsWithRoutes.push({
+            label: tab.label,
+            icon: tab.icon,
+            route: '/orders/' + this.paramOrderId + '/material'
+          });
+          break;
+        }
+        case 'notes': {
+          this.tabsWithRoutes.push({
+            label: tab.label,
+            icon: tab.icon,
+            route: '/orders/' + this.paramOrderId + '/notes'
+          });
+          break;
+        }
+      }
     });
   }
 
@@ -57,6 +99,14 @@ export class MaterialListComponent implements OnInit {
     }
   }
 
+  private getOrderByIdFromCloudDatabase(orderId: string) {
+    this.firestoreOrderService.getOrderById(orderId).then((order: IOrder) => {
+      if (order !== undefined) {
+        this.order = order;
+      }
+    });
+  }
+
   public showEditAndDeleteButton(selectedWorkingHour: IMaterial) {
     this.selectedMaterial = selectedWorkingHour;
     if (this.highlighted.selected.length == 0) {
@@ -67,12 +117,17 @@ export class MaterialListComponent implements OnInit {
   }
 
   public editMaterial(material: IMaterial) {
-    this.router.navigate([
-      'working-hours/order-details/' +
-        material.orderId +
-        '/edit-material/' +
-        material.id
-    ]);
+    this.router.navigate([material.id + '/edit'], { relativeTo: this.route });
+  }
+
+  public applyFilter(filterValue: string): void {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLocaleLowerCase();
+    this.dataSource.filter = filterValue;
+  }
+
+  public navigateToOrderList(): void {
+    this.router.navigate(['/']);
   }
 
   public deleteMaterial(material: IMaterial) {
@@ -118,4 +173,6 @@ export class MaterialListComponent implements OnInit {
     this.dataSource = new MatTableDataSource<IMaterial>(materials);
     this.hasMaterialsFound = true;
   }
+
+  openSettingsDialog() {}
 }

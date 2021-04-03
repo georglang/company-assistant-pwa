@@ -15,65 +15,78 @@
 
 <div id="working-hour-list-component-wrapper" class="row no-gutters">
   <div class="col-12">
-    <div id="customer-info-wrapper" class="row no-gutters clearfix">
-      <div class="col-12">
-        <div id="customer-info">
-          <div id="customer-info-wrapper-left" class="float-left">
-            <div id="order-date" class="clearfix">
-              <mat-icon
-                class="float-left"
-                aria-hidden="false"
-                aria-label="date icon"
-              >
+    <div id="customer-info-wrapper" class="no-gutters">
+      <div id="customer-info">
+        <table>
+          <tr>
+            <td>
+              <mat-icon aria-hidden="false" aria-label="date icon">
                 date_range
               </mat-icon>
-              <div class="float-left icon-margin">
+            </td>
+            <td class="table-data-padding">
+              <div class="icon-margin">
                 {{ order?.date?.seconds * 1000 | date: 'dd.MM.yyyy' }}
               </div>
-            </div>
+            </td>
+          </tr>
 
-            <div id="order-customer" class="clearfix">
-              <mat-icon
-                class="float-left"
-                aria-hidden="false"
-                aria-label="company name icon"
-              >
+          <tr>
+            <td>
+              <mat-icon aria-hidden="false" aria-label="company name icon">
                 perm_identity
               </mat-icon>
-              <div class="float-left icon-margin">
+            </td>
+            <td class="table-data-padding">
+              <div class="icon-margin">
                 {{ order?.companyName }}
               </div>
-            </div>
-          </div>
-          <div id="customer-info-wrapper-right" class="float-left">
-            <div id="order-location" class="clearfix">
-              <mat-icon
-                class="float-left"
-                aria-hidden="false"
-                aria-label="location icon"
-              >
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <mat-icon aria-hidden="false" aria-label="location icon">
                 location_on
               </mat-icon>
-
-              <div class="float-left icon-margin">
+            </td>
+            <td class="table-data-padding">
+              <div class="icon-margin">
                 {{ order?.location }}
               </div>
-            </div>
-            <div id="order-contact-person" class="clearfix">
+            </td>
+          </tr>
+          <tr>
+            <td>
               <img
                 id="helmet-icon"
-                class="float-left"
                 src="./assets/img/helmet.svg"
                 alt="contact person icon"
               />
-              <div class="float-left icon-margin">
+            </td>
+            <td class="table-data-padding">
+              <div class="icon-margin">
                 {{ order?.contactPerson }}
               </div>
-            </div>
-          </div>
-        </div>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
+
+    <nav mat-tab-nav-bar>
+      <a
+        mat-tab-link
+        *ngFor="let tab of tabsWithRoutes"
+        [routerLink]="tab.route"
+        routerLinkActive
+        #rla="routerLinkActive"
+        [active]="rla.isActive"
+      >
+        <mat-icon class="mr-8">{{ tab.icon }}</mat-icon>
+        {{ tab.label }} <br />
+      </a>
+    </nav>
 
     <div id="working-hour-table-wrapper" class="row no-gutter">
       <div class="col-12">

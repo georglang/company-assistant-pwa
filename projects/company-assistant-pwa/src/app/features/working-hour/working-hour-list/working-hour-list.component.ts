@@ -15,7 +15,9 @@ import { FirestoreWorkingHourService } from '../services/firestore-working-hour-
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { UserOptions } from 'jspdf-autotable';
+import { tabs } from '../../order/lazy-loaded-tab-navigation/TabData';
 // import { SettingsDialogComponent } from '../settings-dialog/settings-dialog.component';
+import { ITabItem } from '../../order/lazy-loaded-tab-navigation/ITabItem';
 
 interface jsPDFWithPlugin extends jsPDF {
   autoTable: (options: UserOptions) => jsPDF;
@@ -56,6 +58,8 @@ export class WorkingHourListComponent implements OnInit {
   public pdf = new jsPDF() as jsPDFWithPlugin;
   public selected = false;
   public customerData;
+  public tabs: ITabItem[] = tabs;
+  public tabsWithRoutes = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -75,6 +79,39 @@ export class WorkingHourListComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.paramOrderId = params['id'];
       this.getOrderByIdFromCloudDatabase(this.paramOrderId);
+    });
+
+    this.initTabNavigation();
+  }
+
+  initTabNavigation() {
+    tabs.forEach((tab) => {
+      switch (tab.feature) {
+        case 'workingHours': {
+          this.tabsWithRoutes.push({
+            label: tab.label,
+            icon: tab.icon,
+            route: '/orders/' + this.paramOrderId + '/working-hours'
+          });
+          break;
+        }
+        case 'materials': {
+          this.tabsWithRoutes.push({
+            label: tab.label,
+            icon: tab.icon,
+            route: '/orders/' + this.paramOrderId + '/material'
+          });
+          break;
+        }
+        case 'notes': {
+          this.tabsWithRoutes.push({
+            label: tab.label,
+            icon: tab.icon,
+            route: '/orders/' + this.paramOrderId + '/notes'
+          });
+          break;
+        }
+      }
     });
   }
 

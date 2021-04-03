@@ -22,7 +22,7 @@ import { FirestoreOrderService } from '../../order/services/firestore-order-serv
 })
 export class MaterialListComponent implements OnInit {
   public paramOrderId;
-  public displayedColumns = ['date', 'material', 'amount', 'unit'];
+  public displayedColumns = ['material', 'amount', 'unit'];
   public dataSource = new MatTableDataSource();
   public hasMaterialsFound: boolean = false;
   public selection = new SelectionModel<IMaterial>(true, []);

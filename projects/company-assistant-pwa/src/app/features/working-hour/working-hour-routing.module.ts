@@ -12,7 +12,7 @@ const routes: Routes = [
     component: WorkingHourListComponent
   },
   {
-    path: 'create-working-hour',
+    path: 'create',
     component: CreateWorkingHourComponent
   },
   {
@@ -22,9 +22,8 @@ const routes: Routes = [
         path: 'edit',
         component: EditWorkingHourComponent
       }
-
     ]
-  },
+  }
 ];
 
 @NgModule({

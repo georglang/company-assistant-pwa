@@ -105,7 +105,6 @@ export class CreateMaterialComponent implements OnInit {
       return;
     } else {
       const test = this.createMaterialForm.value;
-      debugger;
 
       this.createMaterial(
         this.createMaterialForm.value,

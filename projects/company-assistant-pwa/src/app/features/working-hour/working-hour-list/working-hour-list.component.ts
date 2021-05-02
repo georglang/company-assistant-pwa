@@ -26,7 +26,7 @@ interface jsPDFWithPlugin extends jsPDF {
 @Component({
   selector: 'app-working-hour-list',
   templateUrl: './working-hour-list.component.html',
-  styleUrls: ['./working-hour-list.component.sass']
+  styleUrls: ['./working-hour-list.component.scss']
 })
 export class WorkingHourListComponent implements OnInit {
   private paramOrderId;

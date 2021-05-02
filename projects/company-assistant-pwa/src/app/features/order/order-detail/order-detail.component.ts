@@ -18,15 +18,12 @@ import { UserOptions } from 'jspdf-autotable';
 import { IJsPDFPlugin } from '../IJsPdfPlugin';
 import { SettingsDialogComponent } from '../../../shared/components/settings-dialog/settings-dialog.component';
 import { ConfirmDeleteDialogComponent } from '../../../shared/components/confirm-delete-dialog/confirm-delete-dialog.component';
-import {
-  WorkingHour,
-  IWorkingHour
-} from '../../working-hour/services/firestore-working-hour-service/WorkingHour';
+import { WorkingHour, IWorkingHour } from '../../working-hour/WorkingHour';
 
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
-  styleUrls: ['./order-detail.component.sass']
+  styleUrls: ['./order-detail.component.scss']
 })
 export class OrderDetailComponent implements OnInit {
   public paramOrderId;

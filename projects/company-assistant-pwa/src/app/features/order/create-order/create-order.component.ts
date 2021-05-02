@@ -11,7 +11,7 @@ import { loadash as _ } from 'lodash';
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
-  styleUrls: ['./create-order.component.sass']
+  styleUrls: ['./create-order.component.scss']
 })
 export class CreateOrderComponent implements OnInit {
   public createOrderForm: FormGroup;
@@ -30,9 +30,9 @@ export class CreateOrderComponent implements OnInit {
 
     this.createOrderForm = this.formBuilder.group({
       date: ['', Validators.required],
+      contactPerson: ['', Validators.required],
       companyName: ['', Validators.required],
-      location: ['', Validators.required],
-      contactPerson: ['', Validators.required]
+      location: ['', Validators.required]
     });
     this.dateAdapter.setLocale('de');
   }
@@ -55,7 +55,7 @@ export class CreateOrderComponent implements OnInit {
     this.addOrderToFirebaseOrdersTable(order);
   }
 
-  public addOrderToFirebaseOrdersTable(order: IOrder): void {
+  private addOrderToFirebaseOrdersTable(order: IOrder): void {
     if (this.firestoreOrderService !== undefined) {
       this.firestoreOrderService
         .checkIfOrderExists(order)
@@ -63,10 +63,10 @@ export class CreateOrderComponent implements OnInit {
           if (!isAlreadyInFirestore) {
             this.firestoreOrderService
               .addOrder(order)
-              .then((id: string) => {
+              .then((order: IOrder) => {
                 this.messageService.orderCreatedSuccessful();
                 this.router.navigate(['orders']);
-                order.id = id;
+                // order.id = id;
               })
               .catch((e) => {
                 console.error('can´t create order to firebase', e);
@@ -84,7 +84,6 @@ export class CreateOrderComponent implements OnInit {
   }
 
   public onSubmit() {
-    debugger;
     this.submitted = true;
     if (this.createOrderForm.invalid) {
       return;

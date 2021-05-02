@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-setttings-dialog',
   templateUrl: './settings-dialog.component.html',
-  styleUrls: ['./settings-dialog.component.sass'],
+  styleUrls: ['./settings-dialog.component.scss']
 })
 export class SettingsDialogComponent implements OnInit {
   public modalTitle: string;
@@ -13,7 +13,7 @@ export class SettingsDialogComponent implements OnInit {
   public isPasswordCorrect = false;
 
   public passwordForm: FormGroup = new FormGroup({
-    password: new FormControl('', [Validators.required, Validators.min(3)]),
+    password: new FormControl('', [Validators.required, Validators.min(3)])
   });
 
   get passwordInput() {

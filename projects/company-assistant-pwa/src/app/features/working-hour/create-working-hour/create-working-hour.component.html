@@ -1,22 +1,21 @@
-<!-- <app-header titleInput="Regiestunden anlegen"></app-header> -->
-
-<div class="sub-nav row">
-  <div class="col-10">
-    <div type="button" class="nav-before-btn" (click)="navigateToOrderList()">
-      <mat-icon>navigate_before</mat-icon>
-    </div>
-  </div>
-  <div class="col-2">
-    <div type="button" class="save-btn" (click)="onSubmit()">
-      <mat-icon>save</mat-icon>
-    </div>
-  </div>
-</div>
-
 <div id="create-working-hour-component-wrapper" class="row no-gutter">
-  <div class="col-12">
-    <div id="create-working-hour-form-wrapper" class="row no-gutter">
-      <div class="col-12">
+  <div class="col">
+    <div class="sub-nav row no-gutters">
+      <div class="col-2">
+        <div
+          type="button"
+          class="nav-before-btn"
+          (click)="navigateToOrderList()"
+        >
+          <mat-icon>navigate_before</mat-icon>
+        </div>
+      </div>
+      <div class="col-8 page-title-wrapper">Arbeitsstunde anlegen</div>
+      <div class="col-2"></div>
+    </div>
+
+    <div class="row no-gutter">
+      <div class="col">
         <form id="create-working-hour-form" [formGroup]="createWorkingHourForm">
           <fieldset class="form-group">
             <mat-form-field>

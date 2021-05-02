@@ -17,7 +17,7 @@ import { IMaterial } from '../material-list/IMaterial';
 @Component({
   selector: 'app-create-material',
   templateUrl: './create-material.component.html',
-  styleUrls: ['./create-material.component.sass']
+  styleUrls: ['./create-material.component.scss']
 })
 export class CreateMaterialComponent implements OnInit {
   public createMaterialForm: FormGroup;

@@ -41,7 +41,6 @@ export class EditMaterialComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
     private route: ActivatedRoute,
     private dateAdapter: DateAdapter<Date>,
     private firestoreMaterialService: FirestoreMaterialService,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -13,7 +13,7 @@ import { FirestoreWorkingHourService } from '../../working-hour/services/firesto
 @Component({
   selector: 'app-edit-order',
   templateUrl: './edit-order.component.html',
-  styleUrls: ['./edit-order.component.sass']
+  styleUrls: ['./edit-order.component.scss']
 })
 export class EditOrderComponent implements OnInit {
   public editOrderForm: FormGroup;
@@ -63,7 +63,6 @@ export class EditOrderComponent implements OnInit {
         .getWorkingHoursByOrderId(order.id)
         .subscribe((workingHours: any[]) => {
           // this.order.workingHours = workingHours;
-          debugger;
           this.setControl(order);
         });
     }

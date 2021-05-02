@@ -1,0 +1,188 @@
+@import './../../../../styles/_variables.scss';
+
+.col-12 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.sub-nav {
+  height: 55px;
+  background: #fff;
+  box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12);
+  position: fixed;
+  width: 100%;
+  top: 64px;
+  z-index: 1030;
+}
+.nav-before-btn {
+  text-align: left;
+  margin-top: 8px;
+  mat-icon {
+    font-size: 40px;
+  }
+}
+.settings-btn {
+  text-align: right;
+  margin-top: 15px;
+}
+.icon-margin {
+  margin-left: 10px;
+}
+.page-title-wrapper {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 120%;
+}
+#main-nav-wrapper {
+  margin-top: 100px;
+}
+#material-list-wrapper {
+  margin-top: 40px;
+}
+th {
+  display: none;
+}
+td {
+  border-top: 0px;
+}
+.disable-on-small-device {
+  display: none;
+}
+.mat-cell {
+  border-bottom-style: none;
+}
+// angular material: checkbox color
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: #43783d;
+}
+.mat-header-row {
+  display: none;
+}
+.mat-row {
+  flex-direction: column;
+  align-items: start;
+  padding: 8px;
+}
+mat-cell:first-of-type,
+mat-header-cell:first-of-type {
+  padding-left: 0px;
+}
+.mat-form-field {
+  display: block;
+  font-size: 16px;
+}
+.mat-cell {
+  margin-left: 20px;
+}
+.mat-row {
+  min-height: 28px;
+}
+#customer-info-wrapper {
+  border-bottom: solid grey 1px;
+  padding-top: 78px;
+  padding-bottom: 36px;
+}
+#customer-info {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+#material-print-btn {
+  position: absolute;
+  background-color: $primary-color;
+  right: 16px;
+  bottom: 78px;
+}
+#material-delete-btn {
+  background-color: $primary-color;
+  position: absolute;
+  right: 16px;
+  bottom: 141px;
+}
+.material-edit-btn-if-print-is-not-active {
+  position: absolute;
+  right: 16px;
+  bottom: 141px;
+}
+.material-edit-btn-if-delete-is-not-active {
+  position: absolute;
+  right: 16px;
+  bottom: 78px;
+}
+.material-edit-btn {
+  position: absolute;
+  right: 16px;
+  bottom: 204px;
+}
+#material-btn {
+  background-color: $primary-color;
+}
+.mat-row.highlighted {
+  background: $light-grey;
+}
+#bottom-nav {
+  background-color: #fff;
+  height: 50px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12);
+  z-index: 1030;
+}
+#create-material-btn {
+  background-color: $primary-color;
+  color: $color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  .material-icons {
+    color: #fff;
+  }
+}
+#edit-material-btn {
+  background-color: $primary-color;
+  .material-icons {
+    color: $color_white;
+  }
+}
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 22px !important;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (min-width: 576px) {
+  .mat-row {
+    flex-direction: row;
+    align-items: start;
+    padding: 8px;
+  }
+  mat-cell:first-of-type,
+  mat-header-cell:first-of-type {
+    padding-left: 0px;
+  }
+  .mat-form-field {
+    display: block;
+    font-size: 16px;
+  }
+  .mat-cell {
+    margin-left: 20px;
+  }
+  .mat-row {
+    min-height: 28px;
+  }
+  // angular material: text input underline
+  ::ng-deep .mat-form-field-underline {
+    display: none;
+  }
+};
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {}

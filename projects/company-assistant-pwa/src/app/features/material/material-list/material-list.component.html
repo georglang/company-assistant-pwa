@@ -2,24 +2,18 @@
   <div class="col">
     <div class="sub-nav row no-gutters">
       <div class="col-2">
-        <div
-          type="button"
-          class="nav-before-btn"
-          (click)="navigateToOrderList()"
-        >
+        <div type="button" class="nav-before-btn" (click)="navigateToOrderList()">
           <mat-icon>navigate_before</mat-icon>
         </div>
       </div>
       <div class="col-8 page-title-wrapper">Material</div>
       <div class="col-2">
-        <div type="button" class="settings-btn" (click)="openSettingsDialog()">
-          <mat-icon>settings</mat-icon>
-        </div>
+            <div>as</div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-12">
+      <div class="col">
         <div id="customer-info-wrapper" class="no-gutters">
           <div id="customer-info">
             <table>
@@ -81,24 +75,28 @@
       </div>
     </div>
 
-    <nav mat-tab-nav-bar>
-      <a
-        mat-tab-link
-        *ngFor="let tab of tabsWithRoutes"
-        [routerLink]="tab.route"
-        routerLinkActive
-        #rla="routerLinkActive"
-        [active]="rla.isActive"
-      >
-        <mat-icon class="mr-8">{{ tab.icon }}</mat-icon>
-        {{ tab.label }} <br />
-      </a>
-    </nav>
+    <div class="row">
+      <div class="col">
+        <nav mat-tab-nav-bar mat-align-tabs="center">
+          <a
+            mat-tab-link
+            *ngFor="let tab of tabsWithRoutes"
+            [routerLink]="tab.route"
+            routerLinkActive
+            #rla="routerLinkActive"
+            [active]="rla.isActive"
+          >
+            <mat-icon class="mr-8">{{ tab.icon }}</mat-icon>
+            {{ tab.label }} <br />
+          </a>
+        </nav>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col">
         <div id="material-list-wrapper" class="row no-gutters">
-          <div class="col-12">
+          <div class="col">
             <mat-table
               #table
               [dataSource]="dataSource"

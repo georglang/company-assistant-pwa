@@ -18,7 +18,7 @@ import { FirestoreOrderService } from '../../order/services/firestore-order-serv
 @Component({
   selector: 'app-material-list',
   templateUrl: './material-list.component.html',
-  styleUrls: ['./material-list.component.sass']
+  styleUrls: ['./material-list.component.scss']
 })
 export class MaterialListComponent implements OnInit {
   public paramOrderId;

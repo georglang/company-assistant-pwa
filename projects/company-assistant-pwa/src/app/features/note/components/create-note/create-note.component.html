@@ -1,0 +1,103 @@
+<div id="create-note-component-wrapper" class="row no-gutters">
+  <div class="col">
+    <div class="sub-nav row no-gutters">
+      <div class="col-2">
+        <div
+          type="button"
+          class="nav-before-btn"
+          (click)="navigateToOrderList()"
+        >
+          <mat-icon>navigate_before</mat-icon>
+        </div>
+      </div>
+      <div class="col-8 page-title-wrapper">Notiz anlegen</div>
+      <div class="col-2"></div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div id="customer-info-wrapper" class="no-gutters">
+          <div id="customer-info">
+            <table>
+              <tr>
+                <td>
+                  <mat-icon aria-hidden="false" aria-label="date icon">
+                    date_range
+                  </mat-icon>
+                </td>
+                <td class="table-data-padding">
+                  <div class="icon-margin">
+                    {{ order?.date?.seconds * 1000 | date: 'dd.MM.yyyy' }}
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <mat-icon aria-hidden="false" aria-label="company name icon">
+                    perm_identity
+                  </mat-icon>
+                </td>
+                <td class="table-data-padding">
+                  <div class="icon-margin">
+                    {{ order?.companyName }}
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <mat-icon aria-hidden="false" aria-label="location icon">
+                    location_on
+                  </mat-icon>
+                </td>
+                <td class="table-data-padding">
+                  <div class="icon-margin">
+                    {{ order?.location }}
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img
+                    id="helmet-icon"
+                    src="./assets/img/helmet.svg"
+                    alt="contact person icon"
+                  />
+                </td>
+                <td class="table-data-padding">
+                  <div class="icon-margin">
+                    {{ order?.contactPerson }}
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <form [formGroup]="createNoteFormGroup">
+          <fieldset class="form-group">
+            <mat-form-field>
+              <textarea
+                type="text"
+                matInput
+                placeholder="Notiz eingeben"
+                formControlName="note"
+                required
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="10"
+                cdkAutosizeMaxRows="30"
+              >
+              </textarea>
+            </mat-form-field>
+          </fieldset>
+        </form>
+        <app-upload-form></app-upload-form>
+      </div>
+    </div>
+  </div>
+</div>

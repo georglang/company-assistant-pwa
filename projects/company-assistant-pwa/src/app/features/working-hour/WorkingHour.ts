@@ -1,14 +1,5 @@
 import { Timestamp } from '@firebase/firestore-types';
-
-export interface IWorkingHour {
-  date: Timestamp;
-  description: string;
-  employee: string;
-  workingHours: number;
-  id?: string; // is necessary when deleting local working hour after synchronization
-  orderId?: string;
-  hasBeenPrinted?: boolean;
-}
+import { IWorkingHour } from './IWorkingHour';
 
 export class WorkingHour implements IWorkingHour {
   public date: Timestamp;

@@ -1,135 +1,146 @@
-<!-- <app-header titleInput="Auftrag anlegen"></app-header> -->
-
-<div class="sub-nav row">
-  <div class="col-10">
-    <div type="button" class="nav-before-btn" (click)="navigateToOrderList()">
-      <mat-icon>navigate_before</mat-icon>
-    </div>
-  </div>
-  <div class="col-2">
-    <div
-      type="button"
-      class="save-btn"
-      (click)="onSubmit()"
-    >
-      <mat-icon>save</mat-icon>
-    </div>
-  </div>
-</div>
-
-<div id="create-order-component-wrapper" class="row no-gutter">
-  <div class="col-12">
-    <div id="create-order-form-wrapper" class="row no-gutters">
-      <div class="col-12">
-        <form id="create-order-form" [formGroup]="createOrderForm">
-          <fieldset class="form-group">
-            <mat-form-field>
-              <input
-                matInput
-                [matDatepicker]="picker"
-                placeholder="Datum wählen"
-                id="date"
-                name="date"
-                formControlName="date"
-                (click)="picker.open()"
-                required
-                [ngClass]="{
-                  'is-invalid': submitted && getFormControl.date.errors
-                }"
-              />
-              <mat-datepicker-toggle matSuffix [for]="picker">
-              </mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-              <div
-                *ngIf="submitted && getFormControl.date.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="getFormControl.date.errors.required">
-                  Bitte <strong>Datum</strong> eingeben
-                </div>
-              </div>
-            </mat-form-field>
-          </fieldset>
-
-          <fieldset class="form-group">
-            <mat-form-field>
-              <input
-                matInput
-                set
-                control
-                name
-                formControlName="companyName"
-                placeholder="Firmenname"
-                class="form-control form-control-sm"
-                type="text"
-                [ngClass]="{
-                  'is-invalid': submitted && getFormControl.companyName.errors
-                }"
-              />
-              <div
-                *ngIf="submitted && getFormControl.companyName.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="getFormControl.companyName.errors.required">
-                  Bitte <strong>Firmenname</strong> eingeben
-                </div>
-              </div>
-            </mat-form-field>
-          </fieldset>
-
-          <fieldset class="form-group">
-            <mat-form-field>
-              <input
-                matInput
-                set
-                control
-                name
-                formControlName="contactPerson"
-                placeholder="Einsatzleiter"
-                class="form-control form-control-sm"
-                type="text"
-                [ngClass]="{
-                  'is-invalid': submitted && getFormControl.contactPerson.errors
-                }"
-              />
-              <div
-                *ngIf="submitted && getFormControl.contactPerson.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="getFormControl.contactPerson.errors.required">
-                  Bitte <strong>Einsatzleiter</strong> eingeben
-                </div>
-              </div>
-            </mat-form-field>
-          </fieldset>
-
-          <fieldset class="form-group">
-            <mat-form-field>
-              <input
-                matInput
-                set
-                control
-                name
-                formControlName="location"
-                placeholder="Ort"
-                class="form-control form-control-sm"
-                type="text"
-                [ngClass]="{
-                  'is-invalid': submitted && getFormControl.location.errors
-                }"
-              />
-              <div
-                *ngIf="submitted && getFormControl.contactPerson.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="getFormControl.location.errors.required">
-                  Bitte <strong>Ort</strong> eingeben
-                </div>
-              </div>
-            </mat-form-field>
-          </fieldset>
-        </form>
+<div id="create-order-wrapper" class="row no-gutters">
+  <div class="col">
+    <div class="sub-nav row no-gutters">
+      <div class="col-2">
+        <div
+          type="button"
+          class="nav-before-btn"
+          (click)="navigateToOrderList()"
+        >
+          <mat-icon>navigate_before</mat-icon>
+        </div>
       </div>
+      <div class="col-8 page-title-wrapper">Auftrag anlegen</div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div id="create-order-component-wrapper" class="row no-gutter">
+      <div class="col-12">
+        <div id="create-order-form-wrapper" class="row no-gutters">
+          <form id="create-order-form" [formGroup]="createOrderForm">
+            <fieldset class="form-group">
+              <mat-form-field>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  placeholder="Datum wählen"
+                  id="date"
+                  name="date"
+                  formControlName="date"
+                  (click)="picker.open()"
+                  required
+                  [ngClass]="{
+                    'is-invalid': submitted && getFormControl.date.errors
+                  }"
+                />
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <div
+                  *ngIf="submitted && getFormControl.date.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="getFormControl.date.errors.required">
+                    Bitte <strong>Datum</strong> eingeben
+                  </div>
+                </div>
+              </mat-form-field>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <mat-form-field>
+                <input
+                  matInput
+                  set
+                  control
+                  name
+                  formControlName="companyName"
+                  placeholder="Firmenname"
+                  class="form-control form-control-sm"
+                  type="text"
+                  [ngClass]="{
+                    'is-invalid': submitted && getFormControl.companyName.errors
+                  }"
+                />
+                <div
+                  *ngIf="submitted && getFormControl.companyName.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="getFormControl.companyName.errors.required">
+                    Bitte <strong>Firmenname</strong> eingeben
+                  </div>
+                </div>
+              </mat-form-field>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <mat-form-field>
+                <input
+                  matInput
+                  set
+                  control
+                  name
+                  formControlName="contactPerson"
+                  placeholder="Einsatzleiter"
+                  class="form-control form-control-sm"
+                  type="text"
+                  [ngClass]="{
+                    'is-invalid':
+                      submitted && getFormControl.contactPerson.errors
+                  }"
+                />
+                <div
+                  *ngIf="submitted && getFormControl.contactPerson.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="getFormControl.contactPerson.errors.required">
+                    Bitte <strong>Einsatzleiter</strong> eingeben
+                  </div>
+                </div>
+              </mat-form-field>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <mat-form-field>
+                <input
+                  matInput
+                  set
+                  control
+                  name
+                  formControlName="location"
+                  placeholder="Ort"
+                  class="form-control form-control-sm"
+                  type="text"
+                  [ngClass]="{
+                    'is-invalid': submitted && getFormControl.location.errors
+                  }"
+                />
+                <div
+                  *ngIf="submitted && getFormControl.contactPerson.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="getFormControl.location.errors.required">
+                    Bitte <strong>Ort</strong> eingeben
+                  </div>
+                </div>
+              </mat-form-field>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="bottom-nav">
+      <button
+        type="button"
+        id="save-order-btn"
+        type="button"
+        mat-fab
+        (click)="saveOrder()"
+      >
+        <i class="material-icons">save</i>
+      </button>
     </div>
   </div>
 </div>

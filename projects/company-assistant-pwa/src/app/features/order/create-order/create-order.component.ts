@@ -83,7 +83,7 @@ export class CreateOrderComponent implements OnInit {
     return this.createOrderForm.controls;
   }
 
-  public onSubmit() {
+  public saveOrder() {
     this.submitted = true;
     if (this.createOrderForm.invalid) {
       return;

@@ -1,6 +1,6 @@
 <div id="create-material-component-wrapper" class="row no-gutter">
   <div class="col">
-    <div class="sub-nav row">
+    <div class="sub-nav row no-gutters">
       <div class="col-2">
         <div
           type="button"
@@ -11,11 +11,7 @@
         </div>
       </div>
       <div class="col-8 page-title-wrapper">Material hinzufügen</div>
-      <div class="col-2">
-        <div type="button" class="save-btn" (click)="onSubmit()">
-          <mat-icon>save</mat-icon>
-        </div>
-      </div>
+      <div class="col-2"></div>
     </div>
 
     <div class="row no-gutter">
@@ -107,6 +103,18 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div id="bottom-nav">
+      <button
+        type="button"
+        id="save-material-btn"
+        type="button"
+        mat-fab
+        (click)="saveMaterial()"
+      >
+        <i class="material-icons">save</i>
+      </button>
     </div>
   </div>
 </div>

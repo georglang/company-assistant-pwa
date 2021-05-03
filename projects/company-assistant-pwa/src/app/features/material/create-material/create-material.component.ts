@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { materials } from '../material-list/materials';
-
-import { Location } from '@angular/common';
-
+import { IMaterial } from '../material-list/IMaterial';
 import { Material } from '../Material';
+import { materials } from '../material-list/materials';
+import { materialUnits } from '../material-list/material-units';
 import { FirestoreMaterialService } from '../services/firestore-material-service/firestore-material.service';
 import { MessageService } from '../../../shared/services/message-service/message.service';
-import { materialUnits } from '../material-list/material-units';
-import { IMaterial } from '../material-list/IMaterial';
 
 @Component({
   selector: 'app-create-material',
@@ -20,14 +18,12 @@ import { IMaterial } from '../material-list/IMaterial';
   styleUrls: ['./create-material.component.scss']
 })
 export class CreateMaterialComponent implements OnInit {
-  public createMaterialForm: FormGroup;
-  private routeParamOrderId;
-  public submitted = false;
-
+  createMaterialForm: FormGroup;
+  filteredOptions: Observable<string[]>;
   myControl = new FormControl();
   options: string[] = materials;
-
-  filteredOptions: Observable<string[]>;
+  routeParamOrderId: string;
+  submitted = false;
   units = materialUnits;
 
   constructor(
@@ -56,19 +52,27 @@ export class CreateMaterialComponent implements OnInit {
     });
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(
-      (option) => option.toLowerCase().indexOf(filterValue) === 0
-    );
-  }
-
-  public navigateToOrderList() {
+  navigateToOrderList() {
     this.location.back();
   }
 
-  public createMaterial(formInput: any, orderId: string): void {
+  get getFormControl() {
+    return this.createMaterialForm.controls;
+  }
+
+  saveMaterial() {
+    this.submitted = true;
+    if (this.createMaterialForm.invalid) {
+      return;
+    } else {
+      this.createMaterial(
+        this.createMaterialForm.value,
+        this.routeParamOrderId
+      );
+    }
+  }
+
+  private createMaterial(formInput: any, orderId: string): void {
     const material = new Material(
       formInput.material,
       formInput.amount,
@@ -78,10 +82,8 @@ export class CreateMaterialComponent implements OnInit {
     this.addMaterialToFirebaseMaterialsTable(material);
   }
 
-  public addMaterialToFirebaseMaterialsTable(material: IMaterial): void {
+  private addMaterialToFirebaseMaterialsTable(material: IMaterial): void {
     if (this.firestoreMaterialService !== undefined) {
-      // check if material is already in firestore
-
       this.firestoreMaterialService
         .addMaterial(material)
         .then((id: string) => {
@@ -90,26 +92,15 @@ export class CreateMaterialComponent implements OnInit {
           material.id = id;
         })
         .catch((e) => {
-          console.error('can´t create working hour in firebase', e);
+          console.error('Can´t add working hour to firebase', e);
         });
     }
   }
 
-  get getFormControl() {
-    return this.createMaterialForm.controls;
-  }
-
-  public onSubmit() {
-    this.submitted = true;
-    if (this.createMaterialForm.invalid) {
-      return;
-    } else {
-      const test = this.createMaterialForm.value;
-
-      this.createMaterial(
-        this.createMaterialForm.value,
-        this.routeParamOrderId
-      );
-    }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(
+      (option) => option.toLowerCase().indexOf(filterValue) === 0
+    );
   }
 }

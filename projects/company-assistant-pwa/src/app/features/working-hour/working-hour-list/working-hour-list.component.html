@@ -11,15 +11,11 @@
         </div>
       </div>
       <div class="col-8 page-title-wrapper">Arbeitsstunden</div>
-      <div class="col-2">
-        <div type="button" class="settings-btn" (click)="openSettingsDialog()">
-          <mat-icon>settings</mat-icon>
-        </div>
-      </div>
+      <div class="col-2"></div>
     </div>
 
     <div class="row">
-      <div class="col-12">
+      <div class="col">
         <div id="customer-info-wrapper" class="no-gutters">
           <div id="customer-info">
             <table>
@@ -78,8 +74,12 @@
             </table>
           </div>
         </div>
+      </div>
+    </div>
 
-        <nav mat-tab-nav-bar>
+    <div class="row">
+      <div class="col">
+        <nav mat-tab-nav-bar mat-align-tabs="center">
           <a
             mat-tab-link
             *ngFor="let tab of tabsWithRoutes"
@@ -92,9 +92,12 @@
             {{ tab.label }} <br />
           </a>
         </nav>
-
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <div id="working-hour-table-wrapper" class="row no-gutter">
-          <div class="col-12">
+          <div class="col">
             <mat-table
               #table
               [dataSource]="dataSource"
@@ -247,63 +250,63 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div id="bottom-nav" class="row">
-      <div class="col">
-        <div
-          *ngIf="showButtonsIfWorkingHourIsSelected"
-          [ngClass]="{
-            'create-working-hour-edit-btn-if-print-is-not-active': !showPrintButton,
-            'create-working-hour-edit-btn': showPrintButton,
-            'create-working-hour-edit-btn-if-delete-is-not-active': !showDeleteButton
-          }"
-        >
-          <button
-            type="button"
-            mat-fab
-            (click)="editWorkingHour(this.selectedWorkingHour)"
-            id="edit-working-hour-btn"
-          >
-            <i class="material-icons">edit</i>
-          </button>
-        </div>
-
-        <div *ngIf="showPrintButton">
-          <button
-            type="button"
-            [ngClass]="{
-              'create-working-hour-edit-btn-if-print-is-not-active': !showPrintButton,
-              'create-working-hour-edit-btn': showPrintButton
-            }"
-            id="create-working-hour-print-btn"
-            type="button"
-            mat-fab
-            (click)="print()"
-          >
-            <i class="material-icons">print</i>
-          </button>
-        </div>
-
-        <div *ngIf="showButtonsIfWorkingHourIsSelected && showDeleteButton">
-          <button
-            id="create-working-hour-delete-btn"
-            type="button"
-            mat-fab
-            (click)="deleteWorkingHour(this.selectedWorkingHour)"
-          >
-            <i class="material-icons">delete</i>
-          </button>
-        </div>
+  <div id="bottom-nav">
+    <div>
+      <div
+        *ngIf="showButtonsIfWorkingHourIsSelected"
+        [ngClass]="{
+          'create-working-hour-edit-btn-if-print-is-not-active': !showPrintButton,
+          'create-working-hour-edit-btn': showPrintButton,
+          'create-working-hour-edit-btn-if-delete-is-not-active': !showDeleteButton
+        }"
+      >
         <button
           type="button"
-          id="create-working-hour-btn"
-          type="button"
           mat-fab
-          (click)="createNewWorkingHour()"
+          (click)="editWorkingHour(this.selectedWorkingHour)"
+          id="edit-working-hour-btn"
         >
-          <i class="material-icons">add</i>
+          <i class="material-icons">edit</i>
         </button>
       </div>
+
+      <div *ngIf="showPrintButton">
+        <button
+          type="button"
+          [ngClass]="{
+            'create-working-hour-edit-btn-if-print-is-not-active': !showPrintButton,
+            'create-working-hour-edit-btn': showPrintButton
+          }"
+          id="create-working-hour-print-btn"
+          type="button"
+          mat-fab
+          (click)="print()"
+        >
+          <i class="material-icons">print</i>
+        </button>
+      </div>
+
+      <div *ngIf="showButtonsIfWorkingHourIsSelected && showDeleteButton">
+        <button
+          id="create-working-hour-delete-btn"
+          type="button"
+          mat-fab
+          (click)="deleteWorkingHour(this.selectedWorkingHour)"
+        >
+          <i class="material-icons">delete</i>
+        </button>
+      </div>
+      <button
+        type="button"
+        id="create-working-hour-btn"
+        type="button"
+        mat-fab
+        (click)="createNewWorkingHour()"
+      >
+        <i class="material-icons">add</i>
+      </button>
     </div>
   </div>
 </div>

@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Router, ActivatedRoute } from '@angular/router';
+import { SelectionModel } from '@angular/cdk/collections';
+
+import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
-import { DateAdapter } from '@angular/material/core';
 
 import { IOrder } from '../../order/Order';
-import { IWorkingHour, WorkingHour } from '../WorkingHour';
-import { FirestoreOrderService } from '../../order/services/firestore-order-service/firestore-order.service';
+import { IWorkingHour } from '../IWorkingHour';
+import { ITabItem } from '../../order/lazy-loaded-tab-navigation/ITabItem';
+import { tabs } from '../../order/lazy-loaded-tab-navigation/TabData';
+
 import { ToastrService } from 'ngx-toastr';
+import { FirestoreOrderService } from '../../order/services/firestore-order-service/firestore-order.service';
 import { FirestoreWorkingHourService } from '../services/firestore-working-hour-service/firestore-working-hour.service';
 
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { UserOptions } from 'jspdf-autotable';
-import { tabs } from '../../order/lazy-loaded-tab-navigation/TabData';
-// import { SettingsDialogComponent } from '../settings-dialog/settings-dialog.component';
-import { ITabItem } from '../../order/lazy-loaded-tab-navigation/ITabItem';
 
 interface jsPDFWithPlugin extends jsPDF {
   autoTable: (options: UserOptions) => jsPDF;
@@ -29,15 +29,8 @@ interface jsPDFWithPlugin extends jsPDF {
   styleUrls: ['./working-hour-list.component.scss']
 })
 export class WorkingHourListComponent implements OnInit {
-  private paramOrderId;
-  public _isOnline;
-  public sumOfWorkingHours;
-  public order: IOrder;
-  public columns: string[];
-  public totalTime = 0.0;
-
-  public workingHours: IWorkingHour[] = [];
-  public displayedColumns = [
+  dataSource: MatTableDataSource<IWorkingHour>;
+  displayedColumns = [
     'select',
     'date',
     'description',
@@ -45,34 +38,32 @@ export class WorkingHourListComponent implements OnInit {
     'employee',
     'hasBeenPrinted'
   ];
-  public dataSource: MatTableDataSource<IWorkingHour>;
-  public hasWorkingHoursFound: boolean = false;
-  public dateFormated;
-  public selection = new SelectionModel<IWorkingHour>(true, []);
+  columns: string[];
+  hasWorkingHoursFound: boolean = false;
+  highlighted = new SelectionModel<IWorkingHour>(false, []);
+  order: IOrder;
+  selection = new SelectionModel<IWorkingHour>(true, []);
+  selectedWorkingHour: IWorkingHour;
+  showButtonsIfWorkingHourIsSelected: boolean = false;
+  showDeleteButton: boolean = false;
+  showPrintButton: boolean = false;
+  tabsWithRoutes = [];
 
-  public highlighted = new SelectionModel<IWorkingHour>(false, []);
-  public selectedWorkingHour: IWorkingHour;
-  public showButtonsIfWorkingHourIsSelected: boolean = false;
-  public showPrintButton: boolean = false;
-  public showDeleteButton: boolean = false;
-  public pdf = new jsPDF() as jsPDFWithPlugin;
-  public selected = false;
-  public customerData;
-  public tabs: ITabItem[] = tabs;
-  public tabsWithRoutes = [];
+  private customerData;
+  private paramOrderId;
+  private pdf = new jsPDF() as jsPDFWithPlugin;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private dateAdapter: DateAdapter<Date>,
-    private toastrService: ToastrService,
     public dialog: MatDialog,
+    private toastrService: ToastrService,
     private firestoreOrderService: FirestoreOrderService,
     private firestoreWorkingHourService: FirestoreWorkingHourService
   ) {
     this.dateAdapter.setLocale('de');
     this.columns = ['Date', 'Description', 'Time', 'Delete'];
-    this.sumOfWorkingHours = 0;
   }
 
   ngOnInit() {
@@ -84,73 +75,8 @@ export class WorkingHourListComponent implements OnInit {
     this.initTabNavigation();
   }
 
-  initTabNavigation() {
-    tabs.forEach((tab) => {
-      switch (tab.feature) {
-        case 'workingHours': {
-          this.tabsWithRoutes.push({
-            label: tab.label,
-            icon: tab.icon,
-            route: '/orders/' + this.paramOrderId + '/working-hours'
-          });
-          break;
-        }
-        case 'materials': {
-          this.tabsWithRoutes.push({
-            label: tab.label,
-            icon: tab.icon,
-            route: '/orders/' + this.paramOrderId + '/material'
-          });
-          break;
-        }
-        case 'notes': {
-          this.tabsWithRoutes.push({
-            label: tab.label,
-            icon: tab.icon,
-            route: '/orders/' + this.paramOrderId + '/notes'
-          });
-          break;
-        }
-      }
-    });
-  }
-
   public navigateToOrderList(): void {
     this.router.navigate(['/']);
-  }
-
-  public getOrderByIdFromCloudDatabase(orderId: string) {
-    this.firestoreOrderService.getOrderById(orderId).then((order: IOrder) => {
-      if (order !== undefined) {
-        this.order = order;
-        this.getWorkingHoursFromCloudDatabase(orderId);
-      }
-    });
-  }
-
-  public getWorkingHoursFromCloudDatabase(orderId: string): any {
-    if (this.firestoreOrderService !== undefined) {
-      this.firestoreWorkingHourService
-        .getWorkingHoursByOrderId(orderId)
-        .subscribe((workingHours: any[]) => {
-          this.order.workingHours = workingHours;
-          const workingHoursSortedByDate = this.order.workingHours.sort(
-            (a, b) => b.date.toMillis() - a.date.toMillis()
-          );
-          this.setWorkingHourDataSource(workingHoursSortedByDate);
-        });
-    }
-  }
-
-  public setWorkingHourDataSource(workingHours: IWorkingHour[]) {
-    if (workingHours.length > 0) {
-      this.dataSource = new MatTableDataSource<IWorkingHour>(workingHours);
-      this.hasWorkingHoursFound = true;
-    } else {
-      this.dataSource = new MatTableDataSource<IWorkingHour>();
-      this.sumOfWorkingHours = 0;
-      this.hasWorkingHoursFound = false;
-    }
   }
 
   public createNewWorkingHour() {
@@ -173,56 +99,12 @@ export class WorkingHourListComponent implements OnInit {
     this.openDeleteWorkingHourDialog(workingHour.id);
   }
 
-  public archiveWorkingHour(workingHour: IWorkingHour) {
-    workingHour.hasBeenPrinted = true;
-  }
-
-  public showDeleteMessage() {
+  private showDeleteMessage() {
     const successConfig = {
       positionClass: 'toast-bottom-center',
       timeout: 500
     };
     this.toastrService.error('Erfolgreich gelöscht', 'Eintrag', successConfig);
-  }
-
-  public showSuccessMessage() {
-    const successConfig = {
-      positionClass: 'toast-bottom-center',
-      timeout: 500
-    };
-    this.toastrService.success(
-      'Erfolgreich erstellt',
-      'Eintrag',
-      successConfig
-    );
-  }
-
-  public openSettingsDialog(): void {
-    // const dialogConfig = new MatDialogConfig();
-    // dialogConfig.disableClose = true;
-    // dialogConfig.autoFocus = true;
-    // const dialogRef = this.dialog.open(SettingsDialogComponent, dialogConfig);
-    // dialogRef.afterClosed().subscribe((shouldPrint) => {
-    //   if (shouldPrint) {
-    //     this.showPrintButton = true;
-    //     this.showDeleteButton = true;
-    //   }
-    // });
-  }
-
-  public openDeleteWorkingHourDialog(workingHourId: string): void {
-    // const dialogConfig = new MatDialogConfig();
-    // dialogConfig.disableClose = true;
-    // dialogConfig.autoFocus = true;
-    // const dialogRef = this.dialog.open(
-    //   ConfirmDeleteDialogComponent,
-    //   dialogConfig
-    // );
-    // dialogRef.afterClosed().subscribe((shouldDelete) => {
-    //   if (shouldDelete) {
-    //     this.deleteWorkingHourInFirebase(workingHourId);
-    //   }
-    // });
   }
 
   public deleteWorkingHourInFirebase(workingHourId: string): void {
@@ -428,6 +310,70 @@ export class WorkingHourListComponent implements OnInit {
       this.customerData.customerName +
       '.pdf';
     this.pdf.save(filename);
+  }
+
+  private getOrderByIdFromCloudDatabase(orderId: string) {
+    this.firestoreOrderService.getOrderById(orderId).then((order: IOrder) => {
+      if (order !== undefined) {
+        this.order = order;
+        this.getWorkingHoursFromCloudDatabase(orderId);
+      }
+    });
+  }
+
+  private initTabNavigation() {
+    tabs.forEach((tab) => {
+      switch (tab.feature) {
+        case 'workingHours': {
+          this.tabsWithRoutes.push({
+            label: tab.label,
+            icon: tab.icon,
+            route: '/orders/' + this.paramOrderId + '/working-hours'
+          });
+          break;
+        }
+        case 'materials': {
+          this.tabsWithRoutes.push({
+            label: tab.label,
+            icon: tab.icon,
+            route: '/orders/' + this.paramOrderId + '/material'
+          });
+          break;
+        }
+        case 'notes': {
+          this.tabsWithRoutes.push({
+            label: tab.label,
+            icon: tab.icon,
+            route: '/orders/' + this.paramOrderId + '/notes'
+          });
+          break;
+        }
+      }
+    });
+  }
+
+  private getWorkingHoursFromCloudDatabase(orderId: string): any {
+    if (this.firestoreOrderService !== undefined) {
+      this.firestoreWorkingHourService
+        .getWorkingHoursByOrderId(orderId)
+        .subscribe((workingHours: any[]) => {
+          this.order.workingHours = workingHours;
+          const workingHoursSortedByDate = this.order.workingHours.sort(
+            (a, b) => b.date.toMillis() - a.date.toMillis()
+          );
+          this.setWorkingHourDataSource(workingHoursSortedByDate);
+        });
+    }
+  }
+
+  private setWorkingHourDataSource(workingHours: IWorkingHour[]) {
+    if (workingHours.length > 0) {
+      this.dataSource = new MatTableDataSource<IWorkingHour>(workingHours);
+      this.hasWorkingHoursFound = true;
+    } else {
+      this.dataSource = new MatTableDataSource<IWorkingHour>();
+      this.hasWorkingHoursFound = false;
+    }
   }
   //  print PDF - end
 }

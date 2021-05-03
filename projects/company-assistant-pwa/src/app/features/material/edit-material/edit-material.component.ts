@@ -5,20 +5,18 @@ import {
   Validators,
   FormControl
 } from '@angular/forms';
-import { Router, ActivatedRoute, UrlSegment } from '@angular/router';
 import { Location } from '@angular/common';
-
+import { ActivatedRoute } from '@angular/router';
 import { DateAdapter } from '@angular/material/core';
-import { ToastrService } from 'ngx-toastr';
 import { Subscription, Observable } from 'rxjs';
-
-import { FirestoreMaterialService } from '../services/firestore-material-service/firestore-material.service';
+import { map, startWith } from 'rxjs/operators';
 import { IMaterial } from '../material-list/IMaterial';
 import { Material } from '../Material';
-import { MessageService } from '../../../shared/services/message-service/message.service';
 import { materialUnits } from '../material-list/material-units';
-import { map, startWith } from 'rxjs/operators';
 import { materials } from '../material-list/materials';
+import { ToastrService } from 'ngx-toastr';
+import { MessageService } from '../../../shared/services/message-service/message.service';
+import { FirestoreMaterialService } from '../services/firestore-material-service/firestore-material.service';
 
 @Component({
   selector: 'app-edit-material',
@@ -26,27 +24,25 @@ import { materials } from '../material-list/materials';
   styleUrls: ['./edit-material.component.scss']
 })
 export class EditMaterialComponent implements OnInit {
-  public editMaterialForm: FormGroup;
-  private materialId: string;
-  private orderId: string;
-  public material: IMaterial;
-  public submitted = false;
-  private subscription: Subscription = new Subscription();
-
-  public units = materialUnits;
+  editMaterialForm: FormGroup;
+  filteredOptions: Observable<string[]>;
+  material: IMaterial;
   myControl = new FormControl();
   options: string[] = materials;
+  submitted = false;
+  units = materialUnits;
 
-  filteredOptions: Observable<string[]>;
+  private orderId: string;
+  private subscription: Subscription = new Subscription();
 
   constructor(
-    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private location: Location,
+    private formBuilder: FormBuilder,
     private dateAdapter: DateAdapter<Date>,
     private firestoreMaterialService: FirestoreMaterialService,
     private messageService: MessageService,
-    private toastrService: ToastrService,
-    private location: Location
+    private toastrService: ToastrService
   ) {
     this.dateAdapter.setLocale('de');
   }
@@ -68,6 +64,50 @@ export class EditMaterialComponent implements OnInit {
         this.getMaterialByIdFromFirebase(url.id, subUrl.id);
       });
     });
+  }
+
+  get getEditMaterialFormControls() {
+    return this.editMaterialForm.controls;
+  }
+
+  navigateToMaterialList(): void {
+    this.location.back();
+  }
+
+  saveMaterial() {
+    const material = new Material(
+      this.editMaterialForm.controls.material.value,
+      this.editMaterialForm.controls.amount.value,
+      this.editMaterialForm.controls.unit.value,
+      this.orderId
+    );
+
+    this.submitted = true;
+    if (this.editMaterialForm.invalid) {
+      return;
+    } else {
+      this.checkIfMaterialExistsInOrderInFirestore(material);
+    }
+  }
+
+  setControl(material: IMaterial): void {
+    this.editMaterialForm.setValue({
+      material: material.material,
+      amount: material.amount,
+      unit: material.unit
+    });
+  }
+
+  private checkIfMaterialExistsInOrderInFirestore(material: IMaterial) {
+    this.firestoreMaterialService
+      .checkIfMaterialExistsInOrderInFirestore(material)
+      .then((doesMaterialExist) => {
+        if (!doesMaterialExist) {
+          this.updateMaterialInFirestore(this.orderId, material);
+        } else {
+          this.messageService.materialAlreadyExists();
+        }
+      });
   }
 
   private _filter(value: string): string[] {
@@ -102,49 +142,16 @@ export class EditMaterialComponent implements OnInit {
     this.subscription.add(getMaterialByOrderId);
   }
 
-  public navigateToMaterialList(): void {
-    this.location.back();
-  }
-
-  public setControl(material: IMaterial): void {
-    this.editMaterialForm.setValue({
-      material: material.material,
-      amount: material.amount,
-      unit: material.unit
-    });
-  }
-
-  get getEditMaterialFormControls() {
-    return this.editMaterialForm.controls;
-  }
-
-  public onSubmit() {
-    debugger;
-    const material = new Material(
-      this.editMaterialForm.controls.material.value,
-      this.editMaterialForm.controls.amount.value,
-      this.editMaterialForm.controls.unit.value,
-      this.orderId
+  private showUpdateMessage() {
+    const successConfig = {
+      positionClass: 'toast-bottom-center',
+      timeout: 500
+    };
+    this.toastrService.success(
+      'Erfolgreich aktualisiert',
+      'Eintrag',
+      successConfig
     );
-
-    this.submitted = true;
-    if (this.editMaterialForm.invalid) {
-      return;
-    } else {
-      this.checkIfMaterialExistsInOrderInFirestore(material);
-    }
-  }
-
-  private checkIfMaterialExistsInOrderInFirestore(material: IMaterial) {
-    this.firestoreMaterialService
-      .checkIfMaterialExistsInOrderInFirestore(material)
-      .then((doesMaterialExist) => {
-        if (!doesMaterialExist) {
-          this.updateMaterialInFirestore(this.orderId, material);
-        } else {
-          this.messageService.materialAlreadyExists();
-        }
-      });
   }
 
   private updateMaterialInFirestore(
@@ -161,19 +168,9 @@ export class EditMaterialComponent implements OnInit {
     }
   }
 
-  private showUpdateMessage() {
-    const successConfig = {
-      positionClass: 'toast-bottom-center',
-      timeout: 500
-    };
-    this.toastrService.success(
-      'Erfolgreich aktualisiert',
-      'Eintrag',
-      successConfig
-    );
-  }
-
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription !== undefined) {
+      this.subscription.unsubscribe();
+    }
   }
 }

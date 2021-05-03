@@ -1,6 +1,6 @@
 <div id="edit-material-component-wrapper" class="row no-gutter">
   <div class="col">
-    <div class="sub-nav row">
+    <div class="sub-nav row no-gutters">
       <div class="col">
         <div class="row">
           <div class="col-2">
@@ -14,15 +14,7 @@
           </div>
           <div class="col-8 page-title-wrapper">Material bearbeiten</div>
 
-          <div class="col-2">
-            <div
-              type="button"
-              class="save-btn"
-              (click)="documentEditMaterialForm.ngSubmit.emit()"
-            >
-              <mat-icon>save</mat-icon>
-            </div>
-          </div>
+          <div class="col-2"></div>
         </div>
       </div>
     </div>
@@ -35,7 +27,7 @@
               id="material-form"
               [formGroup]="editMaterialForm"
               #documentEditMaterialForm="ngForm"
-              (ngSubmit)="onSubmit()"
+              (ngSubmit)="saveMaterial()"
             >
               <fieldset class="form-group">
                 <mat-form-field>
@@ -141,6 +133,17 @@
           </div>
         </div>
       </div>
+    </div>
+    <div id="bottom-nav">
+      <button
+        type="button"
+        id="save-material-btn"
+        type="button"
+        mat-fab
+        (click)="saveMaterial()"
+      >
+        <i class="material-icons">save</i>
+      </button>
     </div>
   </div>
 </div>

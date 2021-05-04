@@ -1,0 +1,172 @@
+<div id="material-list-component-wrapper" class="row no-gutters">
+  <div class="col">
+    <div class="sub-nav row no-gutters">
+      <div class="col-2">
+        <div
+          type="button"
+          class="nav-before-btn"
+          (click)="navigateToOrderList()"
+        >
+          <mat-icon>navigate_before</mat-icon>
+        </div>
+      </div>
+      <div class="col-8 page-title-wrapper">Notizen</div>
+      <div class="col-2"></div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div id="customer-info-wrapper" class="no-gutters">
+          <div id="customer-info">
+            <table>
+              <tr>
+                <td>
+                  <mat-icon aria-hidden="false" aria-label="date icon">
+                    date_range
+                  </mat-icon>
+                </td>
+                <td class="table-data-padding">
+                  <div class="icon-margin">
+                    {{ order?.date?.seconds * 1000 | date: 'dd.MM.yyyy' }}
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <mat-icon aria-hidden="false" aria-label="company name icon">
+                    perm_identity
+                  </mat-icon>
+                </td>
+                <td class="table-data-padding">
+                  <div class="icon-margin">
+                    {{ order?.companyName }}
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <mat-icon aria-hidden="false" aria-label="location icon">
+                    location_on
+                  </mat-icon>
+                </td>
+                <td class="table-data-padding">
+                  <div class="icon-margin">
+                    {{ order?.location }}
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img
+                    id="helmet-icon"
+                    src="./assets/img/helmet.svg"
+                    alt="contact person icon"
+                  />
+                </td>
+                <td class="table-data-padding">
+                  <div class="icon-margin">
+                    {{ order?.contactPerson }}
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <nav mat-tab-nav-bar mat-align-tabs="center">
+          <a
+            mat-tab-link
+            *ngFor="let tab of tabsWithRoutes"
+            [routerLink]="tab.route"
+            routerLinkActive
+            #rla="routerLinkActive"
+            [active]="rla.isActive"
+          >
+            <mat-icon class="mr-8">{{ tab.icon }}</mat-icon>
+            {{ tab.label }} <br />
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="col">
+      <div id="notes-list-wrapper" class="row no-gutters">
+        <div class="col">
+          <mat-table
+            #table
+            [dataSource]="dataSource"
+            matSort
+            *ngIf="hasNotesFound; else noMaterialsFoundTemplate"
+          >
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef> Id</mat-header-cell>
+              <mat-cell *matCellDef="let material">
+                <div>Id:</div>
+                {{ material.id }}
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="notice">
+              <mat-header-cell *matHeaderCellDef>Notiz</mat-header-cell>
+              <mat-cell *matCellDef="let material">
+                <div class="disable-on-small-device">
+                  {{ material.notice }}
+                </div>
+                <mat-form-field>
+                  <input
+                    matInput
+                    placeholder="Notiz"
+                    value="{{ material.notice }}"
+                    readonly
+                  />
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="image">
+              <mat-header-cell *matHeaderCellDef>Bild</mat-header-cell>
+              <mat-cell *matCellDef="let material">
+                <div class="disable-on-small-device">
+                  {{ material.imageUrl }}
+                </div>
+                <img
+                  src="{{ material.imageUrl }}"
+                  lightbox
+                  alt=""
+                  width="100px"
+                />
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row
+              *matHeaderRowDef="displayedColumns"
+            ></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+          </mat-table>
+
+          <ng-template #noMaterialsFoundTemplate>
+            <div class="no-materials-found">Keine Einträge gefunden</div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <div id="bottom-nav">
+      <button
+        type="button"
+        id="create-material-btn"
+        type="button"
+        mat-fab
+        (click)="createNote()"
+      >
+        <i class="material-icons">add</i>
+      </button>
+    </div>
+  </div>
+</div>

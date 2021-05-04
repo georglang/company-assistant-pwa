@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
 import { WorkingHour } from '../WorkingHour';
+import { employees } from '../../../shared/config-data/employees';
 import { FirestoreWorkingHourService } from '../services/firestore-working-hour-service/firestore-working-hour.service';
 import { MessageService } from '../../../shared/services/message-service/message.service';
-import { employees } from '../../../shared/config-data/employees';
 
 @Component({
   selector: 'app-create-working-hour',
@@ -13,18 +13,18 @@ import { employees } from '../../../shared/config-data/employees';
   styleUrls: ['./create-working-hour.component.scss']
 })
 export class CreateWorkingHourComponent implements OnInit {
-  public createWorkingHourForm: FormGroup;
+  createWorkingHourForm: FormGroup;
+  submitted = false;
+  employees = employees;
   private routeParamOrderId;
-  public submitted = false;
-  public employees = employees;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private location: Location,
     private formBuilder: FormBuilder,
     private firestoreWorkingHourService: FirestoreWorkingHourService,
-    private messageService: MessageService,
-    private location: Location
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -40,25 +40,23 @@ export class CreateWorkingHourComponent implements OnInit {
     });
   }
 
-  public navigateToOrderList() {
+  navigateToOrderList() {
     this.location.back();
   }
 
-  private createWorkingHour(formInput: any, orderId: string): void {
-    const workingHour = new WorkingHour(
-      formInput.date,
-      formInput.description,
-      formInput.employee,
-      formInput.workingHours,
-      '',
-      '',
-      false
-    );
-    workingHour.orderId = orderId;
-    this.addWorkingHourToFirebaseWorkingHourTable(workingHour);
+  saveWorkingHour() {
+    if (this.createWorkingHourForm.invalid) {
+      return;
+    } else {
+      this.createWorkingHour(
+        this.createWorkingHourForm.value,
+        this.routeParamOrderId
+      );
+      this.submitted = true;
+    }
   }
 
-  public addWorkingHourToFirebaseWorkingHourTable(woringHour: any): void {
+  private addWorkingHourToFirebaseWorkingHourTable(woringHour: any): void {
     if (this.firestoreWorkingHourService !== undefined) {
       // check if working hour is already in firestore
       this.firestoreWorkingHourService
@@ -85,19 +83,21 @@ export class CreateWorkingHourComponent implements OnInit {
     }
   }
 
-  get getFormControl() {
-    return this.createWorkingHourForm.controls;
+  private createWorkingHour(formInput: any, orderId: string): void {
+    const workingHour = new WorkingHour(
+      formInput.date,
+      formInput.description,
+      formInput.employee,
+      formInput.workingHours,
+      '',
+      '',
+      false
+    );
+    workingHour.orderId = orderId;
+    this.addWorkingHourToFirebaseWorkingHourTable(workingHour);
   }
 
-  public onSubmit() {
-    if (this.createWorkingHourForm.invalid) {
-      return;
-    } else {
-      this.createWorkingHour(
-        this.createWorkingHourForm.value,
-        this.routeParamOrderId
-      );
-      this.submitted = true;
-    }
+  get getFormControl() {
+    return this.createWorkingHourForm.controls;
   }
 }

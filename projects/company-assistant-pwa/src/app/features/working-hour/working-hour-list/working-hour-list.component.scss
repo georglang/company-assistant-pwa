@@ -182,6 +182,11 @@ mat-header-cell:first-of-type {
 .mat-row {
   min-height: 28px;
 }
+
+.material-nav-icon {
+  width: 24px;
+}
+
 ::ng-deep .mat-form-field-wrapper {
   padding-bottom: 22px !important;
 }

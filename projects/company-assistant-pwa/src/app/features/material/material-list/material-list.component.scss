@@ -38,6 +38,11 @@
 #material-list-wrapper {
   margin-top: 40px;
 }
+
+.material-nav-icon {
+  width: 24px;
+}
+
 th {
   display: none;
 }
@@ -176,13 +181,16 @@ mat-header-cell:first-of-type {
   ::ng-deep .mat-form-field-underline {
     display: none;
   }
-};
+}
 
 // Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {}
+@media (min-width: 768px) {
+}
 
 // Large devices (desktops, 992px and up)
-@media (min-width: 992px) {}
+@media (min-width: 992px) {
+}
 
 // Extra large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) {}
+@media (min-width: 1200px) {
+}

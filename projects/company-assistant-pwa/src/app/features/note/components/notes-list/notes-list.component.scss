@@ -147,6 +147,11 @@ mat-header-cell:first-of-type {
     color: $color_white;
   }
 }
+
+.material-nav-icon {
+  width: 24px;
+}
+
 ::ng-deep .mat-form-field-wrapper {
   padding-bottom: 22px !important;
 }

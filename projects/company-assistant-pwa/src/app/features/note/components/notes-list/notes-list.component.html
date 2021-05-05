@@ -88,8 +88,14 @@
             #rla="routerLinkActive"
             [active]="rla.isActive"
           >
-            <mat-icon class="mr-8">{{ tab.icon }}</mat-icon>
-            {{ tab.label }} <br />
+            <div *ngIf="tab.icon.startsWith('./../'); else isAMaterialIcon">
+              <img class="material-nav-icon" src="{{ tab.icon }}" alt="" />
+            </div>
+
+            <ng-template #isAMaterialIcon>
+              <mat-icon class="mr-8">{{ tab.icon }}</mat-icon>
+              {{ tab.label }} <br />
+            </ng-template>
           </a>
         </nav>
       </div>

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 
 import { AuthService } from '../core/auth/auth.service';
 import { authLogin, authLogout } from '../core/core.module';
 import { selectIsAuthenticated } from '../core/auth/state/auth.selectors';
 import { AppState } from '../state/app.state';
 import { LocalStorageService } from '../core/services/local-storage/local-storage.service';
+import { PrintDialogComponent } from '../features/admin/print-dialog/print-dialog.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 const AUTH_KEY = 'Auth';
 
@@ -32,7 +34,8 @@ export class AppComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private authService: AuthService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    public dialog: MatDialog
   ) {
     // this.authService.bootstrapOAuthService();
   }
@@ -65,5 +68,24 @@ export class AppComponent implements OnInit {
 
   doBeforeUnload(): void {
     this.localStorageService.removeItem(AUTH_KEY);
+  }
+
+  openPrintDialog(): void {
+    const dialogRef = this.dialog.open(
+      PrintDialogComponent,
+      this.createDialogConfig()
+    );
+
+    dialogRef.afterClosed().subscribe((dialogResult) => {
+      debugger;
+    });
+  }
+
+  private createDialogConfig(): MatDialogConfig {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = true;
+    dialogConfig.width = '350px';
+    return dialogConfig;
   }
 }

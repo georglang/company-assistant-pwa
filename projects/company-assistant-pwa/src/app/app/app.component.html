@@ -33,6 +33,10 @@
         <button mat-icon-button (click)="login()">Anmelden</button>
 
         <mat-menu #loginMenu="matMenu" id="login-menu">
+          <button mat-menu-item (click)="openPrintDialog()">
+            <mat-icon>print</mat-icon>
+            <span>Drucken</span>
+          </button>
           <button mat-menu-item>
             <mat-icon>edit</mat-icon>
             <span>Profil anzeigen</span>
@@ -71,8 +75,6 @@
 
     <mat-sidenav-content fx>
       <div class="content" #main>
-        <h1>Is Authenticated: {{ isAuthenticated$ | async }}</h1>
-
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

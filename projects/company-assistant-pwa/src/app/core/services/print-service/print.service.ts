@@ -28,6 +28,28 @@ export class PrintService {
   private pdf = new jsPDF() as jsPDFWithPlugin;
   private companyDetailsPrint = companyDetailsPrint;
   private sumOfWorkingHours = 0;
+  private filename = '';
+  private orderInformationTranslation = {
+    date: 'Datum ',
+    companyName: 'Kunde ',
+    location: 'Ort ',
+    contactPerson: 'Ansprechpartner '
+  };
+  private autoTableConfigWorkingHours = {
+    head: ['Datum', 'Beschreibung', 'Stunden', 'Arbeiter'],
+    foot: ['Gesamtstunden', '']
+  };
+
+  private autoTableConfigMaterials = {
+    head: ['Material', 'Menge', 'Einheit'],
+    foot: []
+  };
+  private autoTableConfigNotes = {
+    head: ['Notiz'],
+    foot: []
+  };
+
+  private logoImgUrl = './assets/img/vieweger_logo_pdf_output.png';
 
   constructor(
     private noteService: FirestoreNoteService,
@@ -36,8 +58,12 @@ export class PrintService {
   ) {}
 
   print(order: IOrder, categoriesToPrint: IPrintCategory): void {
-    debugger;
     this.order = order;
+    this.filename = `Ausdruck - ${order.companyName} - ${
+      order.contactPerson
+    } - ${order.location} - ${order.date
+      .toDate()
+      .toLocaleDateString('de-DE')}.pdf`;
 
     // Handling, wenn alle drei false sind
 
@@ -60,9 +86,6 @@ export class PrintService {
         }
       }
     }
-
-    // schauen, wann aufgerufen werden soll, wenn alle daten async von den categorien gekommen sind
-    // evtl. PDF service erstellen
   }
 
   private getMaterials(orderId: string, categoriesToPrint: IPrintCategory) {
@@ -71,12 +94,11 @@ export class PrintService {
       .subscribe((materials: IMaterial[]) => {
         if (materials.length > 0) {
           this.materials = materials;
-          this.autoTableConfigMaterials(this.materials);
+          this.autoTableMaterials(this.materials);
         }
         if (categoriesToPrint.notes) {
           this.getNotes(this.order.id);
         } else {
-          debugger;
           this.generatePdf();
         }
       });
@@ -88,11 +110,10 @@ export class PrintService {
       .subscribe((notes: INote[]) => {
         if (notes.length > 0) {
           this.notes = notes;
-          this.autoTableConfigNotes(this.notes);
+          this.autoTableNotes(this.notes);
         } else {
           return;
         }
-        debugger;
         this.generatePdf();
       });
   }
@@ -103,7 +124,7 @@ export class PrintService {
       .subscribe((workingHours: IWorkingHour[]) => {
         if (workingHours.length > 0) {
           this.workingHours = workingHours;
-          this.autoTableConfigWorkingHours(this.workingHours);
+          this.autoTableWorkingHours(this.workingHours);
         }
 
         if (categoriesToPrint.materials) {
@@ -112,7 +133,6 @@ export class PrintService {
           if (categoriesToPrint.notes) {
             this.getNotes(orderId);
           } else {
-            debugger;
             this.generatePdf();
           }
         }
@@ -130,6 +150,9 @@ export class PrintService {
       ]);
       this.sumWorkingHours(workingHour.workingHours);
     }
+    this.autoTableConfigWorkingHours.foot.push(
+      this.sumOfWorkingHours.toString()
+    );
     return workingHoursToPrint;
   }
 
@@ -158,17 +181,15 @@ export class PrintService {
   }
 
   private generatePdf() {
-    this.loadImage('./assets/img/vieweger_logo_pdf_output.png').then(
-      (logo: HTMLImageElement) => {
-        this.addContentToEveryPage(this.pdf, logo);
-        this.saveAsPdf();
-      }
-    );
+    this.loadImage(this.logoImgUrl).then((logo: HTMLImageElement) => {
+      this.addContentToEveryPage(this.pdf, logo);
+      this.saveAsPdf();
+    });
   }
 
-  private autoTableConfigWorkingHours(workingHours: IWorkingHour[]) {
+  private autoTableWorkingHours(workingHours: IWorkingHour[]) {
     this.pdf.autoTable({
-      head: [['Datum', 'Beschreibung', 'Stunden', 'Arbeiter']],
+      head: [this.autoTableConfigWorkingHours.head],
       headStyles: { fillColor: [55, 92, 127] },
       body: this.prepareWorkingHoursToPrint(workingHours),
       margin: {
@@ -178,14 +199,14 @@ export class PrintService {
       },
       pageBreak: 'auto',
       showFoot: true,
-      foot: [['Gesamtstunden', '', this.sumOfWorkingHours.toString()]]
+      foot: [this.autoTableConfigWorkingHours.foot],
+      footStyles: { fillColor: [55, 92, 127] }
     });
   }
 
-  private autoTableConfigMaterials(materials: IMaterial[]) {
-    debugger;
+  private autoTableMaterials(materials: IMaterial[]) {
     this.pdf.autoTable({
-      head: [['Material', 'Menge', 'Einheit']],
+      head: [this.autoTableConfigMaterials.head],
       headStyles: { fillColor: [55, 92, 127] },
       body: this.prepareMaterialsToPrint(materials),
       margin: {
@@ -198,10 +219,9 @@ export class PrintService {
     });
   }
 
-  private autoTableConfigNotes(notes) {
-    debugger;
+  private autoTableNotes(notes) {
     this.pdf.autoTable({
-      head: [['Notiz']],
+      head: [this.autoTableConfigNotes.head],
       headStyles: { fillColor: [55, 92, 127] },
       body: this.prepareNotesToPrint(notes),
       margin: {
@@ -250,16 +270,16 @@ export class PrintService {
   }
 
   private addOrderInformation() {
-    this.pdf.text('Datum: ', 12, 39);
+    this.pdf.text(this.orderInformationTranslation.date, 12, 39);
     this.pdf.text(this.order.date.toDate().toLocaleDateString('de-DE'), 52, 39);
 
-    this.pdf.text('Kunde: ', 12, 46);
+    this.pdf.text(this.orderInformationTranslation.companyName, 12, 46);
     this.pdf.text(this.order.companyName, 52, 46);
 
-    this.pdf.text('Ort: ', 12, 53);
+    this.pdf.text(this.orderInformationTranslation.location, 12, 53);
     this.pdf.text(this.order.location, 52, 53);
 
-    this.pdf.text('Ansprechpartner: ', 12, 60);
+    this.pdf.text(this.orderInformationTranslation.contactPerson, 12, 60);
     this.pdf.text(this.order.contactPerson, 52, 60);
   }
 
@@ -296,7 +316,12 @@ export class PrintService {
   }
 
   private saveAsPdf() {
-    const filename = 'Regienstunden.pdf';
-    this.pdf.save(filename);
+    this.pdf.save(this.filename);
+    this.sumOfWorkingHours = 0;
+    this.clearPdf();
+  }
+
+  private clearPdf() {
+    this.pdf = new jsPDF() as jsPDFWithPlugin;
   }
 }

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { IMaterial, Material } from '../../Material';
+import { Material } from '../../Material';
+import { IMaterial } from '../../material-list/IMaterial';
 
 import { IOrder } from '../../../order/Order';
 
 import {
   AngularFirestore,
   AngularFirestoreCollection,
-  DocumentData,
+  DocumentData
 } from '@angular/fire/firestore';
 
 import { Observable } from 'rxjs';
@@ -14,18 +15,20 @@ import { map } from 'rxjs/operators';
 import _ from 'lodash';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class FirestoreMaterialService {
   private ordersCollection: AngularFirestoreCollection<IOrder>;
   private materialCollection: AngularFirestoreCollection<IMaterial>;
 
-  constructor(private afs: AngularFirestore) {
-    this.ordersCollection = this.afs.collection<IOrder>('orders');
-    this.materialCollection = this.afs.collection<IMaterial>('materials');
+  constructor(private firestoreDb: AngularFirestore) {
+    this.ordersCollection = this.firestoreDb.collection<IOrder>('orders');
+    this.materialCollection = this.firestoreDb.collection<IMaterial>(
+      'materials'
+    );
   }
 
-  documentToDomainObject = (dToDO) => {
+  private documentToDomainObject = (dToDO) => {
     const object = dToDO.payload.doc.data();
     object.id = dToDO.payload.doc.id;
     return object;
@@ -53,7 +56,7 @@ export class FirestoreMaterialService {
       .pipe(map((actions) => actions.map(this.documentToDomainObject)));
   }
 
-  public getMaterialById(orderId): any {
+  public getMaterialByOrderId(orderId: string): any {
     return this.ordersCollection
       .doc(orderId)
       .collection('materials')

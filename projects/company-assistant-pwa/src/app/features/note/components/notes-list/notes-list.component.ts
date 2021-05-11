@@ -82,7 +82,7 @@ export class NotesListComponent implements OnInit {
   private getNotesFromCloudDatabase(orderId: string) {
     if (this.firestoreNoteService !== undefined) {
       this.firestoreNoteService
-        .getAllNotesById(orderId)
+        .getAllNotesByOrderId(orderId)
         .subscribe((notes: INote[]) => {
           if (notes.length > 0) {
             this.setNotesDataSource(notes);

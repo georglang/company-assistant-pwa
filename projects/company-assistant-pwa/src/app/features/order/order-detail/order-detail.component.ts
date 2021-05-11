@@ -18,7 +18,9 @@ import { UserOptions } from 'jspdf-autotable';
 import { IJsPDFPlugin } from '../IJsPdfPlugin';
 import { SettingsDialogComponent } from '../../../shared/components/settings-dialog/settings-dialog.component';
 import { ConfirmDeleteDialogComponent } from '../../../shared/components/confirm-delete-dialog/confirm-delete-dialog.component';
-import { WorkingHour, IWorkingHour } from '../../working-hour/WorkingHour';
+import { IWorkingHour } from '../../working-hour/IWorkingHour';
+import { WorkingHour } from '../../working-hour/WorkingHour';
+import { companyDetailsPrint } from '../../../../assets/config/companyDetailsPrint';
 
 @Component({
   selector: 'app-order-detail',
@@ -55,6 +57,7 @@ export class OrderDetailComponent implements OnInit {
   public pdf = new jsPDF() as IJsPDFPlugin;
   public selected = false;
   public customerData;
+  private companyDetailsPrint = companyDetailsPrint;
 
   constructor(
     private route: ActivatedRoute,
@@ -343,7 +346,7 @@ export class OrderDetailComponent implements OnInit {
     this.pdf.setFontSize(12);
 
     this.pdf.text(
-      'Forstbetrieb Tschabi | Hochkreuthweg 3 | 87642 Trauchgau',
+      `${this.companyDetailsPrint.companyName} | ${this.companyDetailsPrint.street} | ${this.companyDetailsPrint.zipCode} ${this.companyDetailsPrint.city}`,
       12,
       20
     );

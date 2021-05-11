@@ -1,6 +1,6 @@
 <div id="edit-order-component-wrapper" class="row no-gutters">
   <div class="col">
-    <div class="sub-nav row">
+    <div class="sub-nav row no-gutters">
       <div class="col-2">
         <div
           type="button"
@@ -10,16 +10,8 @@
           <mat-icon>navigate_before</mat-icon>
         </div>
       </div>
-      <div class="col-8 page-title-wrapper">Arbeitsstunden</div>
-      <div class="col-2">
-        <div
-          type="button"
-          class="save-btn"
-          (click)="documentEditForm.ngSubmit.emit()"
-        >
-          <mat-icon>save</mat-icon>
-        </div>
-      </div>
+      <div class="col-8 page-title-wrapper">Auftrag bearbeiten</div>
+      <div class="col-2"></div>
     </div>
   </div>
 
@@ -71,7 +63,7 @@
                 control
                 name
                 formControlName="companyName"
-                placeholder="Firmenname"
+                placeholder="Name"
                 class="form-control form-control-sm"
                 type="text"
                 [ngClass]="{
@@ -83,7 +75,7 @@
                 class="invalid-feedback"
               >
                 <div *ngIf="getFormControl.companyName.errors.required">
-                  Bitte <strong>Firmenname</strong> eingeben
+                  Bitte <strong>Name</strong> eingeben
                 </div>
               </div>
             </mat-form-field>
@@ -142,6 +134,18 @@
           </fieldset>
         </form>
       </div>
+    </div>
+
+    <div id="bottom-nav">
+      <button
+        type="button"
+        id="save-order-btn"
+        type="button"
+        mat-fab
+        (click)="onSubmit()"
+      >
+        <i class="material-icons">save</i>
+      </button>
     </div>
   </div>
 </div>

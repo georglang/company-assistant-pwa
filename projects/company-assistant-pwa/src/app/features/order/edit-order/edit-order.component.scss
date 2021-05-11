@@ -16,10 +16,6 @@
     font-size: 40px;
   }
 }
-.save-btn {
-  text-align: right;
-  margin-top: 15px;
-}
 #edit-order-component-wrapper {
   margin-top: 140px;
 }
@@ -35,6 +31,26 @@
 }
 .mat-form-field {
   width: 100%;
+}
+
+#bottom-nav {
+  background-color: #fff;
+  height: 50px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12);
+  z-index: 1030;
+}
+#save-order-btn {
+  background-color: $primary-color;
+  color: $color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  .material-icons {
+    color: #fff;
+  }
 }
 // angular material: text input underline
 ::ng-deep .mat-form-field-underline {

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IOrder } from '../../../order/Order';
-import { WorkingHour, IWorkingHour } from '../../WorkingHour';
+import { IWorkingHour } from '../../IWorkingHour';
+import { WorkingHour } from '../../WorkingHour';
+
 import {
   AngularFirestore,
   AngularFirestoreCollection,

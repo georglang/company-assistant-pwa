@@ -12,15 +12,7 @@
       </div>
       <div class="col-8 page-title-wrapper">Arbeitsstunden bearbeiten</div>
 
-      <div class="col-2">
-        <div
-          type="button"
-          class="save-btn"
-          (click)="documentEditForm.ngSubmit.emit()"
-        >
-          <mat-icon>save</mat-icon>
-        </div>
-      </div>
+      <div class="col-2"></div>
     </div>
 
     <div class="row">
@@ -31,7 +23,7 @@
               id="edit-working-hour-form"
               [formGroup]="editWorkingHourForm"
               #documentEditForm="ngForm"
-              (ngSubmit)="onSubmit()"
+              (ngSubmit)="saveWorkingHour()"
             >
               <fieldset class="form-group">
                 <mat-form-field>
@@ -144,6 +136,17 @@
           </div>
         </div>
       </div>
+    </div>
+    <div id="bottom-nav">
+      <button
+        type="button"
+        id="save-working-hour-btn"
+        type="button"
+        mat-fab
+        (click)="saveWorkingHour()"
+      >
+        <i class="material-icons">save</i>
+      </button>
     </div>
   </div>
 </div>

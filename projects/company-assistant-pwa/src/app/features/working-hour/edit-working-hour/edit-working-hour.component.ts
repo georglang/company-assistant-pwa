@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
-import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { IWorkingHour, WorkingHour } from '../WorkingHour';
+
+import { ToastrService } from 'ngx-toastr';
+import { IWorkingHour } from '../IWorkingHour';
+import { WorkingHour } from '../WorkingHour';
+import { employees } from '../../../shared/config-data/employees';
 import { MessageService } from '../../../shared/services/message-service/message.service';
 import { FirestoreWorkingHourService } from '../services/firestore-working-hour-service/firestore-working-hour.service';
-import { employees } from '../../../shared/config-data/employees';
 
 @Component({
   selector: 'app-edit-working-hour',
@@ -117,7 +118,7 @@ export class EditWorkingHourComponent implements OnInit {
     return this.editWorkingHourForm.controls;
   }
 
-  public onSubmit() {
+  public saveWorkingHour() {
     const workingHour = new WorkingHour(
       this.editWorkingHourForm.controls.date.value,
       this.editWorkingHourForm.controls.description.value,

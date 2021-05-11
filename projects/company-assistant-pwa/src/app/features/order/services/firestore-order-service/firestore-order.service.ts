@@ -15,7 +15,7 @@ import {
   DocumentChangeAction,
   Action,
   DocumentSnapshotDoesNotExist,
-  DocumentSnapshotExists,
+  DocumentSnapshotExists
 } from '@angular/fire/firestore';
 
 import { Observable, from } from 'rxjs';
@@ -26,13 +26,12 @@ import {
   switchMap,
   mergeMap,
   expand,
-  takeWhile,
+  takeWhile
 } from 'rxjs/operators';
 import * as _ from 'lodash';
 
-
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class FirestoreOrderService {
   public ordersCollection: AngularFirestoreCollection<IOrder>;
@@ -42,8 +41,7 @@ export class FirestoreOrderService {
   private ordersInFirestore: any[] = [];
 
   constructor(
-    private firestore: AngularFirestore,
-    // private firestoreWorkingHourService: FirestoreWorkingHourService
+    private firestore: AngularFirestore // private firestoreWorkingHourService: FirestoreWorkingHourService
   ) {
     this.ordersCollection = this.firestore.collection<IOrder>('orders');
     // this.workingHoursCollection = this.firestore.collection<IWorkingHour>(
@@ -95,8 +93,8 @@ export class FirestoreOrderService {
       map((actions) =>
         actions.map((a) => {
           const data = a.payload.doc.data() as IOrder;
-          const id = a.payload.doc.id;
-          return { id, ...data };
+          data.id = a.payload.doc.id;
+          return data;
         })
       )
     );
@@ -114,7 +112,8 @@ export class FirestoreOrderService {
     return this.ordersCollection
       .add(_order)
       .then((docReference) => {
-        return docReference.id;
+        _order.id = docReference.id;
+        return _order;
       })
       .catch((error) => {
         console.error('Error adding order: ', error);
@@ -132,14 +131,14 @@ export class FirestoreOrderService {
               const newOrder = {
                 companyName: order.companyName,
                 location: order.location,
-                contactPerson: order.contactPerson,
+                contactPerson: order.contactPerson
               };
 
               ordersInFirestore.forEach((orderInFirestore) => {
                 orders.push({
                   companyName: orderInFirestore.companyName,
                   location: orderInFirestore.location,
-                  contactPerson: orderInFirestore.contactPerson,
+                  contactPerson: orderInFirestore.contactPerson
                 });
               });
               isAlreadyInFirestore =

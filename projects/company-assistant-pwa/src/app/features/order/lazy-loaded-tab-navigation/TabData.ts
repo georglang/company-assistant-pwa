@@ -3,20 +3,26 @@ import { ITabItem } from './ITabItem';
 export const tabs: ITabItem[] = [
   {
     feature: 'workingHours',
-    label: 'Stunden',
+    label: '',
     icon: 'access_time',
-    route: '',
+    route: ''
   },
   {
     feature: 'materials',
-    label: 'Material',
-    icon: 'material',
-    route: '',
+    label: '',
+    icon: './../../../../assets/img/icon_material_list.png',
+    route: ''
   },
   {
     feature: 'notes',
-    label: 'Notizen',
+    label: '',
     icon: 'sticky_note_2',
-    route: '',
+    route: ''
   },
+  {
+    feature: 'images',
+    label: 'Bilder',
+    icon: 'sticky_note_2',
+    route: ''
+  }
 ];

@@ -9,6 +9,7 @@ import { AppState } from '../state/app.state';
 import { LocalStorageService } from '../core/services/local-storage/local-storage.service';
 import { PrintDialogComponent } from '../features/admin/print-dialog/print-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { PrintService } from '../core/services/print-service/print.service';
 
 const AUTH_KEY = 'Auth';
 
@@ -35,7 +36,8 @@ export class AppComponent implements OnInit {
     private store: Store<AppState>,
     private authService: AuthService,
     private localStorageService: LocalStorageService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private printService: PrintService
   ) {
     // this.authService.bootstrapOAuthService();
   }
@@ -77,7 +79,14 @@ export class AppComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((dialogResult) => {
-      debugger;
+      if (dialogResult.shouldPrint) {
+        if (dialogResult.order !== undefined) {
+          this.printService.print(
+            dialogResult.order,
+            dialogResult.categoriesToPrint
+          );
+        }
+      }
     });
   }
 

@@ -20,6 +20,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatSelectModule,
     MatSnackBarModule,
     MatAutocompleteModule,
-    MatSidenavModule
+    MatSidenavModule,
+    NgxMatSelectSearchModule
   ],
   exports: [
     MatButtonModule,
@@ -61,7 +63,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatSelectModule,
     MatSnackBarModule,
     MatAutocompleteModule,
-    MatSidenavModule
+    MatSidenavModule,
+    NgxMatSelectSearchModule
   ]
 })
 export class AngularMaterialModule {}

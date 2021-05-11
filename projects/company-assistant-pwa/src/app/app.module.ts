@@ -7,6 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 /* NgRx*/
 import { StoreModule } from '@ngrx/store';
@@ -30,6 +31,10 @@ import { ForgotpasswordComponent } from './core/auth/forgot-password/forgot-pass
 import { firebaseConfig } from './firebaseConfig';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { ImpressumComponent } from './shared/components/impressum/impressum.component';
+import { AngularMaterialModule } from './shared/material/angular-material.module';
+import { PrintDialogComponent } from './features/admin/print-dialog/print-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,12 +42,24 @@ import { CommonModule } from '@angular/common';
     HomeComponent,
     SignInComponent,
     SignUpComponent,
-    ForgotpasswordComponent
+    ForgotpasswordComponent,
+    ImpressumComponent,
+    PrintDialogComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
+    AngularMaterialModule,
+    // Init Firestore
+    AngularFireModule.initializeApp(firebaseConfig.firebase),
+    // Auth
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    // Firestorage
+    AngularFireStorageModule,
+    // Database
+    AngularFireDatabaseModule,
     AppRoutingModule,
     CoreModule,
     SharedModule,
@@ -50,10 +67,6 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
-    // Auth
-    AngularFireModule.initializeApp(firebaseConfig.firebase),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
     // NgRx
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([AuthEffects]),
@@ -64,7 +77,7 @@ import { CommonModule } from '@angular/common';
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    })
+    }),
   ],
 
   //ngrx

@@ -26,7 +26,7 @@ export class LazyLoadedTabNavigationComponent implements OnInit {
             this.tabsWithRoutes.push({
               label: tab.label,
               icon: tab.icon,
-              route: '/orders/' + this.paramOrderId + '/working-hours/'
+              route: '/orders/' + this.paramOrderId + '/working-hours'
             });
             break;
           }
@@ -34,8 +34,7 @@ export class LazyLoadedTabNavigationComponent implements OnInit {
             this.tabsWithRoutes.push({
               label: tab.label,
               icon: tab.icon,
-              route:
-                '/orders/order-details/' + this.paramOrderId + '/materials/'
+              route: '/orders/' + this.paramOrderId + '/material'
             });
             break;
           }
@@ -43,14 +42,12 @@ export class LazyLoadedTabNavigationComponent implements OnInit {
             this.tabsWithRoutes.push({
               label: tab.label,
               icon: tab.icon,
-              route: '/orders/order-details/' + this.paramOrderId + '/notes/'
+              route: '/orders/' + this.paramOrderId + '/notes'
             });
             break;
           }
         }
       });
-
-      console.log('Tabs with routes: ', this.tabsWithRoutes);
     });
   }
 }

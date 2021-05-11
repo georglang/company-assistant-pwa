@@ -79,6 +79,10 @@ export class OrderListComponent implements OnInit {
     this.router.navigate(['orders/' + order.id]);
   }
 
+  public navigateToWorkingHours(order: IOrder): void {
+    this.router.navigate(['orders/' + order.id + '/working-hours']);
+  }
+
   public navigateToCreateOrder(): void {
     this.router.navigate(['orders/create-order']);
   }
@@ -95,19 +99,6 @@ export class OrderListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((shouldDelete) => {
       if (shouldDelete) {
         this.deleteOrderInFirebase(orderId);
-      }
-    });
-  }
-
-  public openSettingsDialog(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-
-    const dialogRef = this.dialog.open(SettingsDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe((shouldPrint) => {
-      if (shouldPrint) {
-        this.showDeleteButton = true;
       }
     });
   }

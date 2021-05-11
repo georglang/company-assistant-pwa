@@ -23,7 +23,6 @@ export class FirestoreNoteService {
 
   addNote(note: INote) {
     const _note = { ...note };
-    debugger;
     return this.ordersCollection
       .doc(_note.orderId)
       .collection('notes')
@@ -36,7 +35,7 @@ export class FirestoreNoteService {
       });
   }
 
-  getAllNotesById(orderId: string): Observable<INote[]> {
+  getAllNotesByOrderId(orderId: string): Observable<INote[]> {
     return this.ordersCollection
       .doc(orderId)
       .collection('notes')

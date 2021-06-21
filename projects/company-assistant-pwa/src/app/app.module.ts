@@ -7,7 +7,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import {
+  AngularFireFunctionsModule,
+  USE_EMULATOR
+} from '@angular/fire/functions';
 
 /* NgRx*/
 import { StoreModule } from '@ngrx/store';
@@ -19,7 +23,6 @@ import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app/app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { HomeComponent } from './features/home/home.component';
 
 import { reducers, metaReducers } from './state/app.state';
 import { AuthEffects } from './core/auth/state/auth.effects';
@@ -31,15 +34,13 @@ import { ForgotpasswordComponent } from './core/auth/forgot-password/forgot-pass
 import { firebaseConfig } from './firebaseConfig';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
-import { AngularFireStorageModule } from '@angular/fire/storage';
 import { ImpressumComponent } from './shared/components/impressum/impressum.component';
 import { AngularMaterialModule } from './shared/material/angular-material.module';
-import { PrintDialogComponent } from './features/admin/print-dialog/print-dialog.component';
+import { PrintDialogComponent } from './shared/components/print-dialog/print-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     SignInComponent,
     SignUpComponent,
     ForgotpasswordComponent,
@@ -58,8 +59,7 @@ import { PrintDialogComponent } from './features/admin/print-dialog/print-dialog
     AngularFirestoreModule,
     // Firestorage
     AngularFireStorageModule,
-    // Database
-    AngularFireDatabaseModule,
+    AngularFireFunctionsModule,
     AppRoutingModule,
     CoreModule,
     SharedModule,
@@ -77,11 +77,15 @@ import { PrintDialogComponent } from './features/admin/print-dialog/print-dialog
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    }),
+    })
   ],
 
   //ngrx
-  providers: [AuthService],
+  providers: [
+    AuthService,
+
+    // { provide: USE_EMULATOR, useValue: ['localhost', 5000] }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

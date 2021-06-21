@@ -2,24 +2,7 @@
   <mat-toolbar class="toolbar">
     <mat-toolbar-row>
       <div class="branding"></div>
-      <button
-        mat-icon-button
-        (click)="sidenav.toggle()"
-        fxShow="true"
-        fxHide.gt-sm
-      >
-        <mat-icon>menu</mat-icon>
-      </button>
       <span class="menu-spacer"></span>
-      <div fxShow="true" fxHide.lt-md>
-        <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-        <a class="main-nav-link" href="#" mat-button>Menu Item 1</a>
-        <a class="main-nav-link" href="#" mat-button>Menu Item 2</a>
-        <a class="main-nav-link" href="#" mat-button>Menu Item 3</a>
-        <a class="main-nav-link" href="#" mat-button>Menu Item 4</a>
-        <a class="main-nav-link" href="#" mat-button>Menu Item 5</a>
-      </div>
-
       <div id="auth-wrapper">
         <button
           mat-icon-button
@@ -30,16 +13,10 @@
           Login
         </button>
 
-        <button mat-icon-button (click)="login()">Anmelden</button>
-
         <mat-menu #loginMenu="matMenu" id="login-menu">
           <button mat-menu-item (click)="openPrintDialog()">
             <mat-icon>print</mat-icon>
             <span>Drucken</span>
-          </button>
-          <button mat-menu-item>
-            <mat-icon>edit</mat-icon>
-            <span>Profil anzeigen</span>
           </button>
           <button mat-menu-item (click)="logout()">
             <mat-icon>power_settings_new</mat-icon>
@@ -57,25 +34,15 @@
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <!-- sidbar left -->
   <mat-sidenav-container fxFlexFill id="sidenav">
-    <mat-sidenav #sidenav fxShow="true" fxHide.gt-sm>
-      <mat-nav-list>
-        <button (click)="sidenav.toggle()" href="" mat-list-item>
-          <fa-icon>times</fa-icon>
-        </button>
-        <a href="#" mat-list-item>Menu Item 1</a>
-        <a href="#" mat-list-item>Menu Item 2</a>
-        <a href="#" mat-list-item>Menu Item 3</a>
-        <a href="#" mat-list-item>Menu Item 4</a>
-        <a href="#" mat-list-item>Menu Item 5</a>
-        <a href="#" mat-list-item>Menu Item 6</a>
-      </mat-nav-list>
-    </mat-sidenav>
-
     <mat-sidenav-content fx>
       <div class="content" #main>
         <router-outlet></router-outlet>
+        <!-- Display Name: {{ this.user?.displayName }} <br />
+        Email: {{ this.user?.email }} <br />
+        Is Admin: {{ this.user?.roles.admin }} <br />
+        Is User Admin: {{ this.user?.roles.userAdmin }} <br />
+        Is Employee: {{ this.user?.roles.employee }} -->
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

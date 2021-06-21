@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
-import { FirestoreNoteService } from '../../../features/note/services/firestore-note/firestore-note.service';
-import { FirestoreMaterialService } from '../../../features/material/services/firestore-material-service/firestore-material.service';
-import { FirestoreWorkingHourService } from '../../../features/working-hour/services/firestore-working-hour-service/firestore-working-hour.service';
-import { INote } from '../../../features/note/INote';
-import { IMaterial } from '../../../features/material/material-list/IMaterial';
+
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 
-import { UserOptions } from 'jspdf-autotable';
+import { FirestoreNoteService } from '../../../features/note/services/firestore-note/firestore-note.service';
+import { FirestoreMaterialService } from '../../../features/material/services/firestore-material-service/firestore-material.service';
+import { FirestoreWorkingHourService } from '../../../features/working-hour/services/firestore-working-hour-service/firestore-working-hour.service';
+
+import { IMaterial } from '../../../features/material/material-list/IMaterial';
+import { INote } from '../../../features/note/INote';
 import { IOrder } from '../../../features/order/Order';
 import { IPrintCategory } from './IPrintCategory';
-import { companyDetailsPrint } from '../../../../assets/config/companyDetailsPrint';
 import { IWorkingHour } from '../../../features/working-hour/IWorkingHour';
+import { UserOptions } from 'jspdf-autotable';
+import { autoTableConfig } from './autotable-config';
+import { companyDetailsPrint } from '../../../../assets/config/companyDetailsPrint';
 
 interface jsPDFWithPlugin extends jsPDF {
   autoTable: (options: UserOptions) => jsPDF;
@@ -21,32 +24,21 @@ interface jsPDFWithPlugin extends jsPDF {
   providedIn: 'root'
 })
 export class PrintService {
-  private notes: INote[];
+  private companyDetailsPrint = companyDetailsPrint;
+  private filename = '';
+
   private materials: IMaterial[];
-  private workingHours: IWorkingHour[];
+  private notes: INote[];
   private order: IOrder;
   private pdf = new jsPDF() as jsPDFWithPlugin;
-  private companyDetailsPrint = companyDetailsPrint;
   private sumOfWorkingHours = 0;
-  private filename = '';
+  private workingHours: IWorkingHour[];
+
   private orderInformationTranslation = {
     date: 'Datum ',
     companyName: 'Kunde ',
     location: 'Ort ',
     contactPerson: 'Ansprechpartner '
-  };
-  private autoTableConfigWorkingHours = {
-    head: ['Datum', 'Beschreibung', 'Stunden', 'Arbeiter'],
-    foot: ['Gesamtstunden', '']
-  };
-
-  private autoTableConfigMaterials = {
-    head: ['Material', 'Menge', 'Einheit'],
-    foot: []
-  };
-  private autoTableConfigNotes = {
-    head: ['Notiz'],
-    foot: []
   };
 
   private logoImgUrl = './assets/img/vieweger_logo_pdf_output.png';
@@ -64,8 +56,6 @@ export class PrintService {
     } - ${order.location} - ${order.date
       .toDate()
       .toLocaleDateString('de-DE')}.pdf`;
-
-    // Handling, wenn alle drei false sind
 
     if (
       categoriesToPrint.workingHours === false &&
@@ -86,6 +76,78 @@ export class PrintService {
         }
       }
     }
+  }
+
+  private addContentToEveryPage(doc, logo) {
+    const numberOfPages = doc.internal.getNumberOfPages();
+    const pdfPages = doc.internal.pages;
+
+    for (let i = 1; i < pdfPages.length; i++) {
+      doc.setPage(i);
+      this.addHeaderToEveryPage(logo);
+      this.addFooter(doc, i, numberOfPages);
+    }
+  }
+  private addConsultantAdress() {
+    this.pdf.text(
+      `${this.companyDetailsPrint.companyName} | ${this.companyDetailsPrint.street} | ${this.companyDetailsPrint.zipCode} ${this.companyDetailsPrint.city}`,
+      12,
+      20
+    );
+  }
+
+  private addHeaderToEveryPage(logo) {
+    this.setFontHeader();
+    this.addImage(logo);
+    this.addConsultantAdress();
+    this.addOrderInformation();
+  }
+
+  private autoTableMaterials(materials: IMaterial[]) {
+    this.pdf.autoTable({
+      head: [autoTableConfig.materials.head],
+      headStyles: { fillColor: [55, 92, 127] },
+      body: this.prepareMaterialsToPrint(materials),
+      margin: {
+        top: 78,
+        right: 15,
+        bottom: 55
+      },
+      pageBreak: 'auto',
+      showFoot: true
+    });
+  }
+
+  private autoTableNotes(notes) {
+    this.pdf.autoTable({
+      head: [autoTableConfig.notes.head],
+      headStyles: { fillColor: [55, 92, 127] },
+      body: this.prepareNotesToPrint(notes),
+      margin: {
+        top: 78,
+        right: 15,
+        bottom: 55
+      },
+      pageBreak: 'auto',
+      showFoot: true
+    });
+  }
+
+  private autoTableWorkingHours(workingHours: IWorkingHour[]) {
+    this.pdf.autoTable({
+      head: [autoTableConfig.workingHours.head],
+      headStyles: { fillColor: [55, 92, 127] },
+      body: this.prepareWorkingHoursToPrint(workingHours),
+      margin: {
+        top: 78,
+        right: 15,
+        bottom: 55
+      },
+      pageBreak: 'auto',
+      showFoot: true,
+      foot: [autoTableConfig.workingHours.foot],
+      footStyles: { fillColor: [55, 92, 127] }
+    });
   }
 
   private getMaterials(orderId: string, categoriesToPrint: IPrintCategory) {
@@ -139,27 +201,6 @@ export class PrintService {
       });
   }
 
-  private prepareWorkingHoursToPrint(workingHours: IWorkingHour[]) {
-    const workingHoursToPrint = [];
-    for (const workingHour of workingHours) {
-      workingHoursToPrint.push([
-        workingHour.date.toDate().toLocaleDateString('de-DE'),
-        workingHour.description,
-        workingHour.workingHours,
-        workingHour.employee
-      ]);
-      this.sumWorkingHours(workingHour.workingHours);
-    }
-    this.autoTableConfigWorkingHours.foot.push(
-      this.sumOfWorkingHours.toString()
-    );
-    return workingHoursToPrint;
-  }
-
-  private sumWorkingHours(workingHours: number) {
-    this.sumOfWorkingHours += workingHours;
-  }
-
   private prepareMaterialsToPrint(materials: IMaterial[]) {
     const materialsToPrint = [];
     for (const material of materials) {
@@ -180,84 +221,30 @@ export class PrintService {
     return notesToPrint;
   }
 
+  private prepareWorkingHoursToPrint(workingHours: IWorkingHour[]) {
+    const workingHoursToPrint = [];
+    for (const workingHour of workingHours) {
+      workingHoursToPrint.push([
+        workingHour.date.toDate().toLocaleDateString('de-DE'),
+        workingHour.description,
+        workingHour.workingHours,
+        workingHour.employee
+      ]);
+      this.sumWorkingHours(workingHour.workingHours);
+    }
+    autoTableConfig.workingHours.foot.push(this.sumOfWorkingHours.toString());
+    return workingHoursToPrint;
+  }
+
+  private sumWorkingHours(workingHours: number) {
+    this.sumOfWorkingHours += workingHours;
+  }
+
   private generatePdf() {
     this.loadImage(this.logoImgUrl).then((logo: HTMLImageElement) => {
       this.addContentToEveryPage(this.pdf, logo);
       this.saveAsPdf();
     });
-  }
-
-  private autoTableWorkingHours(workingHours: IWorkingHour[]) {
-    this.pdf.autoTable({
-      head: [this.autoTableConfigWorkingHours.head],
-      headStyles: { fillColor: [55, 92, 127] },
-      body: this.prepareWorkingHoursToPrint(workingHours),
-      margin: {
-        top: 78,
-        right: 15,
-        bottom: 55
-      },
-      pageBreak: 'auto',
-      showFoot: true,
-      foot: [this.autoTableConfigWorkingHours.foot],
-      footStyles: { fillColor: [55, 92, 127] }
-    });
-  }
-
-  private autoTableMaterials(materials: IMaterial[]) {
-    this.pdf.autoTable({
-      head: [this.autoTableConfigMaterials.head],
-      headStyles: { fillColor: [55, 92, 127] },
-      body: this.prepareMaterialsToPrint(materials),
-      margin: {
-        top: 78,
-        right: 15,
-        bottom: 55
-      },
-      pageBreak: 'auto',
-      showFoot: true
-    });
-  }
-
-  private autoTableNotes(notes) {
-    this.pdf.autoTable({
-      head: [this.autoTableConfigNotes.head],
-      headStyles: { fillColor: [55, 92, 127] },
-      body: this.prepareNotesToPrint(notes),
-      margin: {
-        top: 78,
-        right: 15,
-        bottom: 55
-      },
-      pageBreak: 'auto',
-      showFoot: true
-    });
-  }
-
-  private addContentToEveryPage(doc, logo) {
-    const numberOfPages = doc.internal.getNumberOfPages();
-    const pdfPages = doc.internal.pages;
-
-    for (let i = 1; i < pdfPages.length; i++) {
-      doc.setPage(i);
-      this.addHeaderToEveryPage(logo);
-      this.addFooter(doc, i, numberOfPages);
-    }
-  }
-
-  private addHeaderToEveryPage(logo) {
-    this.setFontHeader();
-    this.addImage(logo);
-    this.addConsultantAdress();
-    this.addOrderInformation();
-  }
-
-  private addConsultantAdress() {
-    this.pdf.text(
-      `${this.companyDetailsPrint.companyName} | ${this.companyDetailsPrint.street} | ${this.companyDetailsPrint.zipCode} ${this.companyDetailsPrint.city}`,
-      12,
-      20
-    );
   }
 
   private setFontHeader() {
@@ -285,11 +272,11 @@ export class PrintService {
 
   private addFooter(doc: any, i: number, numberOfPages: any) {
     this.setFontFooter(doc);
-    doc.text(
-      'Hiermit bestätigt bzw. akzeptiert der oben genannte Auftraggeber, die Angaben der vollbrachten Arbeiten,\nsowie die geleisteten Arbeitsstunden, die dann in Rechnung gestellt werden.\n \n Vielen Dank für Ihren Auftrag \n\n Mit freundlichen Grüßen \n Matthias Tschabi ',
-      12,
-      250
-    );
+    // doc.text(
+    //   'Hiermit bestätigt bzw. akzeptiert der oben genannte Auftraggeber, die Angaben der vollbrachten Arbeiten,\nsowie die geleisteten Arbeitsstunden, die dann in Rechnung gestellt werden.\n \n Vielen Dank für Ihren Auftrag \n\n Mit freundlichen Grüßen \n Matthias Tschabi ',
+    //   12,
+    //   250
+    // );
 
     doc.text(
       'Seite ' + String(i) + ' von ' + String(numberOfPages),

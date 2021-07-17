@@ -1,15 +1,23 @@
 import { IMaterial } from './material-list/IMaterial';
 
 export class Material implements IMaterial {
-  public material: string;
   public amount: number;
+  public id: string;
+  public material: string;
   public unit: string;
   public orderId: string;
 
-  constructor(material: string, amount: number, unit: string, orderId: any) {
+  constructor(
+    material: string,
+    amount: number,
+    unit: string,
+    id?: string,
+    orderId?: string
+  ) {
     this.material = material;
     this.amount = amount;
     this.unit = unit;
+    this.id = id;
     this.orderId = orderId;
   }
 }

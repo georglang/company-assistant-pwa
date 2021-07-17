@@ -27,6 +27,7 @@ export class EditMaterialComponent implements OnInit {
   editMaterialForm: FormGroup;
   filteredOptions: Observable<string[]>;
   material: IMaterial;
+  materialId: string;
   myControl = new FormControl();
   options: string[] = materials;
   submitted = false;
@@ -60,7 +61,9 @@ export class EditMaterialComponent implements OnInit {
     );
 
     this.route.parent.parent.params.subscribe((url) => {
+      this.orderId = url.id;
       this.route.parent.params.subscribe((subUrl) => {
+        this.materialId = subUrl.id;
         this.getMaterialByIdFromFirebase(url.id, subUrl.id);
       });
     });
@@ -74,11 +77,12 @@ export class EditMaterialComponent implements OnInit {
     this.location.back();
   }
 
-  saveMaterial() {
+  saveMaterial(): void {
     const material = new Material(
       this.editMaterialForm.controls.material.value,
       this.editMaterialForm.controls.amount.value,
       this.editMaterialForm.controls.unit.value,
+      this.materialId,
       this.orderId
     );
 

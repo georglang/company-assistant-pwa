@@ -6,7 +6,7 @@ import { WorkingHour } from '../WorkingHour';
 import { employees } from '../../../shared/config-data/employees';
 import { FirestoreWorkingHourService } from '../services/firestore-working-hour-service/firestore-working-hour.service';
 import { MessageService } from '../../../shared/services/message-service/message.service';
-
+import { IWorkingHour } from '../IWorkingHour';
 @Component({
   selector: 'app-create-working-hour',
   templateUrl: './create-working-hour.component.html',
@@ -19,7 +19,6 @@ export class CreateWorkingHourComponent implements OnInit {
   private routeParamOrderId: string;
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private location: Location,
     private formBuilder: FormBuilder,
@@ -40,7 +39,7 @@ export class CreateWorkingHourComponent implements OnInit {
     });
   }
 
-  navigateToOrderList() {
+  navigateToWorkingHourList(): void {
     this.location.back();
   }
 
@@ -56,15 +55,15 @@ export class CreateWorkingHourComponent implements OnInit {
     }
   }
 
-  private addWorkingHourToFirebaseWorkingHourTable(workingHour: any): void {
+  private addWorkingHourToFirebaseWorkingHourTable(
+    workingHour: IWorkingHour
+  ): void {
     if (this.firestoreWorkingHourService !== undefined) {
       this.firestoreWorkingHourService
         .addWorkingHour(workingHour)
         .then((id: string) => {
           this.messageService.workingHourCreatedSuccessfully();
-          this.router.navigate([
-            'orders/' + this.routeParamOrderId + '/working-hours'
-          ]);
+          this.navigateToWorkingHourList();
           workingHour.id = id;
         })
         .catch((e) => {

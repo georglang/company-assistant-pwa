@@ -36,6 +36,7 @@ export class FirestoreMaterialService {
 
   public addMaterial(material: IMaterial) {
     const _material = { ...material };
+    delete _material.id;
     return this.ordersCollection
       .doc(_material.orderId)
       .collection('materials')

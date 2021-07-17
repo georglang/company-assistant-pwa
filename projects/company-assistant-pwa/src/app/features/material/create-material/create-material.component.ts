@@ -88,7 +88,10 @@ export class CreateMaterialComponent implements OnInit {
         .addMaterial(material)
         .then((id: string) => {
           this.messageService.workingHourCreatedSuccessfully();
-          this.router.navigate(['order-details', material.orderId]);
+
+          this.router.navigate([
+            'orders/' + this.routeParamOrderId + '/material'
+          ]);
           material.id = id;
         })
         .catch((e) => {

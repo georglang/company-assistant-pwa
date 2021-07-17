@@ -14,9 +14,9 @@ import { MessageService } from '../../../shared/services/message-service/message
 })
 export class CreateWorkingHourComponent implements OnInit {
   createWorkingHourForm: FormGroup;
-  submitted = false;
   employees = employees;
-  private routeParamOrderId;
+  submitted = false;
+  private routeParamOrderId: string;
 
   constructor(
     private router: Router,
@@ -27,7 +27,7 @@ export class CreateWorkingHourComponent implements OnInit {
     private messageService: MessageService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.createWorkingHourForm = this.formBuilder.group({
       date: ['', Validators.required],
       description: ['', Validators.required],
@@ -44,7 +44,7 @@ export class CreateWorkingHourComponent implements OnInit {
     this.location.back();
   }
 
-  saveWorkingHour() {
+  saveWorkingHour(): void {
     if (this.createWorkingHourForm.invalid) {
       return;
     } else {
@@ -56,30 +56,22 @@ export class CreateWorkingHourComponent implements OnInit {
     }
   }
 
-  private addWorkingHourToFirebaseWorkingHourTable(woringHour: any): void {
+  private addWorkingHourToFirebaseWorkingHourTable(workingHour: any): void {
     if (this.firestoreWorkingHourService !== undefined) {
-      // check if working hour is already in firestore
       this.firestoreWorkingHourService
-        .checkIfWorkingHourExistsInOrderInFirestore(woringHour)
-        .then((isAlreadyInFirestore: boolean) => {
-          if (!isAlreadyInFirestore) {
-            this.firestoreWorkingHourService
-              .addWorkingHour(woringHour)
-              .then((id: string) => {
-                this.messageService.workingHourCreatedSuccessfully();
-                this.router.navigate([
-                  'order-details',
-                  woringHour.orderId + '/create'
-                ]);
-                woringHour.id = id;
-              })
-              .catch((e) => {
-                console.error('can´t create working hour to firebase', e);
-              });
-          } else {
-            this.messageService.workingHourAlreadyExists();
-          }
+        .addWorkingHour(workingHour)
+        .then((id: string) => {
+          this.messageService.workingHourCreatedSuccessfully();
+          this.router.navigate([
+            'orders/' + this.routeParamOrderId + '/working-hours'
+          ]);
+          workingHour.id = id;
+        })
+        .catch((e) => {
+          console.error('can´t create working hour to firebase', e);
         });
+    } else {
+      this.messageService.workingHourAlreadyExists();
     }
   }
 

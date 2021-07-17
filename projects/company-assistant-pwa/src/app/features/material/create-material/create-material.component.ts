@@ -27,7 +27,6 @@ export class CreateMaterialComponent implements OnInit {
   units = materialUnits;
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private firestoreMaterialService: FirestoreMaterialService,
@@ -52,7 +51,7 @@ export class CreateMaterialComponent implements OnInit {
     });
   }
 
-  navigateToOrderList() {
+  navigateToMaterialList() {
     this.location.back();
   }
 
@@ -88,15 +87,14 @@ export class CreateMaterialComponent implements OnInit {
         .addMaterial(material)
         .then((id: string) => {
           this.messageService.workingHourCreatedSuccessfully();
-
-          this.router.navigate([
-            'orders/' + this.routeParamOrderId + '/material'
-          ]);
+          this.navigateToMaterialList();
           material.id = id;
         })
         .catch((e) => {
           console.error('Can´t add working hour to firebase', e);
         });
+    } else {
+      this.messageService.materialAlreadyExists();
     }
   }
 

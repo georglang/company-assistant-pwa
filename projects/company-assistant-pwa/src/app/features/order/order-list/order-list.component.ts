@@ -9,7 +9,6 @@ import { IOrder } from '../Order';
 import { FirestoreOrderService } from '../services/firestore-order-service/firestore-order.service';
 import { ConfirmDeleteDialogComponent } from '../../../shared/components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MessageService } from '../../../shared/services/message-service/message.service';
-import { SettingsDialogComponent } from '../../../shared/components/settings-dialog/settings-dialog.component';
 
 @Component({
   selector: 'app-order-list',
@@ -22,7 +21,7 @@ export class OrderListComponent implements OnInit {
   public highlighted: SelectionModel<IOrder>;
   public selectedOrder: IOrder;
   public showButtonsIfOrderIsSelected = false;
-  public showDeleteButton = false;
+  public showDeleteButton = true;
 
   constructor(
     private router: Router,

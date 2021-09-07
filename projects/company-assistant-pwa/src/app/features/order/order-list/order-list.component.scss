@@ -131,15 +131,19 @@ table {
   right: 16px;
   bottom: 78px;
   .material-icons {
-    color: #fff;
+    color: $color-white;
   }
 }
 
 .create-watch-btn-if-delete-btn-is-active {
   background-color: $primary-color;
+  color: $color-white;
   position: absolute;
   right: 16px;
   bottom: 204px;
+  .material-icons {
+    color: $color-white;
+  }
 }
 
 .create-order-watch-btn {
@@ -160,4 +164,9 @@ table {
 
 #order-list-wrapper {
   margin-top: 35px;
+}
+
+#create-order-btn {
+  z-index: 2000;
+  position: absolute;
 }

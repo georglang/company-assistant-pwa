@@ -51,7 +51,9 @@ export class CreateOrderComponent implements OnInit {
       formInput.location,
       ''
     );
+    order.materials = [];
     order.workingHours = [];
+    order.notes = [];
     this.addOrderToFirebaseOrdersTable(order);
   }
 

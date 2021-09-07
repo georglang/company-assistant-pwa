@@ -1,11 +1,14 @@
 {
   "targets": {
-    "angular-pwa-98394": {
+    "company-assistent": {
       "hosting": {
         "company-assistant-pwa": [
-          "angular-pwa-98394"
+          "company-assistent"
         ]
       }
     }
+  },
+  "projects": {
+    "staging": "company-assistent"
   }
 }

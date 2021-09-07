@@ -7,9 +7,12 @@ import { authLogin, authLogout } from '../core/core.module';
 import { selectIsAuthenticated } from '../core/auth/state/auth.selectors';
 import { AppState } from '../state/app.state';
 import { LocalStorageService } from '../core/services/local-storage/local-storage.service';
-import { PrintDialogComponent } from '../features/admin/print-dialog/print-dialog.component';
+import { PrintDialogComponent } from '../shared/components/print-dialog/print-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PrintService } from '../core/services/print-service/print.service';
+import { IUser } from '../core/auth/user';
+import { FireFunctionsService } from '../core/services/fire-functions/fire-functions.service';
+import { NewAuthService } from '../shared/services/newAuth.service';
 
 const AUTH_KEY = 'Auth';
 
@@ -32,29 +35,41 @@ export class AppComponent implements OnInit {
 
   isAuthenticated$: Observable<boolean>;
 
+  user: IUser;
+
   constructor(
     private store: Store<AppState>,
-    private authService: AuthService,
+    private authService: NewAuthService,
     private localStorageService: LocalStorageService,
     public dialog: MatDialog,
-    private printService: PrintService
+    private printService: PrintService,
+    private fireFunctionService: FireFunctionsService
   ) {
     // this.authService.bootstrapOAuthService();
   }
 
   ngOnInit(): void {
-    this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
+    // ToDo: NgRx einbinden
+    // this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
+
+    this.isAuthenticated$ = this.authService.isAuthenticated$;
+
+
+    // this.authService.userChangedObs$.subscribe((user: IUser) => {
+    //   this.user = user;
+    // });
+
     // if (this.authService.hasValidAccessToken()) {
     //   this.store.dispatch(authLogin());
     // } else {
     //   this.localStorageService.removeItem(AUTH_KEY);
     // }
 
-    this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
-      if (isLoggedIn) {
-        this.store.dispatch(authLogin());
-      }
-    });
+    // this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
+    //   if (isLoggedIn) {
+    //     this.store.dispatch(authLogin());
+    //   }
+    // });
   }
 
   login(): void {
@@ -63,7 +78,7 @@ export class AppComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
-    this.store.dispatch(authLogout());
+    // this.store.dispatch(authLogout());
   }
 
   hasValidAccessToken(): void {}
@@ -96,5 +111,9 @@ export class AppComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.width = '350px';
     return dialogConfig;
+  }
+
+  callHelloWorld() {
+    this.fireFunctionService.callHelloWorld();
   }
 }

@@ -25,7 +25,7 @@ export class ConfirmDeleteDialogComponent implements OnInit {
 
   ngOnInit() {
     this.passwordForm.controls['password'].valueChanges.subscribe((input) => {
-      if (input === 'Löwenbräu') {
+      if (input === 'loeschen') {
         this.isPasswordCorrect = true;
       }
     });

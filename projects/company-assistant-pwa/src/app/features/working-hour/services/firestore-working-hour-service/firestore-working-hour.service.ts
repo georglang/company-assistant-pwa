@@ -123,7 +123,6 @@ export class FirestoreWorkingHourService {
 
   public updateWorkingHour(orderId: string, workingHour: IWorkingHour) {
     const _workingHour = { ...workingHour };
-
     return this.ordersCollection
       .doc(orderId)
       .collection('workingHours')
@@ -132,7 +131,7 @@ export class FirestoreWorkingHourService {
       .then(() => {});
   }
 
-  public deleteWorkingHours(orderId: string, id) {
+  public deleteWorkingHours(orderId: string, id: string) {
     return this.ordersCollection
       .doc(orderId)
       .collection('workingHours')

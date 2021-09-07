@@ -24,5 +24,13 @@
         }
       ]
     }
-  ]
+  ],
+  "emulators": {
+    "hosting": {
+      "port": 5000
+    },
+    "ui": {
+      "enabled": true
+    }
+  }
 }

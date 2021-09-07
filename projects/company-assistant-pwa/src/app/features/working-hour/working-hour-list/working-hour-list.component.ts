@@ -3,12 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 
 import { DateAdapter } from '@angular/material/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { IOrder } from '../../order/Order';
 import { IWorkingHour } from '../IWorkingHour';
-import { ITabItem } from '../../order/lazy-loaded-tab-navigation/ITabItem';
 import { tabs } from '../../order/lazy-loaded-tab-navigation/TabData';
 
 import { ToastrService } from 'ngx-toastr';
@@ -18,8 +17,8 @@ import { FirestoreWorkingHourService } from '../services/firestore-working-hour-
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import { UserOptions } from 'jspdf-autotable';
-import { WorkingHour } from '../WorkingHour';
 import { companyDetailsPrint } from '../../../../assets/config/companyDetailsPrint';
+import { ConfirmDeleteDialogComponent } from '../../../shared/components/confirm-delete-dialog/confirm-delete-dialog.component';
 
 interface jsPDFWithPlugin extends jsPDF {
   autoTable: (options: UserOptions) => jsPDF;
@@ -41,14 +40,14 @@ export class WorkingHourListComponent implements OnInit {
     'hasBeenPrinted'
   ];
   columns: string[];
-  hasWorkingHoursFound: boolean = false;
+  hasWorkingHoursFound = false;
   highlighted = new SelectionModel<IWorkingHour>(false, []);
   order: IOrder;
   selection = new SelectionModel<IWorkingHour>(true, []);
   selectedWorkingHour: IWorkingHour;
-  showButtonsIfWorkingHourIsSelected: boolean = false;
-  showDeleteButton: boolean = false;
-  showPrintButton: boolean = false;
+  showButtonsIfSelected = false;
+  showDeleteButton = true;
+  showPrintButton = false;
 
   tabsWithRoutes = [];
 
@@ -70,7 +69,7 @@ export class WorkingHourListComponent implements OnInit {
     this.columns = ['Date', 'Description', 'Time', 'Delete'];
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.paramOrderId = params['id'];
       this.getOrderByIdFromCloudDatabase(this.paramOrderId);
@@ -79,7 +78,7 @@ export class WorkingHourListComponent implements OnInit {
     this.initTabNavigation();
   }
 
-  initTabNavigation() {
+  initTabNavigation(): void {
     tabs.forEach((tab) => {
       switch (tab.feature) {
         case 'workingHours': {
@@ -114,7 +113,7 @@ export class WorkingHourListComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  public getOrderByIdFromCloudDatabase(orderId: string) {
+  public getOrderByIdFromCloudDatabase(orderId: string): void {
     this.firestoreOrderService.getOrderById(orderId).then((order: IOrder) => {
       if (order !== undefined) {
         this.order = order;
@@ -123,7 +122,7 @@ export class WorkingHourListComponent implements OnInit {
     });
   }
 
-  public getWorkingHoursFromCloudDatabase(orderId: string): any {
+  public getWorkingHoursFromCloudDatabase(orderId: string): void {
     if (this.firestoreOrderService !== undefined) {
       this.firestoreWorkingHourService
         .getWorkingHoursByOrderId(orderId)
@@ -137,7 +136,7 @@ export class WorkingHourListComponent implements OnInit {
     }
   }
 
-  public setWorkingHourDataSource(workingHours: IWorkingHour[]) {
+  public setWorkingHourDataSource(workingHours: IWorkingHour[]): void {
     if (workingHours.length > 0) {
       this.dataSource = new MatTableDataSource<IWorkingHour>(workingHours);
       this.hasWorkingHoursFound = true;
@@ -153,7 +152,7 @@ export class WorkingHourListComponent implements OnInit {
     ]);
   }
 
-  public editWorkingHour(workingHour: IWorkingHour) {
+  public navigateToEditWorkingHour(workingHour: IWorkingHour): void {
     this.router.navigate([
       'orders/' +
         this.paramOrderId +
@@ -163,11 +162,11 @@ export class WorkingHourListComponent implements OnInit {
     ]);
   }
 
-  public deleteWorkingHour(workingHour: IWorkingHour) {
+  public deleteWorkingHour(workingHour: IWorkingHour): void {
     this.openDeleteWorkingHourDialog(workingHour.id);
   }
 
-  public archiveWorkingHour(workingHour: IWorkingHour) {
+  public archiveWorkingHour(workingHour: IWorkingHour): void {
     workingHour.hasBeenPrinted = true;
   }
 
@@ -205,21 +204,21 @@ export class WorkingHourListComponent implements OnInit {
   }
 
   public openDeleteWorkingHourDialog(workingHourId: string): void {
-    // const dialogConfig = new MatDialogConfig();
-    // dialogConfig.disableClose = true;
-    // dialogConfig.autoFocus = true;
-    // const dialogRef = this.dialog.open(
-    //   ConfirmDeleteDialogComponent,
-    //   dialogConfig
-    // );
-    // dialogRef.afterClosed().subscribe((shouldDelete) => {
-    //   if (shouldDelete) {
-    //     this.deleteWorkingHourInFirebase(workingHourId);
-    //   }
-    // });
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    const dialogRef = this.dialog.open(
+      ConfirmDeleteDialogComponent,
+      dialogConfig
+    );
+    dialogRef.afterClosed().subscribe((shouldDelete) => {
+      if (shouldDelete) {
+        this.deleteWorkingHourInFirebase(workingHourId);
+      }
+    });
   }
 
-  public deleteWorkingHourInFirebase(workingHourId: string): void {
+  private deleteWorkingHourInFirebase(workingHourId: string): void {
     this.firestoreWorkingHourService
       .deleteWorkingHours(this.paramOrderId, workingHourId)
       .then((data) => {
@@ -263,15 +262,12 @@ export class WorkingHourListComponent implements OnInit {
     });
   }
 
-  public showEditAndDeleteButton(selectedWorkingHour: IWorkingHour) {
+  public showActionButtons(selectedWorkingHour: IWorkingHour): void {
     this.selectedWorkingHour = selectedWorkingHour;
-    if (
-      this.highlighted.selected.length == 0 ||
-      selectedWorkingHour.hasBeenPrinted
-    ) {
-      this.showButtonsIfWorkingHourIsSelected = false;
+    if (this.highlighted.selected.length == 0) {
+      this.showButtonsIfSelected = false;
     } else {
-      this.showButtonsIfWorkingHourIsSelected = true;
+      this.showButtonsIfSelected = true;
     }
   }
 

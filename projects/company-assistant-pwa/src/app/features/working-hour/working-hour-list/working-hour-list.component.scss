@@ -129,13 +129,68 @@ td {
   display: none;
 }
 #bottom-nav {
-  background-color: #fff;
+  background-color: $color-white;
   height: 50px;
   position: fixed;
   bottom: 0;
   width: 100%;
   box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12);
   z-index: 1030;
+}
+
+#create-workingHour-btn {
+  background-color: $primary-color;
+  color: $color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
+#create-workingHour-delete-btn {
+  background-color: $primary-color;
+  color: $color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 78px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
+#create-workingHour-edit-btn {
+  background-color: $primary-color;
+  color: $color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 141px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
+.create-workingHour-edit-btn-if-delete-btn-is-active {
+  background-color: $primary-color;
+  color: $color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 141px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
+.create-workingHour-edit-btn {
+  background-color: $primary-color;
+  color: $color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 78px;
+  .material-icons {
+    color: $color-white;
+  }
 }
 
 .no-working-hours-found {

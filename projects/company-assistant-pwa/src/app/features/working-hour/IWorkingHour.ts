@@ -5,7 +5,7 @@ export interface IWorkingHour {
   description: string;
   employee: string;
   workingHours: number;
-  id?: string; // is necessary when deleting local working hour after synchronization
+  id?: string;
   orderId?: string;
   hasBeenPrinted?: boolean;
 }

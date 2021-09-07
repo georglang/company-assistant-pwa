@@ -1,10 +1,10 @@
 // bihler-default theme
+@use '~@angular/material' as mat;
 
 /**
 * Generated theme by Material Theme Generator
 * https://materialtheme.arcsine.dev
 */
-@import '~@angular/material/theming';
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -14,19 +14,19 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 
 $fontConfig: (
-  display-4: mat-typography-level(112px, 112px, 300, 'Roboto', -0.0134em),
-  display-3: mat-typography-level(56px, 56px, 400, 'Roboto', -0.0089em),
-  display-2: mat-typography-level(45px, 48px, 400, 'Roboto', 0em),
-  display-1: mat-typography-level(34px, 40px, 400, 'Roboto', 0.0074em),
-  headline: mat-typography-level(24px, 32px, 400, 'Roboto', 0em),
-  title: mat-typography-level(20px, 32px, 500, 'Roboto', 0.0075em),
-  subheading-2: mat-typography-level(16px, 28px, 400, 'Roboto', 0.0094em),
-  subheading-1: mat-typography-level(15px, 24px, 500, 'Roboto', 0.0067em),
-  body-2: mat-typography-level(14px, 24px, 500, 'Roboto', 0.0179em),
-  body-1: mat-typography-level(14px, 20px, 400, 'Roboto', 0.0179em),
-  button: mat-typography-level(14px, 14px, 500, 'Roboto', 0.0893em),
-  caption: mat-typography-level(12px, 20px, 400, 'Roboto', 0.0333em),
-  input: mat-typography-level(inherit, 1.125, 400, 'Roboto', 1.5px)
+  display-4: mat.define-typography-level(112px, 112px, 300, 'Roboto', -0.0134em),
+  display-3: mat.define-typography-level(56px, 56px, 400, 'Roboto', -0.0089em),
+  display-2: mat.define-typography-level(45px, 48px, 400, 'Roboto', 0em),
+  display-1: mat.define-typography-level(34px, 40px, 400, 'Roboto', 0.0074em),
+  headline: mat.define-typography-level(24px, 32px, 400, 'Roboto', 0em),
+  title: mat.define-typography-level(20px, 32px, 500, 'Roboto', 0.0075em),
+  subheading-2: mat.define-typography-level(16px, 28px, 400, 'Roboto', 0.0094em),
+  subheading-1: mat.define-typography-level(15px, 24px, 500, 'Roboto', 0.0067em),
+  body-2: mat.define-typography-level(14px, 24px, 500, 'Roboto', 0.0179em),
+  body-1: mat.define-typography-level(14px, 20px, 400, 'Roboto', 0.0179em),
+  button: mat.define-typography-level(14px, 14px, 500, 'Roboto', 0.0893em),
+  caption: mat.define-typography-level(12px, 20px, 400, 'Roboto', 0.0333em),
+  input: mat.define-typography-level(inherit, 1.125, 400, 'Roboto', 1.5px)
 );
 
 // Foreground Elements
@@ -34,13 +34,13 @@ $fontConfig: (
 // Light Theme Text
 $dark-text: #000000;
 $dark-primary-text: rgba($dark-text, 0.87);
-$dark-accent-text: rgba($dark-primary-text, 0.54);
-$dark-disabled-text: rgba($dark-primary-text, 0.38);
-$dark-dividers: rgba($dark-primary-text, 0.12);
-$dark-focused: rgba($dark-primary-text, 0.12);
+$dark-accent-text: rgba(rgba(black, 0.87), 0.54);
+$dark-disabled-text: rgba(rgba(black, 0.87), 0.38);
+$dark-dividers: rgba(rgba(black, 0.87), 0.12);
+$dark-focused: rgba(rgba(black, 0.87), 0.12);
 
 // Compute font config
-@include mat-core($fontConfig);
+@include mat.core($fontConfig);
 
 // Theme Config
 
@@ -48,9 +48,9 @@ body {
   --primary-color: #375c7f;
   --primary-lighter-color: #c3ced9;
   --primary-darker-color: #234162;
-  --text-primary-color: #{$light-primary-text};
-  --text-primary-lighter-color: #{$dark-primary-text};
-  --text-primary-darker-color: #{$light-primary-text};
+  --text-primary-color: #{white};
+  --text-primary-lighter-color: #{rgba(black, 0.87)};
+  --text-primary-darker-color: #{white};
 }
 
 $mat-primary: (
@@ -60,20 +60,20 @@ $mat-primary: (
   200: #375c7f, // For slide toggle,
   contrast:
     (
-      main: $light-primary-text,
-      lighter: $dark-primary-text,
-      darker: $light-primary-text
+      main: white,
+      lighter: rgba(black, 0.87),
+      darker: white
     )
 );
-$app-primary: mat-palette($mat-primary, main, lighter, darker);
+$app-primary: mat.define-palette($mat-primary, main, lighter, darker);
 
 body {
   --accent-color: #797979;
   --accent-lighter-color: #d7d7d7;
   --accent-darker-color: #5c5c5c;
-  --text-accent-color: #{$light-primary-text};
-  --text-accent-lighter-color: #{$dark-primary-text};
-  --text-accent-darker-color: #{$light-primary-text};
+  --text-accent-color: #{white};
+  --text-accent-lighter-color: #{rgba(black, 0.87)};
+  --text-accent-darker-color: #{white};
 }
 
 $mat-accent: (
@@ -83,20 +83,20 @@ $mat-accent: (
   200: #797979, // For slide toggle,
   contrast:
     (
-      main: $dark-primary-text,
-      lighter: $dark-primary-text,
-      darker: $dark-primary-text
+      main: rgba(black, 0.87),
+      lighter: rgba(black, 0.87),
+      darker: rgba(black, 0.87)
     )
 );
-$app-accent: mat-palette($mat-accent, main, lighter, darker);
+$app-accent: mat.define-palette($mat-accent, main, lighter, darker);
 
 body {
   --warn-color: #ff0000;
   --warn-lighter-color: #ffb3b3;
   --warn-darker-color: #ff0000;
-  --text-warn-color: #{$light-primary-text};
-  --text-warn-lighter-color: #{$dark-primary-text};
-  --text-warn-darker-color: #{$light-primary-text};
+  --text-warn-color: #{white};
+  --text-warn-lighter-color: #{rgba(black, 0.87)};
+  --text-warn-darker-color: #{white};
 }
 
 $mat-warn: (
@@ -107,12 +107,12 @@ $mat-warn: (
   // For slide toggle,
   contrast:
     (
-      main: $light-primary-text,
-      lighter: $dark-primary-text,
-      darker: $light-primary-text
+      main: white,
+      lighter: rgba(black, 0.87),
+      darker: white
     )
 );
-$app-warn: mat-palette($mat-warn, main, lighter, darker);
+$app-warn: mat.define-palette($mat-warn, main, lighter, darker);
 
 // Specific component overrides, pieces that are not in line with the general theming
 
@@ -140,9 +140,9 @@ $app-warn: mat-palette($mat-warn, main, lighter, darker);
   }
 }
 
-$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+$app-theme: mat.define-light-theme($app-primary, $app-accent, $app-warn);
 
 // export colors
-$primary: mat-color($app-primary);
-$accent: mat-color($app-accent);
-$warn: mat-color($app-warn);
+$primary: mat.get-color-from-palette($app-primary);
+$accent: mat.get-color-from-palette($app-accent);
+$warn: mat.get-color-from-palette($app-warn);

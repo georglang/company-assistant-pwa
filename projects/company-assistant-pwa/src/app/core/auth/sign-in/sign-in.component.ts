@@ -1,6 +1,7 @@
 import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NewAuthService } from '../../../shared/services/newAuth.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class SignInComponent implements OnInit {
 
   hide = true;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: NewAuthService, private router: Router) {}
 
   ngOnInit() {}
 
@@ -34,14 +35,10 @@ export class SignInComponent implements OnInit {
   submit() {
     if (this.signInForm.valid) {
       this.submitEM.emit(this.signInForm.value);
-      this.authService
-        .login(
-          this.signInForm.get('email').value,
-          this.signInForm.get('password').value
-        )
-        .then((data) => {
-          this.router.navigate(['working-hours']);
-        });
+      this.authService.login(
+        this.signInForm.get('email').value,
+        this.signInForm.get('password').value
+      )
     }
   }
 }

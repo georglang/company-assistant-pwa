@@ -29,18 +29,18 @@ export class EditWorkingHourComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
     private route: ActivatedRoute,
     private dateAdapter: DateAdapter<Date>,
     private firestoreWorkingHourService: FirestoreWorkingHourService,
     private messageService: MessageService,
     private toastrService: ToastrService,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) {
     this.dateAdapter.setLocale('de');
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.editWorkingHourForm = this.formBuilder.group({
       id: [''],
       date: ['', Validators.required],
@@ -49,13 +49,12 @@ export class EditWorkingHourComponent implements OnInit {
       employee: ['', Validators.required]
     });
 
-    this.route.parent.parent.parent.params.subscribe((params) => {
-      this.orderId = params.id;
-    });
-
-    this.route.params.subscribe((params) => {
-      this.workingHourId = params['id'];
-      this.getWorkingHourByIdFromFirebase(this.orderId, this.workingHourId);
+    this.route.parent.parent.params.subscribe((url) => {
+      this.orderId = url.id;
+      this.route.parent.params.subscribe((subUrl) => {
+        this.workingHourId = subUrl.id;
+        this.getWorkingHourByIdFromFirebase(url.id, subUrl.id);
+      });
     });
   }
 
@@ -118,7 +117,7 @@ export class EditWorkingHourComponent implements OnInit {
     return this.editWorkingHourForm.controls;
   }
 
-  public saveWorkingHour() {
+  public saveWorkingHour(): void {
     const workingHour = new WorkingHour(
       this.editWorkingHourForm.controls.date.value,
       this.editWorkingHourForm.controls.description.value,
@@ -161,6 +160,7 @@ export class EditWorkingHourComponent implements OnInit {
         .updateWorkingHour(orderId, workingHour)
         .then(() => {
           this.showUpdateMessage();
+          this.navigateToWorkingHourList();
         });
     }
   }

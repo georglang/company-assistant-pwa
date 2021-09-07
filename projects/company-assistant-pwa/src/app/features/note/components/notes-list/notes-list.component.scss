@@ -131,7 +131,7 @@ mat-header-cell:first-of-type {
   box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12);
   z-index: 1030;
 }
-#create-material-btn {
+#create-note-btn {
   background-color: $primary-color;
   color: $color-white;
   position: absolute;
@@ -141,6 +141,29 @@ mat-header-cell:first-of-type {
     color: #fff;
   }
 }
+
+#note-delete-btn {
+  background-color: $primary-color;
+  color: $color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 78px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
+#note-edit-btn {
+  background-color: $primary-color;
+  color: $color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 141px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
 #edit-material-btn {
   background-color: $primary-color;
   .material-icons {
@@ -150,6 +173,10 @@ mat-header-cell:first-of-type {
 
 .material-nav-icon {
   width: 24px;
+}
+
+.mat-row.highlighted {
+  background: $light-grey;
 }
 
 ::ng-deep .mat-form-field-wrapper {

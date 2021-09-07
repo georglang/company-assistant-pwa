@@ -153,7 +153,23 @@
             <mat-header-row
               *matHeaderRowDef="displayedColumns"
             ></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+            <mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              (click)="highlighted.toggle(row); showActionButtons(row)"
+              [ngClass]="{
+                hovered: row.hovered,
+                highlighted: highlighted.isSelected(row)
+              }"
+              (click)="!row.hasBeenPrinted && selection.toggle(row)"
+              [ngStyle]="
+                row.hasBeenPrinted && {
+                  'background-color': '#aeafae',
+                  border: '1px solid #999999',
+                  color: '#666666',
+                  opacity: '0.8'
+                }
+              "
+            ></mat-row>
           </mat-table>
 
           <ng-template #noMaterialsFoundTemplate>
@@ -164,12 +180,35 @@
     </div>
 
     <div id="bottom-nav">
+      <div *ngIf="showButtonsIfSelected">
+        <button
+          id="note-edit-btn"
+          type="button"
+          mat-fab
+          (click)="navigateToEditNote(this.selectedNote)"
+        >
+          <i class="material-icons">edit</i>
+        </button>
+      </div>
+
+      <div *ngIf="showButtonsIfSelected">
+        <button
+          type="button"
+          id="note-delete-btn"
+          type="button"
+          mat-fab
+          (click)="deleteNote(this.selectedNote)"
+        >
+          <i class="material-icons">delete</i>
+        </button>
+      </div>
+
       <button
         type="button"
-        id="create-material-btn"
+        id="create-note-btn"
         type="button"
         mat-fab
-        (click)="createNote()"
+        (click)="navigateToCreateNote()"
       >
         <i class="material-icons">add</i>
       </button>

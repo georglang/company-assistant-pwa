@@ -43,6 +43,14 @@ export class FirestoreNoteService {
       .pipe(map((actions) => actions.map(this.documentToDomainObject)));
   }
 
+  public getNotesByOrderId(orderId: string): Observable<INote[]> {
+    return this.ordersCollection
+      .doc(orderId)
+      .collection('notes')
+      .snapshotChanges()
+      .pipe(map((actions) => actions.map(this.documentToDomainObject)));
+  }
+
   getMaterialByOrderId(orderId: string): any {
     return this.ordersCollection
       .doc(orderId)
@@ -57,6 +65,14 @@ export class FirestoreNoteService {
           })
         )
       );
+  }
+
+  public deleteNote(orderId: string, id: string) {
+    return this.ordersCollection
+      .doc(orderId)
+      .collection('notes')
+      .doc(id)
+      .delete();
   }
 
   private documentToDomainObject = (dToDO) => {

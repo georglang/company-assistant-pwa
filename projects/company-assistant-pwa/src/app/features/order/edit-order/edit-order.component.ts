@@ -99,17 +99,23 @@ export class EditOrderComponent implements OnInit {
     const order = new Order(
       this.editOrderForm.controls.date.value,
       this.editOrderForm.controls.companyName.value,
-      this.editOrderForm.controls.location.value,
       this.editOrderForm.controls.contactPerson.value,
-      this.orderId,
-      this.order.workingHours
+      this.editOrderForm.controls.location.value,
+      this.orderId
     );
+
 
     this.submitted = true;
     if (this.editOrderForm.invalid) {
       return;
     } else {
       if (order !== undefined) {
+        // order.materials
+        // notes: undefined
+        // workingHours: undefined
+
+
+
         this.updateOrderInFirestore(order);
       }
     }

@@ -175,7 +175,7 @@
               ></mat-header-row>
               <mat-row
                 *matRowDef="let row; columns: displayedColumns"
-                (click)="highlighted.toggle(row); showEditAndDeleteButton(row)"
+                (click)="highlighted.toggle(row); showActionButtons(row)"
                 [ngClass]="{
                   hovered: row.hovered,
                   highlighted: highlighted.isSelected(row)
@@ -202,42 +202,26 @@
     </div>
 
     <div id="bottom-nav">
-      <div
-        *ngIf="showButtonsIfMaterialIsSelected"
-        [ngClass]="{
-          'material-edit-btn-if-print-is-not-active': !showPrintButton,
-          'material-edit-btn': showPrintButton,
-          'material-edit-btn-if-delete-is-not-active': !showDeleteButton
-        }"
-      >
+      <div *ngIf="showButtonsIfMaterialIsSelected">
         <button
+          [ngClass]="{
+            'material-edit-btn-if-print-is-not-active': !showPrintButton,
+            'material-edit-btn': showPrintButton
+          }"
           type="button"
           mat-fab
-          (click)="editMaterial(this.selectedMaterial)"
+          (click)="routeToeditMaterial(this.selectedMaterial)"
           id="edit-material-btn"
         >
           <i class="material-icons">edit</i>
         </button>
       </div>
 
-      <div *ngIf="showPrintButton">
+      <div *ngIf="showButtonsIfMaterialIsSelected">
         <button
+          *ngIf="showButtonsIfMaterialIsSelected"
           type="button"
-          [ngClass]="{
-            'material-edit-btn-if-print-is-not-active': !showPrintButton,
-            'material-edit-btn': showPrintButton
-          }"
-          id="material-print-btn"
-          type="button"
-          mat-fab
-        >
-          <i class="material-icons">print</i>
-        </button>
-      </div>
-
-      <div *ngIf="showButtonsIfMaterialIsSelected && showDeleteButton">
-        <button
-          id="material-delete-btn"
+          id="create-material-delete-btn"
           type="button"
           mat-fab
           (click)="deleteMaterial(this.selectedMaterial)"
@@ -245,12 +229,13 @@
           <i class="material-icons">delete</i>
         </button>
       </div>
+
       <button
         type="button"
         id="create-material-btn"
         type="button"
         mat-fab
-        (click)="createMaterial()"
+        (click)="routeToCreateMaterial()"
       >
         <i class="material-icons">add</i>
       </button>

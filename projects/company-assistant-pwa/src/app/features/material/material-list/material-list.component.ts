@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
@@ -8,12 +8,12 @@ import { FirestoreMaterialService } from '../services/firestore-material-service
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 
-// import { ConfirmDeleteDialogComponent } from '../../working-hour/confirm-delete-dialog/confirm-delete-dialog.component';
 import { IMaterial } from './IMaterial';
 import { ITabItem } from '../../order/lazy-loaded-tab-navigation/ITabItem';
 import { tabs } from '../../order/lazy-loaded-tab-navigation/TabData';
 import { IOrder } from '../../order/Order';
 import { FirestoreOrderService } from '../../order/services/firestore-order-service/firestore-order.service';
+import { ConfirmDeleteDialogComponent } from '../../../shared/components/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
   selector: 'app-material-list',
@@ -24,13 +24,12 @@ export class MaterialListComponent implements OnInit {
   public paramOrderId;
   public displayedColumns = ['material', 'amount', 'unit'];
   public dataSource = new MatTableDataSource();
-  public hasMaterialsFound: boolean = false;
+  public hasMaterialsFound = false;
   public selection = new SelectionModel<IMaterial>(true, []);
   public highlighted = new SelectionModel<IMaterial>(false, []);
   public selectedMaterial: IMaterial;
-  public showButtonsIfMaterialIsSelected: boolean = false;
-  public showPrintButton: boolean = false;
-  public showDeleteButton: boolean = false;
+  public showButtonsIfMaterialIsSelected = false;
+  public showPrintButton = false;
   public tabs: ITabItem[] = tabs;
   public tabsWithRoutes = [];
   public order: IOrder;
@@ -44,7 +43,7 @@ export class MaterialListComponent implements OnInit {
     private toastrService: ToastrService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.paramOrderId = params['id'];
       this.getMaterialsFromCloudDatabase(this.paramOrderId);
@@ -107,8 +106,8 @@ export class MaterialListComponent implements OnInit {
     });
   }
 
-  public showEditAndDeleteButton(selectedWorkingHour: IMaterial) {
-    this.selectedMaterial = selectedWorkingHour;
+  public showActionButtons(selectedMaterial: IMaterial): void {
+    this.selectedMaterial = selectedMaterial;
     if (this.highlighted.selected.length == 0) {
       this.showButtonsIfMaterialIsSelected = false;
     } else {
@@ -116,7 +115,7 @@ export class MaterialListComponent implements OnInit {
     }
   }
 
-  public editMaterial(material: IMaterial) {
+  public routeToeditMaterial(material: IMaterial): void {
     this.router.navigate([material.id + '/edit'], { relativeTo: this.route });
   }
 
@@ -130,26 +129,26 @@ export class MaterialListComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  public deleteMaterial(material: IMaterial) {
+  public deleteMaterial(material: IMaterial): void {
     this.openDeleteWorkingHourDialog(material.id);
   }
-  public createMaterial() {
+  public routeToCreateMaterial(): void {
     this.router.navigate(['orders/' + this.paramOrderId + '/material/create']);
   }
 
   public openDeleteWorkingHourDialog(materialId: string): void {
-    // const dialogConfig = new MatDialogConfig();
-    // dialogConfig.disableClose = true;
-    // dialogConfig.autoFocus = true;
-    // const dialogRef = this.dialog.open(
-    //   ConfirmDeleteDialogComponent,
-    //   dialogConfig
-    // );
-    // dialogRef.afterClosed().subscribe((shouldDelete) => {
-    //   if (shouldDelete) {
-    //     this.deleteMaterialInFirebase(materialId);
-    //   }
-    // });
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    const dialogRef = this.dialog.open(
+      ConfirmDeleteDialogComponent,
+      dialogConfig
+    );
+    dialogRef.afterClosed().subscribe((shouldDelete) => {
+      if (shouldDelete) {
+        this.deleteMaterialInFirebase(materialId);
+      }
+    });
   }
 
   public deleteMaterialInFirebase(materialId: string): void {

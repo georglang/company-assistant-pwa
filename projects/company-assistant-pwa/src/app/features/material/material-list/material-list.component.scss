@@ -156,6 +156,17 @@ mat-header-cell:first-of-type {
   padding-bottom: 22px !important;
 }
 
+#create-material-delete-btn {
+  background-color: $primary-color;
+  color: $color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 78px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
 // Small devices (landscape phones, 576px and up)
 @media screen and (min-width: 576px) {
   .mat-row {

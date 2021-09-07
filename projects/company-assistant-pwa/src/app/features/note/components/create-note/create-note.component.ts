@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IOrder } from '../../../order/Order';
@@ -9,17 +9,20 @@ import { Note } from '../../Note';
 import { ImageService } from '../../../../shared/services/image-service/image.service';
 import { FirestoreNoteService } from '../../services/firestore-note/firestore-note.service';
 import { MessageService } from '../../../../shared/services/message-service/message.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-note',
   templateUrl: './create-note.component.html',
   styleUrls: ['./create-note.component.scss']
 })
-export class CreateNoteComponent implements OnInit {
+export class CreateNoteComponent implements OnInit, OnDestroy {
   createNoteFormGroup: FormGroup;
   order: IOrder;
   paramOrderId;
+  percentageImageUpload;
   private imageEvent;
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -41,25 +44,30 @@ export class CreateNoteComponent implements OnInit {
       this.paramOrderId = params['id'];
       this.getOrderByIdFromCloudDatabase(this.paramOrderId);
     });
+
+    const uploadProgress$ = this.imageService.changePercentage$.subscribe(
+      (percentage) => {
+        console.log('Percentage: ', percentage);
+
+        this.percentageImageUpload = percentage;
+      }
+    );
+    this.subscriptions.add(uploadProgress$);
   }
 
   fileInputOnChange($event): void {
     this.imageEvent = $event;
   }
 
-  navigateToOrderList(): void {
+  navigateToNotesList(): void {
     this.location.back();
   }
 
   saveNote(): void {
-    if (this.createNoteFormGroup.invalid) {
-      return;
-    } else {
-      this.createNote(
-        this.createNoteFormGroup.controls.notice.value,
-        this.paramOrderId
-      );
-    }
+    this.createNote(
+      this.createNoteFormGroup.controls.notice.value,
+      this.paramOrderId
+    );
   }
 
   private getOrderByIdFromCloudDatabase(orderId: string): void {
@@ -75,9 +83,11 @@ export class CreateNoteComponent implements OnInit {
       this.imageService
         .upload(this.imageEvent)
         .subscribe((imageUrl: string) => {
-          const note = new Note(notice, imageUrl, orderId);
+          const note = new Note(orderId, notice, imageUrl);
           this.addNoteToFirestoreNotesTable(note);
         });
+    } else {
+      this.addNoteToFirestoreNotesTable(new Note(orderId, notice, ''));
     }
   }
 
@@ -88,10 +98,17 @@ export class CreateNoteComponent implements OnInit {
         .then((id: string) => {
           this.messageService.noteCreatedSuccessfully();
           note.id = id;
+          this.navigateToNotesList();
         })
         .catch((e) => {
           console.error('Can´t add note to firebase', e);
         });
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.subscriptions !== undefined) {
+      this.subscriptions.unsubscribe();
     }
   }
 }

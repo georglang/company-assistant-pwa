@@ -98,4 +98,12 @@ export class MessageService {
     };
     this.toastr.success('Erfolgreich angelegt', 'Material', successConfig);
   }
+
+  public userNotAuthorized() {
+    const errorConfig = {
+      positionClass: 'toast-bottom-center',
+      timeout: 2000
+    };
+    this.toastr.error('Keine Berechtigung', 'Eintrag', errorConfig);
+  }
 }

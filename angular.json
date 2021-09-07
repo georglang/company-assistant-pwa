@@ -22,7 +22,6 @@
             "main": "projects/company-assistant-pwa/src/main.ts",
             "polyfills": "projects/company-assistant-pwa/src/polyfills.ts",
             "tsConfig": "projects/company-assistant-pwa/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/company-assistant-pwa/src/favicon.ico",
               "projects/company-assistant-pwa/src/assets",
@@ -32,7 +31,13 @@
             "stylePreprocessorOptions": {
               "includePaths": ["projects/company-assistant-pwa/src/styles"]
             },
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -64,7 +69,8 @@
               "serviceWorker": true,
               "ngswConfigPath": "projects/company-assistant-pwa/ngsw-config.json"
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

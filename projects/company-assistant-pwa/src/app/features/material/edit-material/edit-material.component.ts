@@ -82,8 +82,8 @@ export class EditMaterialComponent implements OnInit {
       this.editMaterialForm.controls.material.value,
       this.editMaterialForm.controls.amount.value,
       this.editMaterialForm.controls.unit.value,
-      this.materialId,
-      this.orderId
+      this.orderId,
+      this.materialId
     );
 
     this.submitted = true;
@@ -168,6 +168,7 @@ export class EditMaterialComponent implements OnInit {
         .updateMaterial(orderId, material)
         .then(() => {
           this.showUpdateMessage();
+          this.navigateToMaterialList();
         });
     }
   }

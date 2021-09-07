@@ -1,60 +1,105 @@
-<div id="sign-up-component-wrapper" class="row no-gutter">
-  <div class="col-12">
-    <mat-card id="sign-up-form-wrapper" class="row no-gutter">
-      <div>
-        <h2>Anmelden</h2>
-        <form [formGroup]="signUpForm" (ngSubmit)="submit()">
-          <p>
-            <mat-form-field>
-              <input
-                type="email"
-                matInput
-                placeholder="Bitte Email Adresse eingeben"
-                formControlName="email"
-                autocomplete="on"
-                required
-              />
-              <mat-hint *ngIf="!emailInput.value"
-                >Email Adresse eingeben</mat-hint
-              >
-            </mat-form-field>
-          </p>
-
-          <p>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Bitte Passwort eingeben"
-                [type]="hide ? 'password' : 'text'"
-                formControlName="password"
-                autocomplete="on"
-                required
-              />
-              <mat-icon matSuffix (click)="hide = !hide">{{
-                hide ? 'visibility_off' : 'visibility'
-              }}</mat-icon>
-              <mat-hint *ngIf="!passwordInput.value"
-                >Passwort eingeben</mat-hint
-              >
-            </mat-form-field>
-          </p>
-
-          <p *ngIf="error" class="error">
-            {{ error }}
-          </p>
-
-          <div id="redirectToLogin">
-            <span
-              >Bist du schon angemeldet ?
-              <a id="redirect" routerLink="/sign-in">Zum Login</a>
-            </span>
-          </div>
-
-          <div id="register-btn-wrapper">
-            <button mat-raised-button type="submit" mat-button>Anmelden</button>
-          </div>
-        </form>
+<div id="sign-up-component-wrapper" class="row no-gutters">
+  <div class="col">
+    <div class="sub-nav row no-gutters">
+      <div class="col-2">
+        <div type="button" class="nav-before-btn">
+          <mat-icon>navigate_before</mat-icon>
+        </div>
       </div>
-    </mat-card>
+      <div class="col-8 page-title-wrapper">Arbeitsstunden</div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+
+  <div id="sign-up-component-wrapper" class="row no-gutter">
+    <div class="col-12">
+      <mat-card id="sign-up-form-wrapper" class="row no-gutter">
+        <div>
+          <h2>Anmelden</h2>
+          <form [formGroup]="signUpForm" (ngSubmit)="submit()">
+            <mat-form-field>
+              <input
+                matInput
+                autocomplete="on"
+                type="text"
+                placeholder="Vor- und Nachname eingeben"
+                formControlName="displayName"
+                required
+              />
+              <mat-hint *ngIf="!displayNameInput.value"
+                >Vor- und Nachname eingeben</mat-hint
+              >
+            </mat-form-field>
+
+            <div id="email-and-passwort-wrapper">
+              <mat-form-field>
+                <input
+                  type="email"
+                  matInput
+                  placeholder="Email Adresse eingeben"
+                  formControlName="email"
+                  autocomplete="on"
+                  required
+                />
+                <mat-hint *ngIf="!emailInput.value"
+                  >Email Adresse eingeben</mat-hint
+                >
+              </mat-form-field>
+
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Passwort eingeben"
+                  [type]="hide ? 'password' : 'text'"
+                  formControlName="password"
+                  autocomplete="on"
+                  required
+                />
+                <mat-icon matSuffix (click)="hide = !hide">{{
+                  hide ? 'visibility_off' : 'visibility'
+                }}</mat-icon>
+                <mat-hint *ngIf="!passwordInput.value"
+                  >Passwort eingeben</mat-hint
+                >
+              </mat-form-field>
+            </div>
+
+            <div id="user-role-checkboxes">
+              <h3><strong>Benutzer Rollen</strong></h3>
+              <section>
+                <mat-checkbox formControlName="isAdmin">Admin</mat-checkbox>
+                <br />
+                <mat-checkbox formControlName="isUserAdmin"
+                  >User Admin</mat-checkbox
+                >
+                <br />
+                <mat-checkbox formControlName="isEmployee"
+                  >Arbeiter</mat-checkbox
+                >
+                <br />
+                <br />
+              </section>
+            </div>
+
+            <p *ngIf="error" class="error">
+              {{ error }}
+            </p>
+
+            <div id="redirectToLogin">
+              <span
+                >Bist du schon angemeldet ?
+                <a id="redirect" routerLink="/sign-in">Zum Login</a>
+              </span>
+            </div>
+
+            <div id="register-btn-wrapper">
+              <button mat-raised-button (click)="signUp()" mat-button>
+                Benutzer registrieren
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-card>
+    </div>
   </div>
 </div>

@@ -11,13 +11,13 @@ export class Material implements IMaterial {
     material: string,
     amount: number,
     unit: string,
-    id?: string,
-    orderId?: string
+    orderId?: string,
+    id?: string
   ) {
     this.material = material;
     this.amount = amount;
     this.unit = unit;
-    this.id = id;
     this.orderId = orderId;
+    this.id = id;
   }
 }

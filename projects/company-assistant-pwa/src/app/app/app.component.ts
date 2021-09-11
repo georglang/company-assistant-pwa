@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { from, Observable } from 'rxjs';
 
@@ -13,6 +13,7 @@ import { PrintService } from '../core/services/print-service/print.service';
 import { IUser } from '../core/auth/user';
 import { FireFunctionsService } from '../core/services/fire-functions/fire-functions.service';
 import { NewAuthService } from '../shared/services/newAuth.service';
+import { SearchService } from '../shared/services/search.service';
 
 const AUTH_KEY = 'Auth';
 
@@ -37,13 +38,18 @@ export class AppComponent implements OnInit {
 
   user: IUser;
 
+  toggleSearch: boolean = false;
+  @ViewChild('searchbar') searchbar: ElementRef;
+  searchText = '';
+
   constructor(
     private store: Store<AppState>,
     private authService: NewAuthService,
     private localStorageService: LocalStorageService,
     public dialog: MatDialog,
     private printService: PrintService,
-    private fireFunctionService: FireFunctionsService
+    private fireFunctionService: FireFunctionsService,
+    private searchService: SearchService
   ) {
     // this.authService.bootstrapOAuthService();
   }
@@ -53,7 +59,6 @@ export class AppComponent implements OnInit {
     // this.isAuthenticated$ = this.store.pipe(select(selectIsAuthenticated));
 
     this.isAuthenticated$ = this.authService.isAuthenticated$;
-
 
     // this.authService.userChangedObs$.subscribe((user: IUser) => {
     //   this.user = user;
@@ -70,6 +75,10 @@ export class AppComponent implements OnInit {
     //     this.store.dispatch(authLogin());
     //   }
     // });
+  }
+
+  searchInputChanged(searchText: string): void {
+    this.searchService.changeSearchText(searchText);
   }
 
   login(): void {
@@ -115,5 +124,14 @@ export class AppComponent implements OnInit {
 
   callHelloWorld() {
     this.fireFunctionService.callHelloWorld();
+  }
+
+  openSearch() {
+    this.toggleSearch = true;
+    this.searchbar.nativeElement.focus();
+  }
+  searchClose() {
+    this.searchText = '';
+    this.toggleSearch = false;
   }
 }

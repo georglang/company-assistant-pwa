@@ -1,8 +1,15 @@
-<div style="height: 85vh">
-  <mat-toolbar class="toolbar">
+<div style="height: 93vh">
+  <!-- <div style="overflow-x: hidden; width: 100%" fxFlexFill cdkScrollable> -->
+  <mat-toolbar
+    class="toolbar main-header mat-elevation-z4"
+    [class.hidden]="toggleSearch"
+  >
     <mat-toolbar-row>
       <div class="branding"></div>
       <span class="menu-spacer"></span>
+      <button mat-icon-button (click)="openSearch()">
+        <mat-icon>search</mat-icon>
+      </button>
       <div id="auth-wrapper">
         <button
           mat-icon-button
@@ -31,6 +38,27 @@
           <fa-icon id="user-circle-icon" icon="user-circle"></fa-icon>
         </button>
       </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-toolbar
+    class="search-block mat-elevation-z4"
+    [class.active]="toggleSearch"
+  >
+    <mat-toolbar-row style="padding: 0 5px">
+      <button mat-icon-button disabled>
+        <mat-icon class="search-icon">search</mat-icon>
+      </button>
+      <input
+        class="search-control"
+        type="text"
+        placeholder="Suche"
+        (input)="searchInputChanged($event.target.value)"
+        #searchbar
+      />
+      <button mat-button mat-icon-button (click)="searchClose()">
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-toolbar-row>
   </mat-toolbar>
 

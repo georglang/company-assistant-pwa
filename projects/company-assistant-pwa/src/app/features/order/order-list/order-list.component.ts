@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -9,6 +8,8 @@ import { IOrder } from '../Order';
 import { FirestoreOrderService } from '../services/firestore-order-service/firestore-order.service';
 import { ConfirmDeleteDialogComponent } from '../../../shared/components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MessageService } from '../../../shared/services/message-service/message.service';
+import { Observable } from 'rxjs';
+import { SearchService } from '../../../shared/services/search.service';
 
 @Component({
   selector: 'app-order-list',
@@ -16,24 +17,33 @@ import { MessageService } from '../../../shared/services/message-service/message
   styleUrls: ['./order-list.component.scss']
 })
 export class OrderListComponent implements OnInit {
-  public dataSource: MatTableDataSource<IOrder>;
-  public displayedColumns = ['date', 'customer', 'location'];
-  public highlighted: SelectionModel<IOrder>;
-  public selectedOrder: IOrder;
-  public showButtonsIfOrderIsSelected = false;
-  public showDeleteButton = true;
+  @ViewChild('searchbar') searchbar: ElementRef;
+  dataSource: MatTableDataSource<IOrder>;
+  displayedColumns = ['date', 'customer', 'location'];
+  highlighted: SelectionModel<IOrder>;
+  selectedOrder: IOrder;
+  showButtonsIfOrderIsSelected = false;
+  showDeleteButton = true;
+  list: IOrder[] = [];
+  selectedOptions: IOrder[] = [];
+  searchText: string;
+  toggleSearch = false;
 
   constructor(
     private router: Router,
     public dialog: MatDialog,
     private firestoreOrderService: FirestoreOrderService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private searchService: SearchService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.dataSource = new MatTableDataSource<IOrder>();
     this.highlighted = new SelectionModel<IOrder>(false, []);
     this.getOrdersFromCloudDatabase();
+    this.searchService.searchText$.subscribe((searchText: string) => {
+      this.searchText = searchText;
+    });
   }
 
   public applyFilter(filterValue: string): void {
@@ -42,7 +52,7 @@ export class OrderListComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  public deleteOrder(order: IOrder) {
+  public deleteOrder(order: IOrder): void {
     this.openDeleteOrderDialog(order.id);
   }
 
@@ -53,7 +63,7 @@ export class OrderListComponent implements OnInit {
     });
   }
 
-  public editOrder(order: IOrder) {
+  public editOrder(order: IOrder): void {
     this.router.navigate(['orders/' + order.id + '/edit-order']);
   }
 
@@ -66,6 +76,7 @@ export class OrderListComponent implements OnInit {
             const ordersSortedByDate = orders.sort(
               (a, b) => b.date.seconds - a.date.seconds
             );
+            this.list = ordersSortedByDate;
             this.dataSource = new MatTableDataSource(ordersSortedByDate);
           } else {
             this.dataSource = new MatTableDataSource();
@@ -102,16 +113,25 @@ export class OrderListComponent implements OnInit {
     });
   }
 
-  public showActionButtons(selectedOrder: IOrder) {
-    this.selectedOrder = selectedOrder;
-    if (this.highlighted.selected.length == 0) {
-      this.showButtonsIfOrderIsSelected = false;
-    } else {
+  public showActionButtons(selectedOrder: IOrder[]): void {
+    this.selectedOrder = selectedOrder[0];
+    if (selectedOrder.length > 0) {
       this.showButtonsIfOrderIsSelected = true;
+    } else {
+      this.showButtonsIfOrderIsSelected = false;
     }
   }
 
   private showDeleteMessage() {
     this.messageService.deletedSucessfull();
+  }
+
+  openSearch(): void {
+    this.toggleSearch = true;
+    this.searchbar.nativeElement.focus();
+  }
+  searchClose(): void {
+    this.searchService.changeSearchText('');
+    this.toggleSearch = false;
   }
 }

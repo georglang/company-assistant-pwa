@@ -1,4 +1,4 @@
-@import './../../../../styles/variables';
+@use 'variables';
 
 #order-list-component-wrapper {
   margin-top: 120px;
@@ -110,7 +110,7 @@ table {
 }
 
 #bottom-nav {
-  background-color: $color-white;
+  background-color: variables.$color-white;
   height: 50px;
   position: fixed;
   bottom: 0;
@@ -121,8 +121,8 @@ table {
 }
 
 #create-order-btn {
-  background-color: $primary-color;
-  color: $color-white;
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
   position: absolute;
   right: 16px;
   bottom: 16px;
@@ -132,8 +132,8 @@ table {
 }
 
 #create-order-delete-btn {
-  background-color: $primary-color;
-  color: $color-white;
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
   position: absolute;
   right: 16px;
   bottom: 78px;
@@ -143,8 +143,8 @@ table {
 }
 
 #create-order-edit-btn {
-  background-color: $primary-color;
-  color: $color-white;
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
   position: absolute;
   right: 16px;
   bottom: 141px;
@@ -154,8 +154,8 @@ table {
 }
 
 .create-order-edit-btn-if-delete-btn-is-active {
-  background-color: $primary-color;
-  color: $color-white;
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
   position: absolute;
   right: 16px;
   bottom: 141px;
@@ -165,30 +165,30 @@ table {
 }
 
 .create-order-edit-btn {
-  background-color: $primary-color;
-  color: $color-white;
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
   position: absolute;
   right: 16px;
   bottom: 78px;
   .material-icons {
-    color: $color-white;
+    color: variables.$color-white;
   }
 }
 
 .create-watch-btn-if-delete-btn-is-active {
-  background-color: $primary-color;
-  color: $color-white;
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
   position: absolute;
   right: 16px;
   bottom: 204px;
   .material-icons {
-    color: $color-white;
+    color: variables.$color-white;
   }
 }
 
 .create-order-watch-btn {
-  background-color: $primary-color;
-  color: $color-white;
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
   position: absolute;
   right: 16px;
   bottom: 141px;
@@ -198,8 +198,8 @@ table {
 }
 
 .mat-row.highlighted {
-  background: $light-grey;
-  color: $color-white;
+  background: variables.$light-grey;
+  color: variables.$color-white;
 }
 
 #order-list-wrapper {
@@ -257,4 +257,11 @@ mat-selection-list {
 .company-name {
   font-weight: bold !important;
   font-size: 15px !important;
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: map-get(variables.$grid-breakpoints, md)) {
+  .sub-nav {
+    background-color: green;
+  }
 }

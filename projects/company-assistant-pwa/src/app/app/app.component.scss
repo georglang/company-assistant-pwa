@@ -1,4 +1,4 @@
-@use 'variables';
+@use './../../styles/variables';
 
 mat-sidenav {
   width: 200px;
@@ -29,6 +29,7 @@ mat-sidenav {
 }
 
 header {
+  height: 64px;
   position: fixed;
   top: 0;
   z-index: 11;
@@ -44,7 +45,7 @@ header {
   width: 0%;
   right: 0;
   @extend header;
-  background: #fff;
+  background: variables.$color-white;
   &.active {
     width: 100%;
   }
@@ -55,6 +56,9 @@ header {
     outline: none;
     padding-left: 10px;
   }
+}
+#search-icon {
+  color: variables.$color-white;
 }
 
 .search-block.active {

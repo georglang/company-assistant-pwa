@@ -84,8 +84,8 @@ mat-header-cell:first-of-type {
 }
 #customer-info-wrapper {
   border-bottom: solid grey 1px;
-  padding-top: 78px;
   padding-bottom: 36px;
+  margin-top: 160px;
 }
 #customer-info {
   width: 50%;
@@ -165,6 +165,12 @@ mat-header-cell:first-of-type {
   .material-icons {
     color: #fff;
   }
+}
+
+#no-materials-found {
+  text-align: center;
+  font-size: 120%;
+  margin-top: 20px;
 }
 
 // Small devices (landscape phones, 576px and up)

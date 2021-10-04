@@ -106,29 +106,29 @@
         <div class="col">
           <mat-table
             #table
-            [dataSource]="dataSource"
+            [dataSource]="[dataSource]"
             matSort
-            *ngIf="hasNotesFound; else noMaterialsFoundTemplate"
+            *ngIf="hasNotesFound; else noNotesFoundTemplate"
           >
             <ng-container matColumnDef="id">
               <mat-header-cell *matHeaderCellDef> Id</mat-header-cell>
-              <mat-cell *matCellDef="let material">
+              <mat-cell *matCellDef="let note">
                 <div>Id:</div>
-                {{ material.id }}
+                {{ note.id }}
               </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="notice">
               <mat-header-cell *matHeaderCellDef>Notiz</mat-header-cell>
-              <mat-cell *matCellDef="let material">
+              <mat-cell *matCellDef="let note">
                 <div class="disable-on-small-device">
-                  {{ material.notice }}
+                  {{ note.notice }}
                 </div>
                 <mat-form-field>
                   <input
                     matInput
                     placeholder="Notiz"
-                    value="{{ material.notice }}"
+                    value="{{ note.notice }}"
                     readonly
                   />
                 </mat-form-field>
@@ -136,17 +136,20 @@
             </ng-container>
 
             <ng-container matColumnDef="image">
-              <mat-header-cell *matHeaderCellDef>Bild</mat-header-cell>
-              <mat-cell *matCellDef="let material">
+              <mat-header-cell *matHeaderCellDef class="w-75"
+                >Bild</mat-header-cell
+              >
+              <mat-cell *matCellDef="let note">
                 <div class="disable-on-small-device">
-                  {{ material.imageUrl }}
+                  {{ note.imageUrl }}
                 </div>
                 <img
-                  src="{{ material.imageUrl }}"
+                  src="{{ note.imageUrl }}"
                   lightbox
                   alt=""
                   width="100px"
                 />
+                 Image URL: {{note.imageUrl}}
               </mat-cell>
             </ng-container>
 
@@ -172,8 +175,8 @@
             ></mat-row>
           </mat-table>
 
-          <ng-template #noMaterialsFoundTemplate>
-            <div class="no-materials-found">Keine Einträge gefunden</div>
+          <ng-template #noNotesFoundTemplate>
+            <div id="no-notes-found">Keine Einträge gefunden</div>
           </ng-template>
         </div>
       </div>

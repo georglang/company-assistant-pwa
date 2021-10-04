@@ -77,10 +77,15 @@ mat-header-cell:first-of-type {
 .mat-row {
   min-height: 28px;
 }
+
+.w-75 {
+  width: 75px;
+}
+
 #customer-info-wrapper {
   border-bottom: solid grey 1px;
-  padding-top: 78px;
   padding-bottom: 36px;
+  margin-top: 160px;
 }
 #customer-info {
   width: 50%;
@@ -181,6 +186,12 @@ mat-header-cell:first-of-type {
 
 ::ng-deep .mat-form-field-wrapper {
   padding-bottom: 22px !important;
+}
+
+#no-notes-found {
+  text-align: center;
+  font-size: 120%;
+  margin-top: 20px;
 }
 
 // Small devices (landscape phones, 576px and up)

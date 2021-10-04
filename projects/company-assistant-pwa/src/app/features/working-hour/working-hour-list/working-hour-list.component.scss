@@ -50,8 +50,8 @@ td {
 }
 #customer-info-wrapper {
   border-bottom: solid grey 1px;
-  padding-top: 38px;
   padding-bottom: 36px;
+  margin-top: 120px;
 }
 #customer-info {
   width: 50%;
@@ -193,11 +193,12 @@ td {
   }
 }
 
-.no-working-hours-found {
+#no-working-hours-found {
   text-align: center;
   font-size: 120%;
   margin-top: 20px;
 }
+
 .selected {
   background-color: red !important;
 }

@@ -1,0 +1,14 @@
+<div id="sub-nav" class="container">
+  <div class="flex-left">
+    <div
+      *ngIf="enableBackBtn"
+      type="button"
+      class="nav-before-btn"
+      (click)="navigateBack()"
+    >
+      <mat-icon>navigate_before</mat-icon>
+    </div>
+  </div>
+  <div id="title" class="flex-center">{{ title }}</div>
+  <div class="flex-right"></div>
+</div>

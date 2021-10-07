@@ -1,11 +1,48 @@
 @use './../../styles/variables';
 
-mat-sidenav {
-  width: 200px;
-  a {
-    color: variables.$color-white;
-  }
+body {
+  overflow: hidden;
 }
+
+#app-component-wrapper {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-columns: 1fr;
+  grid-template-rows: 56px 1fr 56px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.header {
+  border-bottom: 1px solid lightgrey;
+}
+
+.footer {
+  border-top: 1px solid lightgrey;
+}
+
+.body {
+  display: grid;
+  overflow: hidden;
+}
+
+.content {
+  overflow-y: scroll;
+  padding: 20px;
+}
+
+// #app-component-wrapper {
+//   display: grid;
+//   grid-template: 56px 64px 100vh 64px / 100%;
+// }
+
+// mat-sidenav {
+//   width: 200px;
+//   a {
+//     color: variables.$color-white;
+//   }
+// }
 
 .branding {
   img {
@@ -13,66 +50,3 @@ mat-sidenav {
   }
 }
 
-#user-circle-icon {
-  font-size: 22px;
-}
-
-.toolbar {
-  color: variables.$color-white;
-  background-color: variables.$primary-color;
-  .main-nav-link {
-    &:hover {
-      color: variables.$hover-color;
-      text-decoration: none;
-    }
-  }
-}
-
-header {
-  height: 64px;
-  position: fixed;
-  top: 0;
-  z-index: 11;
-  transition: all 250ms ease-in-out;
-}
-.main-header {
-  @extend header;
-  &.hidden {
-    opacity: 0;
-  }
-}
-.search-block {
-  width: 0%;
-  right: 0;
-  @extend header;
-  background: variables.$color-white;
-  &.active {
-    width: 100%;
-  }
-  .search-control {
-    flex: 1;
-    font-size: 1rem;
-    border: 0;
-    outline: none;
-    padding-left: 10px;
-  }
-}
-#search-icon {
-  color: variables.$color-white;
-}
-
-.search-block.active {
-  width: 100%;
-  border-bottom: 1px solid #e2e2e2;
-}
-
-mat-toolbar {
-  box-shadow: none;
-}
-
-// Medium devices (tablets, 768px and up)
-@media (min-width: map-get(variables.$grid-breakpoints, md)) {
-  .mat-drawer-transition .mat-drawer-backdrop {
-    display: none;
-  }
-}

@@ -1,0 +1,64 @@
+@use './../../../styles/variables';
+
+#user-circle-icon {
+  font-size: 22px;
+}
+
+.toolbar {
+  color: variables.$color-white;
+  background-color: variables.$primary-color;
+  .main-nav-link {
+    &:hover {
+      color: variables.$hover-color;
+      text-decoration: none;
+    }
+  }
+}
+
+header {
+  position: fixed;
+  top: 0;
+  z-index: 11;
+  transition: all 250ms ease-in-out;
+}
+.main-header {
+  @extend header;
+  &.hidden {
+    opacity: 0;
+  }
+}
+.search-block {
+  width: 0%;
+  right: 0;
+  @extend header;
+  background: variables.$color-white;
+  &.active {
+    width: 100%;
+  }
+  .search-control {
+    flex: 1;
+    font-size: 1rem;
+    border: 0;
+    outline: none;
+    padding-left: 10px;
+  }
+}
+#search-icon {
+  color: variables.$color-white;
+}
+
+.search-block.active {
+  width: 100%;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+mat-toolbar {
+  box-shadow: none;
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: map-get(variables.$grid-breakpoints, md)) {
+  .mat-drawer-transition .mat-drawer-backdrop {
+    display: none;
+  }
+}

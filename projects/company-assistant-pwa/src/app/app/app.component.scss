@@ -14,39 +14,13 @@ body {
   padding-right: 0px;
 }
 
-.header {
-  border-bottom: 1px solid lightgrey;
-}
-
-.footer {
-  border-top: 1px solid lightgrey;
-}
-
 .body {
   display: grid;
   overflow: hidden;
 }
 
-.content {
+#content-wrapper {
   overflow-y: scroll;
-  padding: 20px;
+  padding: 0 20px;
+  margin-top: 56px;
 }
-
-// #app-component-wrapper {
-//   display: grid;
-//   grid-template: 56px 64px 100vh 64px / 100%;
-// }
-
-// mat-sidenav {
-//   width: 200px;
-//   a {
-//     color: variables.$color-white;
-//   }
-// }
-
-.branding {
-  img {
-    width: 76px;
-  }
-}
-

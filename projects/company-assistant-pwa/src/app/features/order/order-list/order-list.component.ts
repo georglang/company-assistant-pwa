@@ -28,6 +28,8 @@ export class OrderListComponent implements OnInit {
   selectedOptions: IOrder[] = [];
   searchText: string;
   toggleSearch = false;
+  subNavTitle = 'Aufträge';
+  enableSubNavBackBtn = false;
 
   constructor(
     private router: Router,

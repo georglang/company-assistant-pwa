@@ -1,7 +1,9 @@
-<div id="order-list-component-wrapper" class="row no-gutter">
-  <div class="sub-nav no-gutter">
-    <div class="page-title-wrapper">Aufträge</div>
-  </div>
+<div id="order-list-component-wrapper" class="row">
+  <app-sub-navigation
+    [title]="subNavTitle"
+    [enableBackBtn]="enableSubNavBackBtn"
+  >
+  </app-sub-navigation>
 
   <div style="overflow-x: hidden; width: 100%">
     <!-- <mat-toolbar

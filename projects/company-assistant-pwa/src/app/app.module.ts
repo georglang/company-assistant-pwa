@@ -37,10 +37,12 @@ import { CommonModule } from '@angular/common';
 import { ImpressumComponent } from './shared/components/impressum/impressum.component';
 import { AngularMaterialModule } from './shared/material/angular-material.module';
 import { PrintDialogComponent } from './shared/components/print-dialog/print-dialog.component';
+import { HeaderComponent } from './app/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
     SignInComponent,
     SignUpComponent,
     ForgotpasswordComponent,
@@ -82,7 +84,7 @@ import { PrintDialogComponent } from './shared/components/print-dialog/print-dia
 
   //ngrx
   providers: [
-    AuthService,
+    AuthService
 
     // { provide: USE_EMULATOR, useValue: ['localhost', 5000] }
   ],

@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AngularMaterialModule } from './material/angular-material.module';
-import { HeaderComponent } from './components/header/header.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { WorkingHoursPipe } from './pipes/working-hours.pipe';
 
 @NgModule({
   imports: [CommonModule, AngularMaterialModule],
-  declarations: [HeaderComponent],
-  exports: [AngularMaterialModule, HeaderComponent]
+  declarations: [FilterPipe, WorkingHoursPipe],
+  exports: [AngularMaterialModule, FilterPipe, WorkingHoursPipe]
 })
 export class SharedModule {}

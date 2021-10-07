@@ -1,15 +1,11 @@
 @use 'variables';
 
-#order-list-component-wrapper {
-  margin-top: 120px;
-}
-
 .sub-nav {
   height: 55px;
   height: 55px;
   background: #fff;
   box-shadow: 0px 2px 15px 0px rgb(0 0 0 / 12%);
-  top: 64px;
+  top: 56px;
   width: 100%;
   position: fixed;
   right: 0px;
@@ -242,10 +238,6 @@ header {
 
 .mat-list-item {
   border-bottom: solid #e0e0e0 1px;
-}
-
-mat-selection-list {
-  padding-left: 18px;
 }
 
 .date {

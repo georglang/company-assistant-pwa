@@ -1,152 +1,133 @@
-<div id="edit-working-hour-component-wrapper" class="row no-gutter">
-  <div class="col">
-    <div class="sub-nav row no-gutters">
-      <div class="col-2">
-        <div
-          type="button"
-          class="nav-before-btn"
-          (click)="navigateToWorkingHourList()"
-        >
-          <mat-icon>navigate_before</mat-icon>
-        </div>
-      </div>
-      <div class="col-8 page-title-wrapper">Arbeitsstunden bearbeiten</div>
-
-      <div class="col-2"></div>
-    </div>
-
-    <div class="row">
-      <div class="col-12">
-        <div id="edit-working-hour-form-wrapper" class="row no-gutter">
-          <div class="col-12">
-            <form
-              id="edit-working-hour-form"
-              [formGroup]="editWorkingHourForm"
-              #documentEditForm="ngForm"
-              (ngSubmit)="saveWorkingHour()"
-            >
-              <fieldset class="form-group">
-                <mat-form-field>
-                  <input
-                    matInput
-                    [matDatepicker]="picker"
-                    placeholder="Datum wählen"
-                    id="date"
-                    name="date"
-                    formControlName="date"
-                    (click)="picker.open()"
-                    required
-                    [ngClass]="{
-                      'is-invalid': submitted && getFormControl.date.errors
-                    }"
-                  />
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="picker"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                  <div
-                    *ngIf="submitted && getFormControl.date.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="getFormControl.date.errors.required">
-                      Bitte <strong>Datum</strong> eingeben
-                    </div>
-                  </div>
-                </mat-form-field>
-              </fieldset>
-
-              <fieldset class="form-group">
-                <mat-form-field>
-                  <input
-                    matInput
-                    set
-                    formControlName="description"
-                    placeholder="Art der Arbeit"
-                    required
-                    [ngClass]="{
-                      'is-invalid':
-                        submitted && getFormControl.description.errors
-                    }"
-                  />
-                  <div
-                    *ngIf="submitted && getFormControl.description.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="getFormControl.description.errors.required">
-                      Bitte <strong>Beschreibung</strong> eingeben
-                    </div>
-                  </div>
-                </mat-form-field>
-              </fieldset>
-
-              <fieldset class="form-group">
-                <mat-form-field>
-                  <input
-                    matInput
-                    type="number"
-                    step="0.25"
-                    formControlName="workingHours"
-                    placeholder="Arbeitsstunden"
-                    required
-                    [ngClass]="{
-                      'is-invalid':
-                        submitted && getFormControl.workingHours.errors
-                    }"
-                  />
-                  <div
-                    *ngIf="submitted && getFormControl.workingHours.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="getFormControl.workingHours.errors.required">
-                      Bitte <strong>Stunden</strong> eingeben
-                    </div>
-                  </div>
-                </mat-form-field>
-              </fieldset>
-
-              <fieldset class="form-group">
-                <mat-form-field appearance="fill">
-                  <mat-label>Arbeiter auswählen</mat-label>
-                  <mat-select
-                    formControlName="employee"
-                    multiple
-                    [ngClass]="{
-                      'is-invalid': submitted && getFormControl.employee.errors
-                    }"
-                  >
-                    <mat-option
-                      *ngFor="let employee of employees"
-                      [value]="employee.viewValue"
-                    >
-                      {{ employee.viewValue }}
-                    </mat-option>
-                  </mat-select>
-                  <div
-                    *ngIf="submitted && getFormControl.employee.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="getFormControl.employee.errors.required">
-                      Bitte <strong>Arbeiter</strong> eingeben
-                    </div>
-                  </div>
-                </mat-form-field>
-              </fieldset>
-            </form>
+<div id="edit-working-hour-component-wrapper">
+  <app-sub-navigation
+    [title]="subNavTitle"
+    [enableBackBtn]="enableSubNavBackBtn"
+    (navigateBack$)="navigateToWorkingHourList()"
+  >
+  </app-sub-navigation>
+  <div id="edit-working-hour-form-wrapper">
+    <form
+      id="edit-working-hour-form"
+      [formGroup]="editWorkingHourForm"
+      #documentEditForm="ngForm"
+      (ngSubmit)="saveWorkingHour()"
+    >
+      <fieldset class="form-group">
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="Datum wählen"
+            id="date"
+            name="date"
+            formControlName="date"
+            (click)="picker.open()"
+            required
+            [ngClass]="{
+              'is-invalid': submitted && getFormControl.date.errors
+            }"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <div
+            *ngIf="submitted && getFormControl.date.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="getFormControl.date.errors.required">
+              Bitte <strong>Datum</strong> eingeben
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div id="bottom-nav">
-      <button
-        type="button"
-        id="save-working-hour-btn"
-        type="button"
-        mat-fab
-        (click)="saveWorkingHour()"
-      >
-        <i class="material-icons">save</i>
-      </button>
-    </div>
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <mat-form-field>
+          <input
+            matInput
+            set
+            formControlName="description"
+            placeholder="Art der Arbeit"
+            required
+            [ngClass]="{
+              'is-invalid': submitted && getFormControl.description.errors
+            }"
+          />
+          <div
+            *ngIf="submitted && getFormControl.description.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="getFormControl.description.errors.required">
+              Bitte <strong>Beschreibung</strong> eingeben
+            </div>
+          </div>
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <mat-form-field>
+          <input
+            matInput
+            type="number"
+            step="0.25"
+            formControlName="workingHours"
+            placeholder="Arbeitsstunden"
+            required
+            [ngClass]="{
+              'is-invalid': submitted && getFormControl.workingHours.errors
+            }"
+          />
+          <div
+            *ngIf="submitted && getFormControl.workingHours.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="getFormControl.workingHours.errors.required">
+              Bitte <strong>Stunden</strong> eingeben
+            </div>
+          </div>
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <mat-form-field appearance="fill">
+          <mat-label>Arbeiter auswählen</mat-label>
+          <mat-select
+            formControlName="employee"
+            multiple
+            [ngClass]="{
+              'is-invalid': submitted && getFormControl.employee.errors
+            }"
+          >
+            <mat-option
+              *ngFor="let employee of employees"
+              [value]="employee.viewValue"
+            >
+              {{ employee.viewValue }}
+            </mat-option>
+          </mat-select>
+          <div
+            *ngIf="submitted && getFormControl.employee.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="getFormControl.employee.errors.required">
+              Bitte <strong>Arbeiter</strong> eingeben
+            </div>
+          </div>
+        </mat-form-field>
+      </fieldset>
+    </form>
+  </div>
+  <div id="bottom-nav">
+    <button
+      type="button"
+      id="save-working-hour-btn"
+      type="button"
+      mat-fab
+      (click)="saveWorkingHour()"
+    >
+      <i class="material-icons">save</i>
+    </button>
   </div>
 </div>

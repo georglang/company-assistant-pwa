@@ -18,14 +18,15 @@ import { FirestoreWorkingHourService } from '../services/firestore-working-hour-
   styleUrls: ['./edit-working-hour.component.scss']
 })
 export class EditWorkingHourComponent implements OnInit {
-  public editWorkingHourForm: FormGroup;
-  private workingHourId: string;
-  private orderId: string;
-  public workingHour: IWorkingHour;
-  public submitted = false;
+  editWorkingHourForm: FormGroup;
+  workingHourId: string;
+  orderId: string;
+  workingHour: IWorkingHour;
+  submitted = false;
+  employees = employees;
+  subNavTitle = 'Arbeitsstunden bearbeiten';
+  enableSubNavBackBtn = true;
   private subscription: Subscription = new Subscription();
-
-  public employees = employees;
 
   constructor(
     private formBuilder: FormBuilder,

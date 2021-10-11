@@ -1,4 +1,4 @@
-@import './../../../../styles/variables';
+@use './../../../../styles/variables';
 
 .sub-nav {
   height: 55px;
@@ -9,7 +9,6 @@
   top: 64px;
   z-index: 1030;
 }
-
 .nav-before-btn {
   text-align: left;
   margin-top: 8px;
@@ -17,34 +16,24 @@
     font-size: 40px;
   }
 }
-
 .page-title-wrapper {
   text-align: center;
   margin-top: 16px;
   font-size: 120%;
 }
-
-.save-btn {
-  text-align: right;
-  margin-top: 15px;
-}
-
 #edit-working-hour-component-wrapper {
-  margin-top: 150px;
+  margin-top: 40px;
 }
-
 #edit-working-hour-form {
   width: 80%;
   max-width: 300px;
   margin: auto;
 }
-
 .mat-form-field {
   width: 100%;
 }
-
 #bottom-nav {
-  background-color: #fff;
+  background-color: $color-white;
   height: 50px;
   position: fixed;
   bottom: 0;
@@ -59,11 +48,10 @@
   right: 16px;
   bottom: 16px;
   .material-icons {
-    color: #fff;
+    color: $color-white;
   }
 }
-
-// material text input underline
+// angular material text input underline
 ::ng-deep .mat-form-field-underline {
   display: block;
 }

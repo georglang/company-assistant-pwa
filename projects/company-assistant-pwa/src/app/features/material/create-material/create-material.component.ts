@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -25,6 +25,8 @@ export class CreateMaterialComponent implements OnInit {
   routeParamOrderId: string;
   submitted = false;
   units = materialUnits;
+  subNavTitle = 'Material anlegen';
+  enableSubNavBackBtn = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,7 +36,7 @@ export class CreateMaterialComponent implements OnInit {
     private location: Location
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.createMaterialForm = this.formBuilder.group({
       material: ['', Validators.required],
       amount: ['', Validators.required],
@@ -51,7 +53,7 @@ export class CreateMaterialComponent implements OnInit {
     });
   }
 
-  navigateToMaterialList() {
+  navigateToMaterialList(): void {
     this.location.back();
   }
 
@@ -59,7 +61,7 @@ export class CreateMaterialComponent implements OnInit {
     return this.createMaterialForm.controls;
   }
 
-  saveMaterial() {
+  saveMaterial(): void {
     this.submitted = true;
     if (this.createMaterialForm.invalid) {
       return;

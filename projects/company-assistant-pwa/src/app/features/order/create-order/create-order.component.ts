@@ -14,10 +14,12 @@ import { loadash as _ } from 'lodash';
   styleUrls: ['./create-order.component.scss']
 })
 export class CreateOrderComponent implements OnInit {
-  public createOrderForm: FormGroup;
-  public columns: string[];
-  public orders: any[]; // IOrder coudn´t be used because of firebase auto generated id,
-  public submitted = false;
+  createOrderForm: FormGroup;
+  columns: string[];
+  orders: any[]; // IOrder coudn´t be used because of firebase auto generated id,
+  submitted = false;
+  subNavTitle = 'Arbeitsstunden bearbeiten';
+  enableSubNavBackBtn = true;
 
   constructor(
     private formBuilder: FormBuilder,

@@ -16,12 +16,13 @@
     font-size: 40px;
   }
 }
-.save-btn {
-  text-align: right;
-  margin-top: 15px;
+.page-title-wrapper {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 120%;
 }
 #create-order-component-wrapper {
-  margin-top: 140px;
+  margin-top: 40px;
 }
 #create-order-form-wrapper {
   width: 80%;
@@ -31,15 +32,8 @@
 .mat-form-field {
   width: 100%;
 }
-
-.page-title-wrapper {
-  text-align: center;
-  margin-top: 16px;
-  font-size: 120%;
-}
-
 #bottom-nav {
-  background-color: #fff;
+  background-color: $color-white;
   height: 50px;
   position: fixed;
   bottom: 0;
@@ -54,10 +48,9 @@
   right: 16px;
   bottom: 16px;
   .material-icons {
-    color: #fff;
+    color: $color-white;
   }
 }
-
 // angular material: text input underline
 ::ng-deep .mat-form-field-underline {
   display: block;

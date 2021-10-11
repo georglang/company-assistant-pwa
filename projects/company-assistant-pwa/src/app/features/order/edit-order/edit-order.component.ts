@@ -16,10 +16,12 @@ import { FirestoreWorkingHourService } from '../../working-hour/services/firesto
   styleUrls: ['./edit-order.component.scss']
 })
 export class EditOrderComponent implements OnInit {
-  public editOrderForm: FormGroup;
-  private orderId: string;
-  public order: IOrder;
-  public submitted = false;
+  editOrderForm: FormGroup;
+  orderId: string;
+  order: IOrder;
+  submitted = false;
+  subNavTitle = 'Auftrag bearbeiten';
+  enableSubNavBackBtn = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -95,7 +97,7 @@ export class EditOrderComponent implements OnInit {
     return this.editOrderForm.controls;
   }
 
-  public onSubmit() {
+  public saveOrder(): void {
     const order = new Order(
       this.editOrderForm.controls.date.value,
       this.editOrderForm.controls.companyName.value,
@@ -103,7 +105,6 @@ export class EditOrderComponent implements OnInit {
       this.editOrderForm.controls.location.value,
       this.orderId
     );
-
 
     this.submitted = true;
     if (this.editOrderForm.invalid) {
@@ -113,8 +114,6 @@ export class EditOrderComponent implements OnInit {
         // order.materials
         // notes: undefined
         // workingHours: undefined
-
-
 
         this.updateOrderInFirestore(order);
       }

@@ -43,3 +43,8 @@ body {
   margin: 0;
   font-family: 'Helvetica Neue', sans-serif;
 }
+
+// Overwrite material
+.mat-list-text {
+  padding-right: 0px !important;
+}

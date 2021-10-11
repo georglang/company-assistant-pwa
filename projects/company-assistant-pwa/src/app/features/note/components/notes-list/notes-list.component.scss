@@ -20,6 +20,18 @@
     font-size: 40px;
   }
 }
+
+#customer-info-wrapper {
+  border-bottom: solid grey 1px;
+  padding-bottom: 20px;
+  margin-top: 20px;
+}
+#customer-info {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
 .settings-btn {
   text-align: right;
   margin-top: 15px;
@@ -80,18 +92,6 @@ mat-header-cell:first-of-type {
 
 .w-75 {
   width: 75px;
-}
-
-#customer-info-wrapper {
-  border-bottom: solid grey 1px;
-  padding-bottom: 36px;
-  margin-top: 160px;
-}
-#customer-info {
-  width: 50%;
-  margin: auto;
-  display: flex;
-  justify-content: center;
 }
 
 #material-print-btn {

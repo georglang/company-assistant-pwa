@@ -29,6 +29,8 @@ export class NotesListComponent implements OnInit {
   tabs: ITabItem[] = tabs;
   notes: INote[] = [];
   showDeleteButton = true;
+  subNavTitle = 'Notizen';
+  enableSubNavBackBtn = true;
   private paramOrderId: string;
 
   constructor(

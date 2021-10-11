@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NotesListComponent } from './components/notes-list/notes-list.component';
 import { EditNoteComponent } from './components/edit-note/edit-note.component';
 import { CrystalLightboxModule } from '@crystalui/angular-lightbox';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { CrystalLightboxModule } from '@crystalui/angular-lightbox';
     ReactiveFormsModule,
     AngularMaterialModule,
     NoteRoutingModule,
-    CrystalLightboxModule
+    CrystalLightboxModule,
+    SharedModule
   ],
   declarations: [NotesListComponent, EditNoteComponent, CreateNoteComponent]
 })

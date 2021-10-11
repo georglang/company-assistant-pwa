@@ -9,7 +9,7 @@ import { Note } from '../../Note';
 import { ImageService } from '../../../../shared/services/image-service/image.service';
 import { FirestoreNoteService } from '../../services/firestore-note/firestore-note.service';
 import { MessageService } from '../../../../shared/services/message-service/message.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-note',
@@ -23,6 +23,8 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
   percentageImageUpload;
   private imageEvent;
   private subscriptions: Subscription = new Subscription();
+  subNavTitle = 'Notzi anlegen';
+  enableSubNavBackBtn = true;
 
   constructor(
     private fb: FormBuilder,

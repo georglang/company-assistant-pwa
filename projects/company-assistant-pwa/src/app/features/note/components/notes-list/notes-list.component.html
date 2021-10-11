@@ -5,63 +5,7 @@
     (navigateBack$)="navigateToOrderList()"
   >
   </app-sub-navigation>
-  <div id="customer-info-wrapper">
-    <div id="customer-info">
-      <table>
-        <tr>
-          <td>
-            <mat-icon aria-hidden="false" aria-label="company name icon">
-              perm_identity
-            </mat-icon>
-          </td>
-          <td class="table-data-padding">
-            <div class="icon-margin">
-              {{ order?.companyName }}
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <mat-icon aria-hidden="false" aria-label="date icon">
-              date_range
-            </mat-icon>
-          </td>
-          <td class="table-data-padding">
-            <div class="icon-margin">
-              {{ order?.date?.seconds * 1000 | date: 'dd.MM.yyyy' }}
-            </div>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <mat-icon aria-hidden="false" aria-label="location icon">
-              location_on
-            </mat-icon>
-          </td>
-          <td class="table-data-padding">
-            <div class="icon-margin">
-              {{ order?.location }}
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img
-              id="helmet-icon"
-              src="./assets/img/helmet.svg"
-              alt="contact person icon"
-            />
-          </td>
-          <td class="table-data-padding">
-            <div class="icon-margin">
-              {{ order?.contactPerson }}
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
+  <app-customer-info-wrapper order="order"></app-customer-info-wrapper>
 
   <nav mat-tab-nav-bar mat-align-tabs="center">
     <a

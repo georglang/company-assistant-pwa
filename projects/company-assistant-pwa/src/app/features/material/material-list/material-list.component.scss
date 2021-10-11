@@ -57,18 +57,6 @@ mat-header-cell:first-of-type {
 .mat-row {
   min-height: 28px;
 }
-#customer-info-wrapper {
-  border-bottom: solid grey 1px;
-  padding-bottom: 20px;
-  margin-top: 20px;
-}
-#customer-info {
-  width: 50%;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-}
-
 #material-print-btn {
   position: absolute;
   background-color: $primary-color;

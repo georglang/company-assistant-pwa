@@ -46,12 +46,12 @@ td {
   border-top: 0px;
 }
 #working-hour-list-component-wrapper {
-  margin-top: 40px;
+  margin-top: 10px;
 }
 #customer-info-wrapper {
   border-bottom: solid grey 1px;
-  padding-bottom: 36px;
-  margin-top: 120px;
+  padding-bottom: 20px;
+  margin-top: 20px;
 }
 #customer-info {
   width: 50%;
@@ -125,8 +125,19 @@ td {
 #location {
   margin-left: 34px;
 }
+
+.date {
+  font-size: 14px !important;
+  text-align: right;
+  margin-right: 10px !important;
+}
+
 .disable-on-small-device {
   display: none;
+}
+
+.mat-list-item {
+  border-bottom: solid #e0e0e0 1px;
 }
 #bottom-nav {
   background-color: $color-white;

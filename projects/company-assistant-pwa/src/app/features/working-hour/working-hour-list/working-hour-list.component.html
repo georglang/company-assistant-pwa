@@ -1,262 +1,106 @@
-<div id="working-hour-list-component-wrapper" class="row no-gutters">
-  <div class="col">
-    <div class="sub-nav row no-gutters">
-      <div class="col-2">
-        <div
-          type="button"
-          class="nav-before-btn"
-          (click)="navigateToOrderList()"
-        >
-          <mat-icon>navigate_before</mat-icon>
-        </div>
-      </div>
-      <div class="col-8 page-title-wrapper">Arbeitsstunden</div>
-      <div class="col-2"></div>
-    </div>
+<div id="working-hour-list-component-wrapper">
+  <app-sub-navigation
+    [title]="subNavTitle"
+    [enableBackBtn]="enableSubNavBackBtn"
+    (navigateBack$)="navigateToOrderList()"
+  >
+  </app-sub-navigation>
 
-    <div class="row">
-      <div class="col">
-        <div id="customer-info-wrapper" class="no-gutters">
-          <div id="customer-info">
-            <table>
-              <tr>
-                <td>
-                  <mat-icon aria-hidden="false" aria-label="date icon">
-                    date_range
-                  </mat-icon>
-                </td>
-                <td class="table-data-padding">
-                  <div class="icon-margin">
-                    {{ order?.date?.seconds * 1000 | date: 'dd.MM.yyyy' }}
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <mat-icon aria-hidden="false" aria-label="company name icon">
-                    perm_identity
-                  </mat-icon>
-                </td>
-                <td class="table-data-padding">
-                  <div class="icon-margin">
-                    {{ order?.companyName }}
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <mat-icon aria-hidden="false" aria-label="location icon">
-                    location_on
-                  </mat-icon>
-                </td>
-                <td class="table-data-padding">
-                  <div class="icon-margin">
-                    {{ order?.location }}
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <img
-                    id="helmet-icon"
-                    src="./assets/img/helmet.svg"
-                    alt="contact person icon"
-                  />
-                </td>
-                <td class="table-data-padding">
-                  <div class="icon-margin">
-                    {{ order?.contactPerson }}
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <nav mat-tab-nav-bar mat-align-tabs="center">
-          <a
-            mat-tab-link
-            *ngFor="let tab of tabsWithRoutes"
-            [routerLink]="tab.route"
-            routerLinkActive
-            #rla="routerLinkActive"
-            [active]="rla.isActive"
-          >
-            <div *ngIf="tab.icon.startsWith('./../'); else isAMaterialIcon">
-              <img class="material-nav-icon" src="{{ tab.icon }}" alt="" />
+  <div id="customer-info-wrapper">
+    <div id="customer-info">
+      <table>
+        <tr>
+          <td>
+            <mat-icon aria-hidden="false" aria-label="company name icon">
+              perm_identity
+            </mat-icon>
+          </td>
+          <td class="table-data-padding">
+            <div class="icon-margin">
+              {{ order?.companyName }}
             </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-icon aria-hidden="false" aria-label="date icon">
+              date_range
+            </mat-icon>
+          </td>
+          <td class="table-data-padding">
+            <div class="icon-margin">
+              {{ order?.date?.seconds * 1000 | date: 'dd.MM.yyyy' }}
+            </div>
+          </td>
+        </tr>
 
-            <ng-template #isAMaterialIcon>
-              <mat-icon class="mr-8">{{ tab.icon }}</mat-icon>
-              {{ tab.label }} <br />
-            </ng-template>
-          </a>
-        </nav>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div id="working-hour-table-wrapper" class="row no-gutter">
-          <div class="col">
-            <mat-table
-              #table
-              [dataSource]="dataSource"
-              matSort
-              *ngIf="hasWorkingHoursFound; else noWorkingHoursFoundTemplate"
-            >
-              <ng-container matColumnDef="select">
-                <mat-header-cell *matHeaderCellDef>
-                  <mat-checkbox
-                    (change)="$event ? masterToggle() : null"
-                    [checked]="selection.hasValue() && isAllSelected()"
-                    [indeterminate]="selection.hasValue() && !isAllSelected()"
-                    *ngIf="showPrintButton"
-                  >
-                  </mat-checkbox>
-                </mat-header-cell>
-                <mat-cell *matCellDef="let order">
-                  <mat-checkbox
-                    (click)="$event.stopPropagation()"
-                    (change)="$event ? selection.toggle(order) : null"
-                    [checked]="selection.isSelected(order)"
-                    *ngIf="showPrintButton && !order.hasBeenPrinted"
-                  >
-                  </mat-checkbox>
-                </mat-cell>
-              </ng-container>
-
-              <ng-container matColumnDef="id">
-                <mat-header-cell *matHeaderCellDef> Id</mat-header-cell>
-                <mat-cell *matCellDef="let order">
-                  <div>Id:</div>
-                  {{ order.id }}
-                </mat-cell>
-              </ng-container>
-
-              <ng-container matColumnDef="date">
-                <mat-header-cell *matHeaderCellDef> Datum</mat-header-cell>
-                <mat-cell *matCellDef="let order">
-                  <div class="disable-on-small-device">
-                    {{ order?.date?.seconds * 1000 | date: 'dd.MM.yyyy' }}
-                  </div>
-                  <mat-form-field class="">
-                    <input
-                      matInput
-                      placeholder="Datum"
-                      value="{{
-                        order?.date?.seconds * 1000 | date: 'dd.MM.yyyy'
-                      }}"
-                      readonly
-                      [disabled]="order.hasBeenPrinted"
-                    />
-                  </mat-form-field>
-                </mat-cell>
-              </ng-container>
-
-              <ng-container matColumnDef="description">
-                <mat-header-cell *matHeaderCellDef
-                  >Beschreibung
-                </mat-header-cell>
-                <mat-cell *matCellDef="let order">
-                  <div class="disable-on-small-device">
-                    {{ order.description }}
-                  </div>
-                  <mat-form-field>
-                    <input
-                      matInput
-                      placeholder="Beschreibung"
-                      value="{{ order.description }}"
-                      readonly
-                      [disabled]="order.hasBeenPrinted"
-                    />
-                  </mat-form-field>
-                </mat-cell>
-              </ng-container>
-
-              <ng-container matColumnDef="workingHours">
-                <mat-header-cell *matHeaderCellDef>
-                  Arbeitsstunden
-                </mat-header-cell>
-                <mat-cell *matCellDef="let order">
-                  <div class="disable-on-small-device">
-                    {{ order.workingHours }}
-                  </div>
-                  <mat-form-field class="hello">
-                    <input
-                      matInput
-                      placeholder="Arbeitsstunden"
-                      value="{{ order.workingHours }}"
-                      readonly
-                      [disabled]="order.hasBeenPrinted"
-                    />
-                  </mat-form-field>
-                </mat-cell>
-              </ng-container>
-
-              <ng-container matColumnDef="employee">
-                <mat-header-cell *matHeaderCellDef> Arbeiter </mat-header-cell>
-                <mat-cell *matCellDef="let order">
-                  <div class="disable-on-small-device">
-                    {{ order.employee }}
-                  </div>
-                  <mat-form-field>
-                    <input
-                      matInput
-                      placeholder="Arbeiter"
-                      value="{{ order.employee }}"
-                      readonly
-                      [disabled]="order.hasBeenPrinted"
-                    />
-                  </mat-form-field>
-                </mat-cell>
-              </ng-container>
-
-              <ng-container
-                id="column-hasBeenPrinted"
-                matColumnDef="hasBeenPrinted"
-              >
-                <th mat-header-cell *matHeaderCellDef>hasBeenPrinted</th>
-                <td mat-cell *matCellDef="let order">
-                  {{ order.hasBeenPrinted }}
-                </td>
-              </ng-container>
-
-              <mat-header-row
-                *matHeaderRowDef="displayedColumns"
-              ></mat-header-row>
-              <mat-row
-                *matRowDef="let row; columns: displayedColumns"
-                (click)="highlighted.toggle(row); showActionButtons(row)"
-                [ngClass]="{
-                  hovered: row.hovered,
-                  highlighted: highlighted.isSelected(row)
-                }"
-                (click)="!row.hasBeenPrinted && selection.toggle(row)"
-                [ngStyle]="
-                  row.hasBeenPrinted && {
-                    'background-color': '#aeafae',
-                    border: '1px solid #999999',
-                    color: '#666666',
-                    opacity: '0.8'
-                  }
-                "
-              ></mat-row>
-            </mat-table>
-
-            <ng-template #noWorkingHoursFoundTemplate>
-              <div id="no-working-hours-found">Keine Einträge gefunden</div>
-            </ng-template>
-          </div>
-        </div>
-      </div>
+        <tr>
+          <td>
+            <mat-icon aria-hidden="false" aria-label="location icon">
+              location_on
+            </mat-icon>
+          </td>
+          <td class="table-data-padding">
+            <div class="icon-margin">
+              {{ order?.location }}
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img
+              id="helmet-icon"
+              src="./assets/img/helmet.svg"
+              alt="contact person icon"
+            />
+          </td>
+          <td class="table-data-padding">
+            <div class="icon-margin">
+              {{ order?.contactPerson }}
+            </div>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
+
+  <nav mat-tab-nav-bar mat-align-tabs="center">
+    <a
+      mat-tab-link
+      *ngFor="let tab of tabsWithRoutes"
+      [routerLink]="tab.route"
+      routerLinkActive
+      #rla="routerLinkActive"
+      [active]="rla.isActive"
+    >
+      <div *ngIf="tab.icon.startsWith('./../'); else isAMaterialIcon">
+        <img class="material-nav-icon" src="{{ tab.icon }}" alt="" />
+      </div>
+
+      <ng-template #isAMaterialIcon>
+        <mat-icon class="mr-8">{{ tab.icon }}</mat-icon>
+        {{ tab.label }} <br />
+      </ng-template>
+    </a>
+  </nav>
+
+  <mat-selection-list
+    [multiple]="false"
+    [(ngModel)]="selectedOptions"
+    (ngModelChange)="showActionButtons($event)"
+  >
+    <mat-list-option
+      *ngFor="let workingHour of list | workingHoursPipe: searchText"
+      [value]="workingHour"
+    >
+      <div mat-line class="date">
+        {{ workingHour?.date.seconds * 1000 | date: 'dd.MM.yyyy' }}
+      </div>
+      <div mat-line>{{ workingHour.description }}</div>
+      <div mat-line>{{ workingHour.workingHours }}</div>
+      <div mat-line>{{ workingHour.employee }}</div>
+    </mat-list-option>
+  </mat-selection-list>
 
   <div id="bottom-nav">
     <div *ngIf="showButtonsIfSelected">

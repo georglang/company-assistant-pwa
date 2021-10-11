@@ -19,6 +19,7 @@ import 'jspdf-autotable';
 import { UserOptions } from 'jspdf-autotable';
 import { companyDetailsPrint } from '../../../../assets/config/companyDetailsPrint';
 import { ConfirmDeleteDialogComponent } from '../../../shared/components/confirm-delete-dialog/confirm-delete-dialog.component';
+import { SearchService } from '../../../shared/services/search.service';
 
 interface jsPDFWithPlugin extends jsPDF {
   autoTable: (options: UserOptions) => jsPDF;
@@ -43,13 +44,17 @@ export class WorkingHourListComponent implements OnInit {
   hasWorkingHoursFound = false;
   highlighted = new SelectionModel<IWorkingHour>(false, []);
   order: IOrder;
+  list: IWorkingHour[] = [];
   selection = new SelectionModel<IWorkingHour>(true, []);
   selectedWorkingHour: IWorkingHour;
   showButtonsIfSelected = false;
   showDeleteButton = true;
   showPrintButton = false;
-
+  selectedOptions: IWorkingHour[] = [];
   tabsWithRoutes = [];
+  searchText: string;
+  subNavTitle = 'Arbeitsstunden';
+  enableSubNavBackBtn = true;
 
   private customerData;
   private paramOrderId;
@@ -63,7 +68,8 @@ export class WorkingHourListComponent implements OnInit {
     private toastrService: ToastrService,
     public dialog: MatDialog,
     private firestoreOrderService: FirestoreOrderService,
-    private firestoreWorkingHourService: FirestoreWorkingHourService
+    private firestoreWorkingHourService: FirestoreWorkingHourService,
+    private searchService: SearchService
   ) {
     this.dateAdapter.setLocale('de');
     this.columns = ['Date', 'Description', 'Time', 'Delete'];
@@ -76,6 +82,9 @@ export class WorkingHourListComponent implements OnInit {
     });
 
     this.initTabNavigation();
+    this.searchService.searchText$.subscribe((searchText: string) => {
+      this.searchText = searchText;
+    });
   }
 
   initTabNavigation(): void {
@@ -131,6 +140,7 @@ export class WorkingHourListComponent implements OnInit {
           const workingHoursSortedByDate = this.order.workingHours.sort(
             (a, b) => b.date.toMillis() - a.date.toMillis()
           );
+          this.list = workingHoursSortedByDate;
           this.setWorkingHourDataSource(workingHoursSortedByDate);
         });
     }
@@ -262,9 +272,9 @@ export class WorkingHourListComponent implements OnInit {
     });
   }
 
-  public showActionButtons(selectedWorkingHour: IWorkingHour): void {
-    this.selectedWorkingHour = selectedWorkingHour;
-    if (this.highlighted.selected.length == 0) {
+  public showActionButtons(selectedWorkingHour: IWorkingHour[]): void {
+    this.selectedWorkingHour = selectedWorkingHour[0];
+    if (selectedWorkingHour.length == 0) {
       this.showButtonsIfSelected = false;
     } else {
       this.showButtonsIfSelected = true;
@@ -272,7 +282,7 @@ export class WorkingHourListComponent implements OnInit {
   }
 
   //  print PDF - start
-  public print() {
+  public print(): void {
     this.autoTableConfig(this.getSelectedWorkingHours().workingHours);
     this.loadImage('./assets/img/logo100px.png').then(
       (logo: HTMLImageElement) => {

@@ -32,6 +32,8 @@ export class EditMaterialComponent implements OnInit {
   options: string[] = materials;
   submitted = false;
   units = materialUnits;
+  subNavTitle = 'Material bearbeiten';
+  enableSubNavBackBtn = true;
 
   private orderId: string;
   private subscription: Subscription = new Subscription();
@@ -48,7 +50,7 @@ export class EditMaterialComponent implements OnInit {
     this.dateAdapter.setLocale('de');
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.editMaterialForm = this.formBuilder.group({
       material: ['', Validators.required],
       amount: [0, Validators.required],

@@ -1,8 +1,8 @@
-@import './../../../../styles/variables';
+@use './../../../../styles/variables';
 
 .sub-nav {
   height: 55px;
-  background: #fff;
+  background: variables.$color-white;
   box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12);
   position: fixed;
   width: 100%;
@@ -39,7 +39,7 @@
 }
 
 #edit-material-form-wrapper {
-  margin-top: 140px;
+  margin-top: 40px;
 }
 
 #material-form {
@@ -48,7 +48,7 @@
 }
 
 #bottom-nav {
-  background-color: #fff;
+  background-color: variables.$color-white;
   height: 50px;
   position: fixed;
   bottom: 0;
@@ -57,8 +57,8 @@
   z-index: 1030;
 }
 #save-material-btn {
-  background-color: $primary-color;
-  color: $color-white;
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
   position: absolute;
   right: 16px;
   bottom: 16px;

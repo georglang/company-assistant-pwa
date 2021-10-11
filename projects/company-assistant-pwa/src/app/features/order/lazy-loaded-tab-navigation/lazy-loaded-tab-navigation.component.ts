@@ -13,9 +13,9 @@ export class LazyLoadedTabNavigationComponent implements OnInit {
   public paramOrderId;
   public tabs: ITabItem[] = tabs;
   public tabsWithRoutes = [];
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.paramOrderId = params['id'];
 

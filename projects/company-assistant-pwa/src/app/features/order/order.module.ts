@@ -13,7 +13,6 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { CreateOrderComponent } from './create-order/create-order.component';
 import { LazyLoadedTabNavigationComponent } from './lazy-loaded-tab-navigation/lazy-loaded-tab-navigation.component';
 import { WorkingHourModule } from '../working-hour/working-hour.module';
-import { FilterPipe } from '../../shared/pipes/filter.pipe';
 
 @NgModule({
   imports: [
@@ -33,8 +32,7 @@ import { FilterPipe } from '../../shared/pipes/filter.pipe';
     SettingsDialogComponent,
     ConfirmDeleteDialogComponent,
     SettingsDialogComponent,
-    LazyLoadedTabNavigationComponent,
-    FilterPipe
+    LazyLoadedTabNavigationComponent
   ],
   providers: [MessageService]
 })

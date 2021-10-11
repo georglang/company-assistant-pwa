@@ -33,7 +33,7 @@ export class PrintDialogComponent implements OnInit, OnDestroy {
     private orderService: FirestoreOrderService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getOrders();
 
     // listen for search field value changes
@@ -96,7 +96,7 @@ export class PrintDialogComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.subscriptions != undefined) {
       this.subscriptions.unsubscribe();
     }

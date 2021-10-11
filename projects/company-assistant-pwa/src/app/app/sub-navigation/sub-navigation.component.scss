@@ -1,7 +1,4 @@
-.container {
-  display: flex;
-  flex-direction: row;
-}
+@use './../../../styles/variables';
 
 .flex-left {
   width: 40px;
@@ -14,9 +11,11 @@
 }
 
 #sub-nav {
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 100%;
   height: 55px;
-  height: 55px;
-  background: #fff;
+  background: $color-white;
   box-shadow: 0px 2px 15px 0px rgb(0 0 0 / 12%);
   top: 56px;
   width: 100%;

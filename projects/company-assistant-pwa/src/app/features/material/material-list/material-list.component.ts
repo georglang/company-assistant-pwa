@@ -33,6 +33,8 @@ export class MaterialListComponent implements OnInit {
   public tabs: ITabItem[] = tabs;
   public tabsWithRoutes = [];
   public order: IOrder;
+  subNavTitle = 'Material';
+  enableSubNavBackBtn = true;
 
   constructor(
     private firestoreMaterialService: FirestoreMaterialService,

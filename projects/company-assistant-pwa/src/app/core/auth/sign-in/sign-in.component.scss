@@ -30,6 +30,10 @@ mat-form-field {
   }
 }
 
+#sign-in-component-wrapper  {
+  margin-top: 40px;
+}
+
 @media (min-width: map-get($grid-breakpoints, md)) {
   #sign-in-form-wrapper {
     width: 50%;

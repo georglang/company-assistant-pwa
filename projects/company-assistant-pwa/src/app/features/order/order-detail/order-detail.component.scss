@@ -48,13 +48,10 @@ td {
 }
 #customer-info-wrapper {
   border-bottom: solid grey 1px;
-  padding-top: 38px;
-  padding-bottom: 36px;
-  margin-top: 120px;
+  padding-bottom: 40px;
+  margin-top: 40px;
 }
-#customer-info-wrapper-right {
-  margin-left: 20px;
-}
+
 #customer-info {
   width: 80%;
   margin: auto;
@@ -196,4 +193,4 @@ mat-header-cell:first-of-type {
   ::ng-deep .mat-form-field-underline {
     display: none;
   }
-};
+} ;

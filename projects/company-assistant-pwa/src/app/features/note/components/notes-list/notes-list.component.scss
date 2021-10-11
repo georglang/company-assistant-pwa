@@ -1,26 +1,5 @@
 @import './../../../../../styles/variables';
 
-.col-12 {
-  padding-left: 0px;
-  padding-right: 0px;
-}
-.sub-nav {
-  height: 55px;
-  background: #fff;
-  box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12);
-  position: fixed;
-  width: 100%;
-  top: 64px;
-  z-index: 1030;
-}
-.nav-before-btn {
-  text-align: left;
-  margin-top: 8px;
-  mat-icon {
-    font-size: 40px;
-  }
-}
-
 #customer-info-wrapper {
   border-bottom: solid grey 1px;
   padding-bottom: 20px;
@@ -38,11 +17,6 @@
 }
 .icon-margin {
   margin-left: 10px;
-}
-.page-title-wrapper {
-  text-align: center;
-  margin-top: 16px;
-  font-size: 120%;
 }
 #main-nav-wrapper {
   margin-top: 100px;

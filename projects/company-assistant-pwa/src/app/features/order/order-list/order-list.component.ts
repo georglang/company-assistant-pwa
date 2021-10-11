@@ -8,7 +8,6 @@ import { IOrder } from '../Order';
 import { FirestoreOrderService } from '../services/firestore-order-service/firestore-order.service';
 import { ConfirmDeleteDialogComponent } from '../../../shared/components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MessageService } from '../../../shared/services/message-service/message.service';
-import { Observable } from 'rxjs';
 import { SearchService } from '../../../shared/services/search.service';
 
 @Component({

@@ -17,6 +17,8 @@ export class CreateWorkingHourComponent implements OnInit {
   employees = employees;
   submitted = false;
   private routeParamOrderId: string;
+  subNavTitle = 'Arbeitsstunden anlegen';
+  enableSubNavBackBtn = true;
 
   constructor(
     private route: ActivatedRoute,

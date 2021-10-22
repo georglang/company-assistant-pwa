@@ -65,10 +65,6 @@ export class EditNoteComponent implements OnInit, OnDestroy {
     this.imageEvent = $event;
   }
 
-  get getEditNoteFormControls() {
-    return this.editNoteForm.controls;
-  }
-
   navigateBack(): void {
     this.location.back();
   }

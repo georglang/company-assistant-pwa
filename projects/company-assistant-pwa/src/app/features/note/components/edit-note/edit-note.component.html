@@ -1,12 +1,12 @@
-<div id="create-note-component-wrapper">
+<div id="edit-note-component-wrapper">
   <app-sub-navigation
     [title]="subNavTitle"
     [enableBackBtn]="enableSubNavBackBtn"
     (navigateBack$)="navigateToNotesList()"
   >
   </app-sub-navigation>
-  <div id="create-note-form-wrapper">
-    <form id="create-note-form" [formGroup]="editNoteForm">
+  <div id="edit-note-form-wrapper">
+    <form id="edit-note-form" [formGroup]="editNoteForm">
       <fieldset class="form-group">
         <mat-form-field>
           <textarea
@@ -15,8 +15,9 @@
             placeholder="Notiz eingeben"
             formControlName="notice"
             required
-            cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5"
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="10"
           >
           </textarea>
         </mat-form-field>

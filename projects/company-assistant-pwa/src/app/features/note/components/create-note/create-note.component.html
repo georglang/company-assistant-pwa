@@ -6,7 +6,7 @@
   >
   </app-sub-navigation>
   <div id="create-note-form-wrapper">
-    <form id="create-note-form" [formGroup]="createNoteFormGroup">
+    <form id="create-note-form" [formGroup]="createNoteForm">
       <fieldset class="form-group">
         <mat-form-field>
           <textarea
@@ -27,19 +27,38 @@
 
   <div id="image-upload-wrapper">
     <div id="upload-file-wrapper">
-      <h5>Bitte Bild auswählen</h5>
-      <input
-        type="file"
-        (change)="fileInputOnChange($event)"
-        accept=".png,.jpg"
-      />
-    </div>
-    <div id="progress-bar-wrapper">
-      <mat-progress-bar
-        *ngIf="percentageImageUpload > 0 && percentageImageUpload < 100"
-        mode="determinate"
-        value="{{ percentageImageUpload }}"
-      ></mat-progress-bar>
+      <form [formGroup]="createNoteForm">
+        <div *ngIf="this.imageUrl && this.imageUrl !== ''">
+          <img
+            class="image-preview"
+            [src]="this.imageUrl"
+            [alt]="createNoteForm.value.name"
+            width="200px"
+          />
+        </div>
+
+        <input
+          #fileInput
+          hidden
+          type="file"
+          accept=".png,.jpg"
+          (change)="imagePreview($event)"
+        />
+        <button
+          class="choose-img-btn"
+          mat-raised-button
+          (click)="fileInput.click()"
+        >
+          Bild Auswählen
+        </button>
+      </form>
+      <div id="progress-bar-wrapper">
+        <mat-progress-bar
+          *ngIf="percentageImageUpload > 0 && percentageImageUpload < 100"
+          mode="determinate"
+          value="{{ percentageImageUpload }}"
+        ></mat-progress-bar>
+      </div>
     </div>
   </div>
 

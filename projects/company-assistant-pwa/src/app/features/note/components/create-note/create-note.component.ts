@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { IOrder } from '../../../order/Order';
 import { FirestoreOrderService } from '../../../order/services/firestore-order-service/firestore-order.service';
 import { Location } from '@angular/common';
@@ -9,7 +9,7 @@ import { Note } from '../../Note';
 import { ImageService } from '../../../../shared/services/image-service/image.service';
 import { FirestoreNoteService } from '../../services/firestore-note/firestore-note.service';
 import { MessageService } from '../../../../shared/services/message-service/message.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-create-note',
@@ -17,20 +17,20 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./create-note.component.scss']
 })
 export class CreateNoteComponent implements OnInit, OnDestroy {
-  createNoteFormGroup: FormGroup;
+  createNoteForm: FormGroup;
   order: IOrder;
   paramOrderId;
   percentageImageUpload;
+  subNavTitle = 'Notiz anlegen';
+  enableSubNavBackBtn = true;
+  imageUrl: string;
   private imageEvent;
   private subscriptions: Subscription = new Subscription();
-  subNavTitle = 'Notzi anlegen';
-  enableSubNavBackBtn = true;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
     private location: Location,
+    private route: ActivatedRoute,
     private firestoreOrderService: FirestoreOrderService,
     private firestoreNoteService: FirestoreNoteService,
     private messageService: MessageService,
@@ -38,8 +38,9 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.createNoteFormGroup = this.fb.group({
-      notice: ['', Validators.required]
+    this.createNoteForm = this.fb.group({
+      notice: ['', Validators.required],
+      img: [null]
     });
 
     this.route.params.subscribe((params) => {
@@ -57,21 +58,6 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
     this.subscriptions.add(uploadProgress$);
   }
 
-  fileInputOnChange($event): void {
-    this.imageEvent = $event;
-  }
-
-  navigateToNotesList(): void {
-    this.location.back();
-  }
-
-  saveNote(): void {
-    this.createNote(
-      this.createNoteFormGroup.controls.notice.value,
-      this.paramOrderId
-    );
-  }
-
   private getOrderByIdFromCloudDatabase(orderId: string): void {
     this.firestoreOrderService.getOrderById(orderId).then((order: IOrder) => {
       if (order !== undefined) {
@@ -80,16 +66,43 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
     });
   }
 
-  private createNote(notice: string, orderId: string): void {
+  imagePreview($event): void {
+    const file = ($event.target as HTMLInputElement).files[0];
+    this.createNoteForm.patchValue({
+      img: file
+    });
+    this.createNoteForm.get('img').updateValueAndValidity();
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+    this.imageEvent = $event;
+  }
+
+  navigateToNotesList(): void {
+    this.location.back();
+  }
+
+  saveNote(): void {
+    if (this.imageEvent) {
+      this.uploadImage().subscribe((newImageUrl: string) => {
+        this.imageUrl = newImageUrl;
+        const note = new Note(
+          this.paramOrderId,
+          this.createNoteForm.controls.notice.value,
+          newImageUrl,
+          ''
+        );
+        this.addNoteToFirestoreNotesTable(note);
+      });
+    }
+  }
+
+  private uploadImage(): Observable<string> {
     if (this.imageService !== undefined && this.imageEvent !== undefined) {
-      this.imageService
-        .upload(this.imageEvent)
-        .subscribe((imageUrl: string) => {
-          const note = new Note(orderId, notice, imageUrl);
-          this.addNoteToFirestoreNotesTable(note);
-        });
-    } else {
-      this.addNoteToFirestoreNotesTable(new Note(orderId, notice, ''));
+      return this.imageService.upload(this.imageEvent);
     }
   }
 
@@ -108,7 +121,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.subscriptions !== undefined) {
       this.subscriptions.unsubscribe();
     }

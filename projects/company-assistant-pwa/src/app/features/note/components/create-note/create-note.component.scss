@@ -29,17 +29,17 @@
 }
 
 #create-note-form {
-  width: 80%;
-  max-width: 300px;
+  width: 40%;
   margin: auto;
+  margin-top: 40px;
 }
 
-#image-upload-wrapper {
+#upload-file-wrapper {
+  width: 40%;
   margin: auto;
   margin-top: 20px;
-  width: 80%;
 }
 
-#progress-bar-wrapper {
-  margin-top: 20px;
+.choose-img-btn {
+  margin-top: 40px;
 }

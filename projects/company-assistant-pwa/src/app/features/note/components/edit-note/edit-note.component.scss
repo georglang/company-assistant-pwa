@@ -1,0 +1,38 @@
+@import './../../../../../styles/variables';
+
+#bottom-nav {
+  background-color: #fff;
+  height: 50px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12);
+  z-index: 1030;
+}
+
+#save-note-btn {
+  background-color: $primary-color;
+  color: $color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
+#create-note-form-wrapper {
+  width: 40%;
+  margin: auto;
+  margin-top: 40px;
+}
+
+#choose-img-btn {
+  margin-left: 0px;
+}
+
+#upload-file-wrapper {
+  width: 40%;
+  margin: auto;
+  margin-top: 20px;
+}

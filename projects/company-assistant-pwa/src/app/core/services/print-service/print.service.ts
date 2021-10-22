@@ -98,7 +98,7 @@ export class PrintService {
 
   private addHeaderToEveryPage(logo) {
     this.setFontHeader();
-    this.addImage(logo);
+    // this.addImage(logo);
     this.addConsultantAdress();
     this.addOrderInformation();
   }

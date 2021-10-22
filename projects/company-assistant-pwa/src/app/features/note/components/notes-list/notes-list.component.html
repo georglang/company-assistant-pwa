@@ -27,73 +27,24 @@
     </a>
   </nav>
 
-  <div id="notes-list-wrapper">
-    <mat-table
-      #table
-      [dataSource]="[dataSource]"
-      matSort
-      *ngIf="hasNotesFound; else noNotesFoundTemplate"
-    >
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef> Id</mat-header-cell>
-        <mat-cell *matCellDef="let note">
-          <div>Id:</div>
-          {{ note.id }}
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="notice">
-        <mat-header-cell *matHeaderCellDef>Notiz</mat-header-cell>
-        <mat-cell *matCellDef="let note">
-          <div class="disable-on-small-device">
-            {{ note.notice }}
-          </div>
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Notiz"
-              value="{{ note.notice }}"
-              readonly
-            />
-          </mat-form-field>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="image">
-        <mat-header-cell *matHeaderCellDef class="w-75">Bild</mat-header-cell>
-        <mat-cell *matCellDef="let note">
-          <div class="disable-on-small-device">
-            {{ note.imageUrl }}
-          </div>
-          <img src="{{ note.imageUrl }}" lightbox alt="" width="100px" />
-          Image URL: {{ note.imageUrl }}
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        (click)="highlighted.toggle(row); showActionButtons(row)"
-        [ngClass]="{
-          hovered: row.hovered,
-          highlighted: highlighted.isSelected(row)
-        }"
-        (click)="!row.hasBeenPrinted && selection.toggle(row)"
-        [ngStyle]="
-          row.hasBeenPrinted && {
-            'background-color': '#aeafae',
-            border: '1px solid #999999',
-            color: '#666666',
-            opacity: '0.8'
-          }
-        "
-      ></mat-row>
-    </mat-table>
-
-    <ng-template #noNotesFoundTemplate>
-      <div id="no-notes-found">Keine Einträge gefunden</div>
-    </ng-template>
-  </div>
+  <mat-selection-list
+    [multiple]="false"
+    [(ngModel)]="selectedOptions"
+    (ngModelChange)="showActionButtons($event)"
+  >
+    <mat-list-option *ngFor="let note of notes" [value]="note">
+      <div mat-line>
+        <p>{{ note.notice }}</p>
+      </div>
+      <div mat-line></div>
+      <div mat-line>
+        <img src="{{ note?.imageUrl }}" lightbox width="200px" />
+      </div>
+      <div mat-line></div>
+      <div mat-line></div>
+      <div mat-line></div>
+    </mat-list-option>
+  </mat-selection-list>
 
   <div id="bottom-nav">
     <div *ngIf="showButtonsIfSelected">

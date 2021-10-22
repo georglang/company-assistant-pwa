@@ -21,6 +21,8 @@ export class NotesListComponent implements OnInit {
   public displayedColumns = ['notice', 'image'];
   highlighted = new SelectionModel<INote>(false, []);
   selection = new SelectionModel<INote>(true, []);
+  selectedOptions: INote[] = [];
+
   hasNotesFound = false;
   order: IOrder;
   tabsWithRoutes = [];
@@ -66,16 +68,16 @@ export class NotesListComponent implements OnInit {
     ]);
   }
 
-  public showActionButtons(selectedNote: INote): void {
-    this.selectedNote = selectedNote;
-    if (this.highlighted.selected.length == 0) {
+  public showActionButtons(selectedNote: INote[]): void {
+    this.selectedNote = selectedNote[0];
+    if (selectedNote.length == 0) {
       this.showButtonsIfSelected = false;
     } else {
       this.showButtonsIfSelected = true;
     }
   }
 
-  public deleteNote(note: INote) {
+  public deleteNote(note: INote): void {
     this.openDeleteNoteDialog(note.id);
   }
 
@@ -109,6 +111,8 @@ export class NotesListComponent implements OnInit {
         .getNotesByOrderId(orderId)
         .subscribe((notes: INote[]) => {
           // this.order.notes = notes;
+          this.notes = notes;
+
           this.setNotesDataSource(notes);
         });
     }
@@ -130,7 +134,7 @@ export class NotesListComponent implements OnInit {
   //   this.hasNotesFound = true;
   // }
 
-  public showDeleteMessage() {
+  public showDeleteMessage(): void {
     const successConfig = {
       positionClass: 'toast-bottom-center',
       timeout: 500

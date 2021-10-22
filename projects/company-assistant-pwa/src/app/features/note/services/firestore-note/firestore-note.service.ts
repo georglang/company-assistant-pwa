@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators';
 
 import { INote } from '../../INote';
 import { IOrder } from '../../../order/Order';
+import _ from 'lodash';
+import { Note } from '../../Note';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +53,21 @@ export class FirestoreNoteService {
       .pipe(map((actions) => actions.map(this.documentToDomainObject)));
   }
 
+  public getNotesFromNotesCollectionTest(orderId): Promise<any> {
+    const notes: INote[] = [];
+    return new Promise((resolve, reject) => {
+      this.notesCollection.ref.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const data = doc.data() as Note;
+          if (data.orderId === orderId) {
+            notes.push(data);
+          }
+        });
+        resolve(notes);
+      });
+    });
+  }
+
   getMaterialByOrderId(orderId: string): any {
     return this.ordersCollection
       .doc(orderId)
@@ -73,6 +90,51 @@ export class FirestoreNoteService {
       .collection('notes')
       .doc(id)
       .delete();
+  }
+
+  public checkIfNoteExistsInOrderInFirestore(note: INote): Promise<boolean> {
+    let doesNoteExist = true;
+    return new Promise((resolve, reject) => {
+      this.getNotesFromNotesCollectionTest(note.orderId).then((notes: any) => {
+        if (notes.length > 0) {
+          if (this.compareIfNoteIsOnline(note, notes)) {
+            doesNoteExist = true;
+          } else {
+            doesNoteExist = false;
+          }
+        } else {
+          doesNoteExist = false;
+        }
+        resolve(doesNoteExist);
+      });
+      resolve(false);
+    });
+  }
+
+  public updateNote(note: INote) {
+
+    return this.ordersCollection
+      .doc(note.orderId)
+      .collection('notes')
+      .doc(note.id)
+      .update(note)
+      .then((data) => {
+        debugger;
+      });
+  }
+
+  private compareIfNoteIsOnline(newNote: INote, notes): boolean {
+    let isNoteAlreadyOnline = false;
+    const notesToCompare: INote = Object();
+    Object.assign(notesToCompare, newNote);
+    notes.forEach((noteOnline) => {
+      delete noteOnline.id;
+      if (_.isEqual(noteOnline, notesToCompare)) {
+        isNoteAlreadyOnline = true;
+        return;
+      }
+    });
+    return isNoteAlreadyOnline;
   }
 
   private documentToDomainObject = (dToDO) => {

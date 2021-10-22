@@ -156,7 +156,7 @@ export class WorkingHourListComponent implements OnInit {
     }
   }
 
-  public createNewWorkingHour() {
+  public createNewWorkingHour(): void {
     this.router.navigate([
       'orders/' + this.paramOrderId + '/working-hours' + '/create'
     ]);
@@ -180,7 +180,7 @@ export class WorkingHourListComponent implements OnInit {
     workingHour.hasBeenPrinted = true;
   }
 
-  public showDeleteMessage() {
+  public showDeleteMessage(): void {
     const successConfig = {
       positionClass: 'toast-bottom-center',
       timeout: 500
@@ -188,7 +188,7 @@ export class WorkingHourListComponent implements OnInit {
     this.toastrService.error('Erfolgreich gelöscht', 'Eintrag', successConfig);
   }
 
-  public showSuccessMessage() {
+  public showSuccessMessage(): void {
     const successConfig = {
       positionClass: 'toast-bottom-center',
       timeout: 500

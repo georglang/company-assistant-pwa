@@ -15,10 +15,9 @@
             placeholder="Notiz eingeben"
             formControlName="notice"
             required
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
           >
-            <!-- cdkTextareaAutosize
-            cdkAutosizeMinRows="10"
-            cdkAutosizeMaxRows="30" -->
           </textarea>
         </mat-form-field>
       </fieldset>
@@ -27,44 +26,40 @@
 
   <div id="image-upload-wrapper">
     <div id="upload-file-wrapper">
-      <input
-        hidden
-        type="file"
-        #fileInput
-        (change)="fileInputOnChange($event)"
-        accept=".png,.jpg"
-      />
-      <button id="choose-img-btn" mat-raised-button (click)="fileInput.click()">
-        Bild Auswählen
-      </button>
-      <img src="{{ this.note?.imageUrl }}" lightbox width="200px" />
-    </div>
+      <form [formGroup]="editNoteForm">
+        <div *ngIf="this.note?.imageUrl && this.note?.imageUrl !== ''">
+          <img
+            class="image-preview"
+            [src]="this.note?.imageUrl"
+            [alt]="editNoteForm.value.name"
+            width="200px"
+          />
+        </div>
 
-    <div id="progress-bar-wrapper">
-      <mat-progress-bar
-        *ngIf="percentageImageUpload > 0 && percentageImageUpload < 100"
-        mode="determinate"
-        value="{{ percentageImageUpload }}"
-      ></mat-progress-bar>
+        <input
+          #fileInput
+          hidden
+          type="file"
+          accept=".png,.jpg"
+          (change)="imagePreview($event)"
+        />
+        <button
+          class="choose-img-btn"
+          mat-raised-button
+          (click)="fileInput.click()"
+        >
+          Bild Auswählen
+        </button>
+      </form>
+      <div id="progress-bar-wrapper">
+        <mat-progress-bar
+          *ngIf="percentageImageUpload > 0 && percentageImageUpload < 100"
+          mode="determinate"
+          value="{{ percentageImageUpload }}"
+        ></mat-progress-bar>
+      </div>
     </div>
   </div>
-
-  <form [formGroup]="editNoteForm" (ngSubmit)="submit()">
-    <div *ngIf="filePath && filePath !== ''">
-      <img [src]="filePath" [alt]="editNoteForm.value.name" width="200px" />
-    </div>
-
-    <input
-      #fileInput2
-      hidden
-      type="file"
-      accept=".png,.jpg"
-      (change)="imagePreview($event)"
-    />
-    <button id="choose-img-btn" mat-raised-button (click)="fileInput2.click()">
-      Bild Auswählen
-    </button>
-  </form>
 
   <div id="bottom-nav">
     <button

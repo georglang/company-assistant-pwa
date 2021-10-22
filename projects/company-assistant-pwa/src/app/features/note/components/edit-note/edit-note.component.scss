@@ -10,6 +10,10 @@
   z-index: 1030;
 }
 
+.img-preview {
+  margin-top: 40px;
+}
+
 #save-note-btn {
   background-color: $primary-color;
   color: $color-white;
@@ -27,12 +31,12 @@
   margin-top: 40px;
 }
 
-#choose-img-btn {
-  margin-left: 0px;
-}
-
 #upload-file-wrapper {
   width: 40%;
   margin: auto;
   margin-top: 20px;
+}
+
+.choose-img-btn {
+  margin-top: 40px;
 }

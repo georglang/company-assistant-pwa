@@ -54,7 +54,7 @@ export class PrintDialogComponent implements OnInit, OnDestroy {
 
   private getOrders() {
     const getOrders$ = this.orderService
-      .getOrdersFromOrdersCollection2()
+      .getOrdersFromOrdersCollection()
       .subscribe((orders: IOrder[]) => {
         this.orders = orders;
         this.filteredOrders.next(this.orders.slice());

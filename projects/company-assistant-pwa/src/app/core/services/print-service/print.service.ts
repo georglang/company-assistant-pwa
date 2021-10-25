@@ -167,17 +167,15 @@ export class PrintService {
   }
 
   private getNotes(orderId: string) {
-    this.noteService
-      .getAllNotesByOrderId(orderId)
-      .subscribe((notes: INote[]) => {
-        if (notes.length > 0) {
-          this.notes = notes;
-          this.autoTableNotes(this.notes);
-        } else {
-          return;
-        }
-        this.generatePdf();
-      });
+    this.noteService.getNotesByOrderId(orderId).subscribe((notes: INote[]) => {
+      if (notes.length > 0) {
+        this.notes = notes;
+        this.autoTableNotes(this.notes);
+      } else {
+        return;
+      }
+      this.generatePdf();
+    });
   }
 
   private getWorkingHours(orderId: string, categoriesToPrint: IPrintCategory) {

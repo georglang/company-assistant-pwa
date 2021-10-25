@@ -15,7 +15,6 @@ import { loadash as _ } from 'lodash';
 })
 export class CreateOrderComponent implements OnInit {
   createOrderForm: FormGroup;
-  columns: string[];
   orders: any[]; // IOrder coudn´t be used because of firebase auto generated id,
   submitted = false;
   subNavTitle = 'Arbeitsstunden bearbeiten';
@@ -28,8 +27,6 @@ export class CreateOrderComponent implements OnInit {
     private firestoreOrderService: FirestoreOrderService,
     private messageService: MessageService
   ) {
-    this.columns = ['Datum', 'Firma', 'Einsatzleiter', 'Ort'];
-
     this.createOrderForm = this.formBuilder.group({
       date: ['', Validators.required],
       contactPerson: ['', Validators.required],
@@ -60,26 +57,16 @@ export class CreateOrderComponent implements OnInit {
   }
 
   private addOrderToFirebaseOrdersTable(order: IOrder): void {
-    if (this.firestoreOrderService !== undefined) {
-      this.firestoreOrderService
-        .checkIfOrderExists(order)
-        .then((isAlreadyInFirestore: boolean) => {
-          if (!isAlreadyInFirestore) {
-            this.firestoreOrderService
-              .addOrder(order)
-              .then((order: IOrder) => {
-                this.messageService.orderCreatedSuccessful();
-                this.router.navigate(['orders']);
-                // order.id = id;
-              })
-              .catch((e) => {
-                console.error('can´t create order to firebase', e);
-              });
-          } else {
-            this.messageService.orderAlreadyExists();
-            return;
-          }
-        });
+    if (this.firestoreOrderService) {
+      this.firestoreOrderService.addOrder(order).subscribe(
+        (order: IOrder) => {
+          this.messageService.orderCreatedSuccessful();
+          this.navigateToOrderList();
+        },
+        (error) => {
+          console.log('Error add order to firebase', error);
+        }
+      );
     }
   }
 

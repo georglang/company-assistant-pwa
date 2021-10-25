@@ -37,14 +37,6 @@ export class FirestoreNoteService {
       });
   }
 
-  getAllNotesByOrderId(orderId: string): Observable<INote[]> {
-    return this.ordersCollection
-      .doc(orderId)
-      .collection('notes')
-      .snapshotChanges()
-      .pipe(map((actions) => actions.map(this.documentToDomainObject)));
-  }
-
   public getNotesByOrderId(orderId: string): Observable<INote[]> {
     return this.ordersCollection
       .doc(orderId)
@@ -112,7 +104,6 @@ export class FirestoreNoteService {
   }
 
   public updateNote(note: INote) {
-
     return this.ordersCollection
       .doc(note.orderId)
       .collection('notes')

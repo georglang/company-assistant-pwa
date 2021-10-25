@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
@@ -17,7 +16,6 @@ import { SearchService } from '../../../shared/services/search.service';
 })
 export class OrderListComponent implements OnInit {
   @ViewChild('searchbar') searchbar: ElementRef;
-  dataSource: MatTableDataSource<IOrder>;
   displayedColumns = ['date', 'customer', 'location'];
   highlighted: SelectionModel<IOrder>;
   selectedOrder: IOrder;
@@ -39,18 +37,11 @@ export class OrderListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource<IOrder>();
     this.highlighted = new SelectionModel<IOrder>(false, []);
-    this.getOrdersFromCloudDatabase();
+    this.getOrders();
     this.searchService.searchText$.subscribe((searchText: string) => {
       this.searchText = searchText;
     });
-  }
-
-  public applyFilter(filterValue: string): void {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLocaleLowerCase();
-    this.dataSource.filter = filterValue;
   }
 
   public deleteOrder(order: IOrder): void {
@@ -60,7 +51,7 @@ export class OrderListComponent implements OnInit {
   private deleteOrderInFirebase(orderId: string) {
     this.firestoreOrderService.deleteOrder(orderId).then((data) => {
       this.showDeleteMessage();
-      this.getOrdersFromCloudDatabase();
+      this.getOrders();
     });
   }
 
@@ -68,19 +59,16 @@ export class OrderListComponent implements OnInit {
     this.router.navigate(['orders/' + order.id + '/edit-order']);
   }
 
-  public getOrdersFromCloudDatabase(): void {
-    if (this.firestoreOrderService !== undefined) {
+  public getOrders(): void {
+    if (this.firestoreOrderService) {
       this.firestoreOrderService
-        .getOrdersFromOrdersCollection2()
+        .getOrdersFromOrdersCollection()
         .subscribe((orders: IOrder[]) => {
-          if (orders !== undefined) {
+          if (orders) {
             const ordersSortedByDate = orders.sort(
               (a, b) => b.date.seconds - a.date.seconds
             );
             this.list = ordersSortedByDate;
-            this.dataSource = new MatTableDataSource(ordersSortedByDate);
-          } else {
-            this.dataSource = new MatTableDataSource();
           }
         });
     }

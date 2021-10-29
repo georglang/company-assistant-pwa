@@ -18,9 +18,9 @@ export class FirestoreNoteService {
   private ordersCollection: AngularFirestoreCollection<IOrder>;
   private notesCollection: AngularFirestoreCollection<INote>;
 
-  constructor(private firestoreDb: AngularFirestore) {
-    this.ordersCollection = this.firestoreDb.collection<IOrder>('orders');
-    this.notesCollection = this.firestoreDb.collection<INote>('notes');
+  constructor(private firestore: AngularFirestore) {
+    this.ordersCollection = this.firestore.collection<IOrder>('orders');
+    this.notesCollection = this.firestore.collection<INote>('notes');
   }
 
   addNote(note: INote) {

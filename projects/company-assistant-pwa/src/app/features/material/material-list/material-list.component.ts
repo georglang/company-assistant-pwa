@@ -4,8 +4,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 
 import { FirestoreMaterialService } from '../services/firestore-material-service/firestore-material.service';
-
-import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 
 import { IMaterial } from './IMaterial';
@@ -23,7 +21,6 @@ import { ConfirmDeleteDialogComponent } from '../../../shared/components/confirm
 export class MaterialListComponent implements OnInit {
   public paramOrderId;
   public displayedColumns = ['material', 'amount', 'unit'];
-  public dataSource = new MatTableDataSource();
   public hasMaterialsFound = false;
   public selection = new SelectionModel<IMaterial>(true, []);
   public highlighted = new SelectionModel<IMaterial>(false, []);
@@ -35,6 +32,9 @@ export class MaterialListComponent implements OnInit {
   public order: IOrder;
   subNavTitle = 'Material';
   enableSubNavBackBtn = true;
+  selectedOptions: IMaterial[] = [];
+  searchText: string;
+  list: IMaterial[] = [];
 
   constructor(
     private firestoreMaterialService: FirestoreMaterialService,
@@ -92,7 +92,7 @@ export class MaterialListComponent implements OnInit {
         .getMaterialsByOrderId(orderId)
         .subscribe((materials: IMaterial[]) => {
           if (materials.length > 0) {
-            this.setMaterialDataSource(materials);
+            this.list = materials;
           } else {
             this.hasMaterialsFound = false;
           }
@@ -108,9 +108,10 @@ export class MaterialListComponent implements OnInit {
     });
   }
 
-  public showActionButtons(selectedMaterial: IMaterial): void {
-    this.selectedMaterial = selectedMaterial;
-    if (this.highlighted.selected.length == 0) {
+  public showActionButtons(selectedMaterial: IMaterial[]): void {
+    debugger;
+    this.selectedMaterial = selectedMaterial[0];
+    if (selectedMaterial.length == 0) {
       this.showButtonsIfMaterialIsSelected = false;
     } else {
       this.showButtonsIfMaterialIsSelected = true;
@@ -121,24 +122,18 @@ export class MaterialListComponent implements OnInit {
     this.router.navigate([material.id + '/edit'], { relativeTo: this.route });
   }
 
-  public applyFilter(filterValue: string): void {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLocaleLowerCase();
-    this.dataSource.filter = filterValue;
-  }
-
   public navigateToOrderList(): void {
     this.router.navigate(['/']);
   }
 
   public deleteMaterial(material: IMaterial): void {
-    this.openDeleteWorkingHourDialog(material.id);
+    this.openDeleteMaterialDialog(material.id);
   }
   public routeToCreateMaterial(): void {
     this.router.navigate(['orders/' + this.paramOrderId + '/material/create']);
   }
 
-  public openDeleteWorkingHourDialog(materialId: string): void {
+  public openDeleteMaterialDialog(materialId: string): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -162,18 +157,11 @@ export class MaterialListComponent implements OnInit {
       });
   }
 
-  public showDeleteMessage() {
+  public showDeleteMessage(): void {
     const successConfig = {
       positionClass: 'toast-bottom-center',
       timeout: 500
     };
     this.toastrService.error('Erfolgreich gelöscht', 'Eintrag', successConfig);
   }
-
-  private setMaterialDataSource(materials: IMaterial[]) {
-    this.dataSource = new MatTableDataSource<IMaterial>(materials);
-    this.hasMaterialsFound = true;
-  }
-
-  openSettingsDialog() {}
 }

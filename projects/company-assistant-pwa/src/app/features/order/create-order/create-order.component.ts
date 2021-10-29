@@ -7,6 +7,7 @@ import { Order, IOrder } from '../Order';
 import { FirestoreOrderService } from '../services/firestore-order-service/firestore-order.service';
 import { MessageService } from '../../../shared/services/message-service/message.service';
 import { loadash as _ } from 'lodash';
+import { FirestoreService } from '../../../shared/services/firestore-service/firestore.service';
 
 @Component({
   selector: 'app-create-order',
@@ -25,7 +26,8 @@ export class CreateOrderComponent implements OnInit {
     private router: Router,
     private dateAdapter: DateAdapter<Date>,
     private firestoreOrderService: FirestoreOrderService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private firestoreService: FirestoreService
   ) {
     this.createOrderForm = this.formBuilder.group({
       date: ['', Validators.required],
@@ -58,15 +60,19 @@ export class CreateOrderComponent implements OnInit {
 
   private addOrderToFirebaseOrdersTable(order: IOrder): void {
     if (this.firestoreOrderService) {
-      this.firestoreOrderService.addOrder(order).subscribe(
-        (order: IOrder) => {
-          this.messageService.orderCreatedSuccessful();
-          this.navigateToOrderList();
-        },
-        (error) => {
-          console.log('Error add order to firebase', error);
-        }
-      );
+      // this.firestoreOrderService.addOrder(order).subscribe(
+      //   (order: IOrder) => {
+      //     this.messageService.orderCreatedSuccessful();
+      //     this.navigateToOrderList();
+      //   },
+      //   (error) => {
+      //     console.log('Error add order to firebase', error);
+      //   }
+      // );
+
+      this.firestoreService.add('orders', order).then((data) => {
+        debugger;
+      });
     }
   }
 

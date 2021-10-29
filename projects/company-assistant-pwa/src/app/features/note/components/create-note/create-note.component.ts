@@ -97,6 +97,14 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
         );
         this.addNoteToFirestoreNotesTable(note);
       });
+    } else {
+      const note = new Note(
+        this.paramOrderId,
+        this.createNoteForm.controls.notice.value,
+        '',
+        ''
+      );
+      this.addNoteToFirestoreNotesTable(note);
     }
   }
 

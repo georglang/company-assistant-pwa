@@ -69,6 +69,7 @@ export class NotesListComponent implements OnInit {
   }
 
   public showActionButtons(selectedNote: INote[]): void {
+    debugger;
     this.selectedNote = selectedNote[0];
     if (selectedNote.length == 0) {
       this.showButtonsIfSelected = false;

@@ -8,6 +8,7 @@ import { FirestoreOrderService } from '../services/firestore-order-service/fires
 import { ConfirmDeleteDialogComponent } from '../../../shared/components/confirm-delete-dialog/confirm-delete-dialog.component';
 import { MessageService } from '../../../shared/services/message-service/message.service';
 import { SearchService } from '../../../shared/services/search.service';
+import { MatSelectionList } from '@angular/material/list';
 
 @Component({
   selector: 'app-order-list',
@@ -16,6 +17,8 @@ import { SearchService } from '../../../shared/services/search.service';
 })
 export class OrderListComponent implements OnInit {
   @ViewChild('searchbar') searchbar: ElementRef;
+  @ViewChild('orderList') orderList: MatSelectionList;
+
   displayedColumns = ['date', 'customer', 'location'];
   highlighted: SelectionModel<IOrder>;
   selectedOrder: IOrder;
@@ -102,13 +105,14 @@ export class OrderListComponent implements OnInit {
     });
   }
 
-  public showActionButtons(selectedOrder: IOrder[]): void {
-    this.selectedOrder = selectedOrder[0];
-    if (selectedOrder.length > 0) {
-      this.showButtonsIfOrderIsSelected = true;
+  public showActionButtons(newSelectedOrder: IOrder): void {
+    if (this.selectedOrder === newSelectedOrder) {
+      this.orderList.deselectAll();
+      this.showButtonsIfOrderIsSelected = !this.showButtonsIfOrderIsSelected;
     } else {
-      this.showButtonsIfOrderIsSelected = false;
+      this.showButtonsIfOrderIsSelected = true;
     }
+    this.selectedOrder = newSelectedOrder;
   }
 
   private showDeleteMessage() {

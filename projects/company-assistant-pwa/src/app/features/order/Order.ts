@@ -11,6 +11,7 @@ export interface IOrder {
   location: string;
   id?: any;
   workingHours?: IWorkingHour[];
+  materials?: IMaterial[];
   notes?: INote[];
 }
 

@@ -1,33 +1,13 @@
-import { Injectable, OnInit } from '@angular/core';
-import { Timestamp, QuerySnapshot } from '@firebase/firestore-types';
+import { Injectable } from '@angular/core';
 
-// import * as firebase from 'firebase';
-// import 'firebase/firestore';
-// import 'firebase/database';
-
-import { IOrder, Order, IFlattenOrder } from '../../Order';
-// import { WorkingHour, IWorkingHour } from '../../../working-hour/WorkingHour';
-// import { FirestoreWorkingHourService } from '../../../working-hour/services/firestore-working-hour-service/firestore-working-hour.service';
+import { IOrder } from '../../Order';
 import {
   AngularFirestore,
-  AngularFirestoreDocument,
-  AngularFirestoreCollection,
-  DocumentChangeAction,
-  Action,
-  DocumentSnapshotDoesNotExist,
-  DocumentSnapshotExists
+  AngularFirestoreCollection
 } from '@angular/fire/firestore';
 
 import { Observable, from } from 'rxjs';
-import {
-  map,
-  tap,
-  take,
-  switchMap,
-  mergeMap,
-  expand,
-  takeWhile
-} from 'rxjs/operators';
+import { map, take, switchMap } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 @Injectable({
@@ -35,18 +15,10 @@ import * as _ from 'lodash';
 })
 export class FirestoreOrderService {
   public ordersCollection: AngularFirestoreCollection<IOrder>;
-  // public workingHoursCollection: AngularFirestoreCollection<IWorkingHour>;
   public order: Observable<IOrder[]>;
-  private orders: Observable<IOrder[]>;
-  private ordersInFirestore: any[] = [];
 
-  constructor(
-    private firestore: AngularFirestore // private firestoreWorkingHourService: FirestoreWorkingHourService
-  ) {
+  constructor(private firestore: AngularFirestore) {
     this.ordersCollection = this.firestore.collection<IOrder>('orders');
-    // this.workingHoursCollection = this.firestore.collection<IWorkingHour>(
-    //   'workingHours'
-    // );
   }
 
   public getOrders(): Observable<IOrder[]> {

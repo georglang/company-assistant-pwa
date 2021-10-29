@@ -4,7 +4,7 @@ import { MaterialListComponent } from './material-list/material-list.component';
 import { AngularMaterialModule } from '../../shared/material/angular-material.module';
 import { MaterialRoutingModule } from './material-routing.module';
 import { CreateMaterialComponent } from './create-material/create-material.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { EditMaterialComponent } from './edit-material/edit-material.component';
 import { SharedModule } from '../../shared/shared.module';
 @NgModule({
@@ -13,7 +13,8 @@ import { SharedModule } from '../../shared/shared.module';
     AngularMaterialModule,
     MaterialRoutingModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   declarations: [
     MaterialListComponent,

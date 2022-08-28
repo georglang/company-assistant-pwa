@@ -26,7 +26,6 @@
     "@angular/router": "~12.2.4",
     "@angular/service-worker": "^12.2.4",
     "@azure/storage-blob": "12.3.0",
-    "@crystalui/angular-lightbox": "^1.1.8",
     "@fortawesome/angular-fontawesome": "^0.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",

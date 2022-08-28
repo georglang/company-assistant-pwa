@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-password',
@@ -10,8 +10,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class ForgotpasswordComponent {
   @Input() error: string | null;
 
-  forgotpasswordForm: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required])
+  forgotpasswordForm: UntypedFormGroup = new UntypedFormGroup({
+    email: new UntypedFormControl('', [Validators.required])
   });
   constructor(private authService: AuthService) {}
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { IMaterial } from '../material-list/IMaterial';
@@ -18,9 +18,9 @@ import { MessageService } from '../../../shared/services/message-service/message
   styleUrls: ['./create-material.component.scss']
 })
 export class CreateMaterialComponent implements OnInit {
-  createMaterialForm: FormGroup;
+  createMaterialForm: UntypedFormGroup;
   filteredOptions: Observable<string[]>;
-  myControl = new FormControl();
+  myControl = new UntypedFormControl();
   options: string[] = materials;
   routeParamOrderId: string;
   submitted = false;
@@ -30,7 +30,7 @@ export class CreateMaterialComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private firestoreMaterialService: FirestoreMaterialService,
     private messageService: MessageService,
     private location: Location

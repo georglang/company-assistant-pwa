@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { IRoles, Roles } from '../roles';
 
@@ -13,13 +13,13 @@ export class SignUpComponent implements OnInit {
   @Input() error: string | null;
   @Output() submitEM = new EventEmitter();
 
-  signUpForm: FormGroup = new FormGroup({
-    displayName: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    isAdmin: new FormControl(false, [Validators.required]),
-    isUserAdmin: new FormControl(false, [Validators.required]),
-    isEmployee: new FormControl(false, [Validators.required])
+  signUpForm: UntypedFormGroup = new UntypedFormGroup({
+    displayName: new UntypedFormControl('', Validators.required),
+    email: new UntypedFormControl('', [Validators.required]),
+    password: new UntypedFormControl('', [Validators.required]),
+    isAdmin: new UntypedFormControl(false, [Validators.required]),
+    isUserAdmin: new UntypedFormControl(false, [Validators.required]),
+    isEmployee: new UntypedFormControl(false, [Validators.required])
   });
 
   hide = true;

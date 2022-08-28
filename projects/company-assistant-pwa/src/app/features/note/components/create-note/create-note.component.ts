@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IOrder } from '../../../order/Order';
 import { FirestoreOrderService } from '../../../order/services/firestore-order-service/firestore-order.service';
@@ -17,7 +17,7 @@ import { Subscription, Observable } from 'rxjs';
   styleUrls: ['./create-note.component.scss']
 })
 export class CreateNoteComponent implements OnInit, OnDestroy {
-  createNoteForm: FormGroup;
+  createNoteForm: UntypedFormGroup;
   order: IOrder;
   paramOrderId;
   percentageImageUpload;
@@ -28,7 +28,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private location: Location,
     private route: ActivatedRoute,
     private firestoreOrderService: FirestoreOrderService,

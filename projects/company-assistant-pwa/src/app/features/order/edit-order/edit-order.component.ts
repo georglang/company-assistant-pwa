@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { DateAdapter } from '@angular/material/core';
@@ -16,7 +16,7 @@ import { FirestoreWorkingHourService } from '../../working-hour/services/firesto
   styleUrls: ['./edit-order.component.scss']
 })
 export class EditOrderComponent implements OnInit {
-  editOrderForm: FormGroup;
+  editOrderForm: UntypedFormGroup;
   orderId: string;
   order: IOrder;
   submitted = false;
@@ -24,7 +24,7 @@ export class EditOrderComponent implements OnInit {
   enableSubNavBackBtn = true;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private dateAdapter: DateAdapter<Date>,

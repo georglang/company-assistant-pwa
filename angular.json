@@ -133,7 +133,6 @@
       }
     }
   },
-  "defaultProject": "company-assistant-pwa",
   "schematics": {
     "@schematics/angular:component": {
       "styleext": "scss"

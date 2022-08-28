@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 
 import { Order, IOrder } from '../Order';
@@ -14,14 +14,14 @@ import { loadash as _ } from 'lodash';
   styleUrls: ['./create-order.component.scss']
 })
 export class CreateOrderComponent {
-  createOrderForm: FormGroup;
+  createOrderForm: UntypedFormGroup;
   orders: any[]; // IOrder coudn´t be used because of firebase auto generated id,
   submitted = false;
   subNavTitle = 'Arbeitsstunden bearbeiten';
   enableSubNavBackBtn = true;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private dateAdapter: DateAdapter<Date>,
     private firestoreOrderService: FirestoreOrderService,

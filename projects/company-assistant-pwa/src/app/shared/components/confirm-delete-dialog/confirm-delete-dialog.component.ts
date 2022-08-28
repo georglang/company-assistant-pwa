@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -13,8 +13,8 @@ export class ConfirmDeleteDialogComponent implements OnInit {
   public hide = true;
   public isPasswordCorrect = false;
 
-  public passwordForm: FormGroup = new FormGroup({
-    password: new FormControl('', [Validators.required, Validators.min(3)])
+  public passwordForm: UntypedFormGroup = new UntypedFormGroup({
+    password: new UntypedFormControl('', [Validators.required, Validators.min(3)])
   });
 
   get passwordInput() {

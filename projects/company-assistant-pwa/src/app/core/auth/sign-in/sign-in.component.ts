@@ -1,5 +1,5 @@
 import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NewAuthService } from '../../../shared/services/newAuth.service';
 import { AuthService } from '../auth.service';
@@ -13,9 +13,9 @@ export class SignInComponent implements OnInit {
   @Input() error: string | null;
   @Output() submitEM = new EventEmitter();
 
-  signInForm: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required])
+  signInForm: UntypedFormGroup = new UntypedFormGroup({
+    email: new UntypedFormControl('', [Validators.required]),
+    password: new UntypedFormControl('', [Validators.required])
   });
 
   hide = true;

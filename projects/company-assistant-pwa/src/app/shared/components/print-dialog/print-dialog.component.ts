@@ -6,7 +6,7 @@ import {
   TemplateRef
 } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -36,10 +36,10 @@ export class PrintDialogComponent implements OnInit, OnDestroy {
   archiveSingleSelect: MatSelect;
 
   filteredOrders: ReplaySubject<IOrder[]> = new ReplaySubject<IOrder[]>(1);
-  orderSelectFormControl: FormControl = new FormControl();
-  archiveOrderSelectFormControl: FormControl = new FormControl();
-  orderFilteredFormControl: FormControl = new FormControl();
-  archiveOrderFilteredFormControl: FormControl = new FormControl();
+  orderSelectFormControl: UntypedFormControl = new UntypedFormControl();
+  archiveOrderSelectFormControl: UntypedFormControl = new UntypedFormControl();
+  orderFilteredFormControl: UntypedFormControl = new UntypedFormControl();
+  archiveOrderFilteredFormControl: UntypedFormControl = new UntypedFormControl();
   orders: IOrder[] = [];
 
   constructor(

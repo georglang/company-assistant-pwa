@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { WorkingHour } from '../WorkingHour';
 import { employees } from '../../../shared/config-data/employees';
 import { FirestoreWorkingHourService } from '../services/firestore-working-hour-service/firestore-working-hour.service';
@@ -13,7 +13,7 @@ import { IWorkingHour } from '../IWorkingHour';
   styleUrls: ['./create-working-hour.component.scss']
 })
 export class CreateWorkingHourComponent implements OnInit {
-  createWorkingHourForm: FormGroup;
+  createWorkingHourForm: UntypedFormGroup;
   employees = employees;
   submitted = false;
   private routeParamOrderId: string;
@@ -23,7 +23,7 @@ export class CreateWorkingHourComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private firestoreWorkingHourService: FirestoreWorkingHourService,
     private messageService: MessageService
   ) {}

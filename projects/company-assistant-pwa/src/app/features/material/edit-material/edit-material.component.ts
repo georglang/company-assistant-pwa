@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   Validators,
-  FormControl
+  UntypedFormControl
 } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -24,11 +24,11 @@ import { FirestoreMaterialService } from '../services/firestore-material-service
   styleUrls: ['./edit-material.component.scss']
 })
 export class EditMaterialComponent implements OnInit {
-  editMaterialForm: FormGroup;
+  editMaterialForm: UntypedFormGroup;
   filteredOptions: Observable<string[]>;
   material: IMaterial;
   materialId: string;
-  myControl = new FormControl();
+  myControl = new UntypedFormControl();
   options: string[] = materials;
   submitted = false;
   units = materialUnits;
@@ -41,7 +41,7 @@ export class EditMaterialComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private dateAdapter: DateAdapter<Date>,
     private firestoreMaterialService: FirestoreMaterialService,
     private messageService: MessageService,

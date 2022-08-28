@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FirestoreNoteService } from '../../services/firestore-note/firestore-note.service';
@@ -15,7 +15,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./edit-note.component.scss']
 })
 export class EditNoteComponent implements OnInit, OnDestroy {
-  editNoteForm: FormGroup;
+  editNoteForm: UntypedFormGroup;
   percentageImageUpload;
   imageEvent;
   subNavTitle = 'Notiz bearbeiten';
@@ -29,7 +29,7 @@ export class EditNoteComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private location: Location,
     private route: ActivatedRoute,
     private firestoreNoteService: FirestoreNoteService,

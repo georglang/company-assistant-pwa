@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { Subscription } from 'rxjs';
 
@@ -18,7 +18,7 @@ import { FirestoreWorkingHourService } from '../services/firestore-working-hour-
   styleUrls: ['./edit-working-hour.component.scss']
 })
 export class EditWorkingHourComponent implements OnInit {
-  editWorkingHourForm: FormGroup;
+  editWorkingHourForm: UntypedFormGroup;
   workingHourId: string;
   orderId: string;
   workingHour: IWorkingHour;
@@ -29,7 +29,7 @@ export class EditWorkingHourComponent implements OnInit {
   private subscription: Subscription = new Subscription();
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private dateAdapter: DateAdapter<Date>,
     private firestoreWorkingHourService: FirestoreWorkingHourService,

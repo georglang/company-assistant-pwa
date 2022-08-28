@@ -16,9 +16,17 @@
       </button>
 
       <mat-menu #loginMenu="matMenu" id="login-menu">
+        <button mat-menu-item routerLink="/orders">
+          <mat-icon>description</mat-icon>
+          <span>Aufträge</span>
+        </button>
         <button mat-menu-item (click)="openPrintDialog()">
           <mat-icon>print</mat-icon>
-          <span>Drucken</span>
+          <span>Drucken / Archivieren</span>
+        </button>
+        <button mat-menu-item routerLink="/archive">
+          <mat-icon>lock</mat-icon>
+          <span>Archiv</span>
         </button>
         <button mat-menu-item (click)="logout()">
           <mat-icon>power_settings_new</mat-icon>

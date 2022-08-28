@@ -22,6 +22,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatAutocompleteModule,
     MatSidenavModule,
     NgxMatSelectSearchModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatExpansionModule
   ],
   exports: [
     MatButtonModule,
@@ -67,7 +69,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatAutocompleteModule,
     MatSidenavModule,
     NgxMatSelectSearchModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatExpansionModule
   ]
 })
 export class AngularMaterialModule {}

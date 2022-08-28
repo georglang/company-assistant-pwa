@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 
 import { AppState } from '../state/app.state';
 import { LocalStorageService } from '../core/services/local-storage/local-storage.service';
 import { IUser } from '../core/auth/user';
-import { FireFunctionsService } from '../core/services/fire-functions/fire-functions.service';
-import { SearchService } from '../shared/services/search.service';
 
 const AUTH_KEY = 'Auth';
 
@@ -28,10 +25,7 @@ export class AppComponent implements OnInit {
 
   user: IUser;
 
-  constructor(
-    private store: Store<AppState>,
-    private localStorageService: LocalStorageService
-  ) {
+  constructor(private localStorageService: LocalStorageService) {
     // this.authService.bootstrapOAuthService();
   }
 

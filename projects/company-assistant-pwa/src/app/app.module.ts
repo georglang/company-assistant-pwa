@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -65,7 +64,6 @@ import { HeaderComponent } from './app/header/header.component';
     AppRoutingModule,
     CoreModule,
     SharedModule,
-    FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),

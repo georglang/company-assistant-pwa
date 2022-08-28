@@ -24,6 +24,10 @@
         <div mat-line>{{ order.location }}</div>
       </mat-list-option>
     </mat-selection-list>
+
+    <div class="no-orders-found" *ngIf="list.length < 1">
+      <h3>Keine Aufträge gefunden</h3>
+    </div>
   </div>
 
   <div id="bottom-nav">

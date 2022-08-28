@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
@@ -7,14 +7,13 @@ import { Order, IOrder } from '../Order';
 import { FirestoreOrderService } from '../services/firestore-order-service/firestore-order.service';
 import { MessageService } from '../../../shared/services/message-service/message.service';
 import { loadash as _ } from 'lodash';
-import { FirestoreService } from '../../../shared/services/firestore-service/firestore.service';
 
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
   styleUrls: ['./create-order.component.scss']
 })
-export class CreateOrderComponent implements OnInit {
+export class CreateOrderComponent {
   createOrderForm: FormGroup;
   orders: any[]; // IOrder coudn´t be used because of firebase auto generated id,
   submitted = false;
@@ -26,8 +25,7 @@ export class CreateOrderComponent implements OnInit {
     private router: Router,
     private dateAdapter: DateAdapter<Date>,
     private firestoreOrderService: FirestoreOrderService,
-    private messageService: MessageService,
-    private firestoreService: FirestoreService
+    private messageService: MessageService
   ) {
     this.createOrderForm = this.formBuilder.group({
       date: ['', Validators.required],
@@ -38,13 +36,24 @@ export class CreateOrderComponent implements OnInit {
     this.dateAdapter.setLocale('de');
   }
 
-  ngOnInit() {}
-
-  public navigateToOrderList() {
+  public navigateToOrderList(): void {
     this.router.navigate(['orders']);
   }
 
-  public createOrder(formInput: any): void {
+  get getFormControl() {
+    return this.createOrderForm.controls;
+  }
+
+  public saveOrder(): void {
+    this.submitted = true;
+    if (this.createOrderForm.invalid) {
+      return;
+    } else {
+      this.createOrder(this.createOrderForm.value);
+    }
+  }
+
+  private createOrder(formInput: any): void {
     const order = new Order(
       formInput.date,
       formInput.companyName,
@@ -60,32 +69,20 @@ export class CreateOrderComponent implements OnInit {
 
   private addOrderToFirebaseOrdersTable(order: IOrder): void {
     if (this.firestoreOrderService) {
-      // this.firestoreOrderService.addOrder(order).subscribe(
-      //   (order: IOrder) => {
-      //     this.messageService.orderCreatedSuccessful();
-      //     this.navigateToOrderList();
-      //   },
-      //   (error) => {
-      //     console.log('Error add order to firebase', error);
-      //   }
-      // );
-
-      this.firestoreService.add('orders', order).then((data) => {
-        debugger;
-      });
-    }
-  }
-
-  get getFormControl() {
-    return this.createOrderForm.controls;
-  }
-
-  public saveOrder() {
-    this.submitted = true;
-    if (this.createOrderForm.invalid) {
-      return;
-    } else {
-      this.createOrder(this.createOrderForm.value);
+      this.firestoreOrderService.addOrder(order).subscribe(
+        (order: IOrder) => {
+          if (order) {
+            this.messageService.orderCreatedSuccessful();
+            this.navigateToOrderList();
+          } else {
+            this.messageService.orderNotCreated();
+          }
+        },
+        (error) => {
+          console.log('Error add order to firebase', error);
+          this.messageService.orderNotCreated();
+        }
+      );
     }
   }
 }

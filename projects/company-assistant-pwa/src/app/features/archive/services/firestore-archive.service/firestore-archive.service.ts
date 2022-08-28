@@ -33,54 +33,28 @@ export class FirestoreArchiveService {
     this.ordersCollection = this.firestore.collection<IOrder>('orders');
   }
 
-  getOrdersWithSubcollections(): Promise<IOrder[]> {
+  async getOrdersWithSubcollections(): Promise<IOrder[]> {
     const _orders: IOrder[] = [];
+
     return new Promise((resolve) => {
       this.ordersCollection
         .snapshotChanges()
         .pipe(map((actions) => actions.map(this.documentToDomainObject)))
-        .subscribe((orders: IOrder[]) => {
+        .subscribe(async (orders: IOrder[]) => {
           if (orders.length > 0) {
-            orders.map((order: IOrder) => {
-              const orders$ = () => {
-                return Promise.all([
-                  this.materialService
-                    .getMaterialsByOrderId(order.id)
-                    .pipe(take(1))
-                    .toPromise(),
-                  this.workingHourService
-                    .getWorkingHoursByOrderId(order.id)
-                    .pipe(take(1))
-                    .toPromise(),
-                  this.notesService
-                    .getNotesByOrderId(order.id)
-                    .pipe(take(1))
-                    .toPromise()
-                ]);
-              };
-
-              void orders$().then((val) => {
-                order.materials = val[0];
-                order.workingHours = val[1];
-                order.notes = val[2];
-                _orders.push(order);
-                console.log('Promise.all Result:', order);
-                resolve(_orders);
-              });
-              console.log('11111');
-
-              resolve(_orders);
-            });
-            console.log('22222');
-            resolve(_orders);
+            const results = await Promise.all(
+              orders.map(async (order) => {
+                const result = await this.materialService
+                  .getMaterialsByOrderId(order.id)
+                  .pipe(take(1))
+                  .toPromise();
+                return result;
+              })
+            );
+            console.log('results', results);
           }
-          console.log('33333');
-          resolve(_orders);
         });
-      console.log('4444');
-      resolve(_orders);
     });
-    console.log('5555');
   }
 
   getArchivedData(): Observable<IOrder[]> {
@@ -97,13 +71,46 @@ export class FirestoreArchiveService {
     return observable;
   }
 
+  public archiveOrder(orders: IOrder[]) {
+    let _order: IOrder;
+
+    orders.forEach((order: IOrder) => {
+      _order = order;
+
+      this.workingHourService
+        .getWorkingHoursByOrderId(order.id)
+        .pipe(take(1))
+        .subscribe((workingHours: IWorkingHour[]) => {
+          _order.workingHours = workingHours;
+          this.materialService
+            .getMaterialsByOrderId(order.id)
+            .pipe(take(1))
+            .subscribe((materials: IMaterial[]) => {
+              _order.materials = materials;
+              this.notesService
+                .getNotesByOrderId(order.id)
+                .pipe(take(1))
+                .subscribe((notes: INote[]) => {
+                  _order.notes = notes;
+                  this.addOrderToArchive(order).then((data) => {
+                    debugger;
+                  });
+                });
+            });
+        });
+
+      // Zuerst Orders in archiv übertragen und wenn success callback kommt aus orders table loeschen
+      // archive order http call
+    });
+  }
+
   private documentToDomainObject = (dToDO) => {
     const object = dToDO.payload.doc.data();
     object.id = dToDO.payload.doc.id;
     return object;
   };
 
-  public addOrderToArchive(order: IOrder): Promise<DocumentReference<IOrder>> {
+  private addOrderToArchive(order: IOrder): Promise<DocumentReference<IOrder>> {
     const _order = { ...order };
     return this.archiveCollection.add(_order);
   }

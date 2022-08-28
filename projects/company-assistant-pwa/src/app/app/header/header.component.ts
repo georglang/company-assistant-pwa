@@ -5,6 +5,8 @@ import { PrintService } from '../../core/services/print-service/print.service';
 import { PrintDialogComponent } from '../../shared/components/print-dialog/print-dialog.component';
 import { NewAuthService } from '../../shared/services/newAuth.service';
 import { SearchService } from '../../shared/services/search.service';
+import { FirestoreArchiveService } from '../../features/archive/services/firestore-archive.service/firestore-archive.service';
+import { PrintAndArchiveDialogReturnValue } from '../../shared/components/print-dialog/PrintAndArchiveReturnValue';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +23,8 @@ export class HeaderComponent implements OnInit {
     public dialog: MatDialog,
     private printService: PrintService,
     private authService: NewAuthService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private archiveService: FirestoreArchiveService
   ) {}
 
   ngOnInit(): void {
@@ -56,22 +59,29 @@ export class HeaderComponent implements OnInit {
       this.createDialogConfig()
     );
 
-    dialogRef.afterClosed().subscribe((dialogResult) => {
-      if (dialogResult.shouldPrint) {
-        if (dialogResult.order !== undefined) {
-          this.printService.print(
-            dialogResult.order,
-            dialogResult.categoriesToPrint
-          );
+    dialogRef
+      .afterClosed()
+      .subscribe((dialogResult: PrintAndArchiveDialogReturnValue) => {
+        if (dialogResult.shouldPrint) {
+          if (dialogResult.orderToPrint) {
+            this.printService.print(
+              dialogResult.orderToPrint,
+              dialogResult.categoriesToPrint
+            );
+          }
+        } else {
+          if (dialogResult?.ordersToArchive?.length > 0) {
+            this.archiveService.archiveOrder(dialogResult.ordersToArchive);
+          }
         }
-      }
-    });
+      });
   }
+
   private createDialogConfig(): MatDialogConfig {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = true;
-    dialogConfig.width = '350px';
+    dialogConfig.width = '500px';
     return dialogConfig;
   }
 }

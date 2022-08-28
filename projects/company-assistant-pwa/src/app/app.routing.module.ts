@@ -28,6 +28,11 @@ const routes: Routes = [
     // canActivate: [AngularFireAuthGuard],
     // data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
+  {
+    path: 'archive',
+    loadChildren: () =>
+      import('./features/archive/archive.module').then((m) => m.ArchiveModule)
+  },
   // {
   //   path: 'admin',
   //   loadChildren: () =>

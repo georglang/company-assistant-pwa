@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  TemplateRef
+} from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
@@ -7,6 +13,17 @@ import { takeUntil } from 'rxjs/operators';
 import { IOrder } from '../../../features/order/Order';
 import { MatSelect } from '@angular/material/select';
 import { FirestoreOrderService } from '../../../features/order/services/firestore-order-service/firestore-order.service';
+
+interface PrintAndArchiveDialogReturnValue {
+  categoriesToPrint: {
+    materials: boolean;
+    notes: boolean;
+    workingHours: boolean;
+  };
+  ordersToArchive: IOrder[];
+  orderToPrint: IOrder;
+  shouldPrint: boolean;
+}
 
 @Component({
   selector: 'app-print-dialog',
@@ -17,15 +34,22 @@ export class PrintDialogComponent implements OnInit, OnDestroy {
   workingHoursChecked = true;
   notesChecked = true;
   materialsChecked = true;
+  contentTemplate: TemplateRef<any>;
+
   private subscriptions = new Subscription();
   private _onDestroy = new Subject<void>();
   public selectedOrder: IOrder;
+  public archiveSelectedOrders: IOrder[] = [];
 
   @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
+  @ViewChild('archiveSingleSelect', { static: true })
+  archiveSingleSelect: MatSelect;
 
   filteredOrders: ReplaySubject<IOrder[]> = new ReplaySubject<IOrder[]>(1);
   orderSelectFormControl: FormControl = new FormControl();
+  archiveOrderSelectFormControl: FormControl = new FormControl();
   orderFilteredFormControl: FormControl = new FormControl();
+  archiveOrderFilteredFormControl: FormControl = new FormControl();
   orders: IOrder[] = [];
 
   constructor(
@@ -50,6 +74,20 @@ export class PrintDialogComponent implements OnInit, OnDestroy {
       }
     );
     this.subscriptions.add(selectOrderValueChanges$);
+
+    const archiveFilterFormControlValueChanges$ = this.archiveOrderFilteredFormControl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterOrders();
+      });
+    this.subscriptions.add(archiveFilterFormControlValueChanges$);
+
+    const selectArchiveOrderValueChanges$ = this.archiveSingleSelect.valueChange.subscribe(
+      (selectedOrders: IOrder[]) => {
+        this.archiveSelectedOrders = selectedOrders;
+      }
+    );
+    this.subscriptions.add(selectArchiveOrderValueChanges$);
   }
 
   private getOrders() {
@@ -66,16 +104,28 @@ export class PrintDialogComponent implements OnInit, OnDestroy {
     this.dialogRef.close({ shouldPrint: false });
   }
 
-  closeAndSave(): void {
-    this.dialogRef.close({
-      shouldPrint: true,
+  closeAndSavePrintDialog(): void {
+    const returnValue: PrintAndArchiveDialogReturnValue = {
       categoriesToPrint: {
         materials: this.materialsChecked,
         notes: this.notesChecked,
         workingHours: this.workingHoursChecked
       },
-      order: this.selectedOrder
-    });
+      ordersToArchive: null,
+      orderToPrint: this.selectedOrder,
+      shouldPrint: true
+    };
+    this.dialogRef.close(returnValue);
+  }
+
+  closeAndSaveArchiveDialog(): void {
+    const returnValue: PrintAndArchiveDialogReturnValue = {
+      categoriesToPrint: null,
+      ordersToArchive: this.archiveSelectedOrders,
+      orderToPrint: null,
+      shouldPrint: false
+    };
+    this.dialogRef.close(returnValue);
   }
 
   private filterOrders(): void {

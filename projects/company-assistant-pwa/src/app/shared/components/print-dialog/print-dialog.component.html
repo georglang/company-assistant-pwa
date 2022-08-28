@@ -1,48 +1,108 @@
-<h1 mat-dialog-title>Drucken</h1>
+<mat-tab-group mat-align-tabs="start">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>print</mat-icon>
+    </ng-template>
+    <div id="print-dialog">
+      <h1>Drucken</h1>
+      <h2>Auftrag auswählen</h2>
 
-<h2>Auftrag auswählen</h2>
+      <mat-form-field id="order-form-field">
+        <mat-select
+          [formControl]="orderSelectFormControl"
+          placeholder="Auftrag"
+          #singleSelect
+        >
+          <mat-option>
+            <ngx-mat-select-search
+              [formControl]="orderFilteredFormControl"
+            ></ngx-mat-select-search>
+          </mat-option>
 
-<mat-form-field id="order-form-field">
-  <mat-select
-    [formControl]="orderSelectFormControl"
-    placeholder="Auftrag"
-    #singleSelect
-  >
-    <mat-option>
-      <ngx-mat-select-search
-        [formControl]="orderFilteredFormControl"
-      ></ngx-mat-select-search>
-    </mat-option>
+          <mat-option
+            *ngFor="let order of filteredOrders | async"
+            [value]="order"
+          >
+            {{ order.companyName }} - {{ order.contactPerson }}
+            {{ order.date.toDate() | date: 'dd.MM.yyyy' }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-option *ngFor="let order of filteredOrders | async" [value]="order">
-      {{ order.companyName }} - {{ order.contactPerson }}
-      {{ order.date.toDate() | date: 'dd.MM.yyyy' }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+      <br />
+      <br />
 
-<br />
-<br />
+      <div mat-dialog-content>
+        <section>
+          <mat-checkbox [(ngModel)]="workingHoursChecked"
+            >Arbeitsstunden</mat-checkbox
+          >
+          <br />
+          <mat-checkbox [(ngModel)]="materialsChecked">Material</mat-checkbox>
+          <br />
+          <mat-checkbox [(ngModel)]="notesChecked">Notizen</mat-checkbox><br />
+        </section>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-button (click)="cancle()">Abbrechen</button>
+        <button
+          mat-button
+          (click)="closeAndSavePrintDialog()"
+          [disabled]="selectedOrder === undefined"
+          cdkFocusInitial
+        >
+          Drucken
+        </button>
+      </div>
+    </div>
+  </mat-tab>
 
-<div mat-dialog-content>
-  <section>
-    <mat-checkbox [(ngModel)]="workingHoursChecked"
-      >Arbeitsstunden</mat-checkbox
-    >
-    <br />
-    <mat-checkbox [(ngModel)]="materialsChecked">Material</mat-checkbox>
-    <br />
-    <mat-checkbox [(ngModel)]="notesChecked">Notizen</mat-checkbox><br />
-  </section>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="cancle()">Abbrechen</button>
-  <button
-    mat-button
-    (click)="closeAndSave()"
-    [disabled]="selectedOrder === undefined"
-    cdkFocusInitial
-  >
-    Drucken
-  </button>
-</div>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>archive</mat-icon>
+    </ng-template>
+    <div id="archive-dialog">
+      <h1>Archivieren</h1>
+      <h2>Auftrag auswählen</h2>
+
+      <mat-form-field id="order-form-field">
+        <mat-select
+          [formControl]="archiveOrderSelectFormControl"
+          placeholder="Auftrag"
+          #archiveSingleSelect
+          multiple="true"
+        >
+          <mat-option>
+            <ngx-mat-select-search
+              [formControl]="orderFilteredFormControl"
+            ></ngx-mat-select-search>
+          </mat-option>
+
+          <mat-option
+            *ngFor="let order of filteredOrders | async"
+            [value]="order"
+          >
+            {{ order.companyName }} - {{ order.contactPerson }}
+            {{ order.date.toDate() | date: 'dd.MM.yyyy' }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <br />
+      <br />
+
+      <div mat-dialog-actions>
+        <button mat-button (click)="cancle()">Abbrechen</button>
+        <button
+          mat-button
+          (click)="closeAndSaveArchiveDialog()"
+          [disabled]="archiveSelectedOrders.length === 0"
+          cdkFocusInitial
+        >
+          Archivieren
+        </button>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+<ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>

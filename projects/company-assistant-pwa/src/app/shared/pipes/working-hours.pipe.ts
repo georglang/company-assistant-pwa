@@ -9,10 +9,10 @@ export class WorkingHoursPipe implements PipeTransform {
     if (!items) return [];
     if (!searchText) return items;
     searchText = searchText.toLowerCase();
-    return items.filter((item) => {
+    return items.filter((item: IWorkingHour) => {
       return (
         item.description.toLowerCase().includes(searchText) ||
-        item.employee.toLowerCase().includes(searchText)
+        item.employee.includes(searchText)
       );
     });
   }

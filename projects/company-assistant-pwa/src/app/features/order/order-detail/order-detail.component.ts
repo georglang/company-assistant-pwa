@@ -41,8 +41,7 @@ export class OrderDetailComponent implements OnInit {
     'description',
     'workingHours',
     'employee',
-    'tool',
-    'hasBeenPrinted'
+    'tool'
   ];
   public dataSource: MatTableDataSource<IWorkingHour>;
   public hasWorkingHoursFound: boolean = false;
@@ -142,10 +141,6 @@ export class OrderDetailComponent implements OnInit {
     this.openDeleteWorkingHourDialog(workingHour.id);
   }
 
-  public archiveWorkingHour(workingHour: IWorkingHour) {
-    workingHour.hasBeenPrinted = true;
-  }
-
   public showDeleteMessage() {
     const successConfig = {
       positionClass: 'toast-bottom-center',
@@ -205,33 +200,8 @@ export class OrderDetailComponent implements OnInit {
       });
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  public isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRowsMinushasBeenPrinted = this.dataSource.data.filter(
-      (row) => !row.hasBeenPrinted
-    ).length;
-
-    return numSelected === numRowsMinushasBeenPrinted;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
-
-    // this.dataSource.data.forEach((row) => this.selection.select(row));
-    this.dataSource.data.forEach((row) => {
-      if (!row.hasBeenPrinted) {
-        this.selection.select(row);
-      }
-    });
-  }
-
   private updateWorkingHoursInFirestore(workingHours: IWorkingHour[]) {
     workingHours.forEach((workingHour) => {
-      workingHour.hasBeenPrinted = true;
       this.firestoreWorkingHourService
         .updateWorkingHour(workingHour.orderId, workingHour)
         .then(() => {
@@ -242,10 +212,7 @@ export class OrderDetailComponent implements OnInit {
 
   public showEditAndDeleteButton(selectedWorkingHour: IWorkingHour) {
     this.selectedWorkingHour = selectedWorkingHour;
-    if (
-      this.highlighted.selected.length == 0 ||
-      selectedWorkingHour.hasBeenPrinted
-    ) {
+    if (this.highlighted.selected.length == 0) {
       this.showButtonsIfWorkingHourIsSelected = false;
     } else {
       this.showButtonsIfWorkingHourIsSelected = true;

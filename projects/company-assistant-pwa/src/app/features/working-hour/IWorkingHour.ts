@@ -7,5 +7,4 @@ export interface IWorkingHour {
   workingHours: number;
   id?: string;
   orderId?: string;
-  hasBeenPrinted?: boolean;
 }

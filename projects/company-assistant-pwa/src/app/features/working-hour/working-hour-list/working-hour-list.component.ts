@@ -37,8 +37,7 @@ export class WorkingHourListComponent implements OnInit {
     'date',
     'description',
     'workingHours',
-    'employee',
-    'hasBeenPrinted'
+    'employee'
   ];
   columns: string[];
   hasWorkingHoursFound = false;
@@ -176,10 +175,6 @@ export class WorkingHourListComponent implements OnInit {
     this.openDeleteWorkingHourDialog(workingHour.id);
   }
 
-  public archiveWorkingHour(workingHour: IWorkingHour): void {
-    workingHour.hasBeenPrinted = true;
-  }
-
   public showDeleteMessage(): void {
     const successConfig = {
       positionClass: 'toast-bottom-center',
@@ -237,33 +232,8 @@ export class WorkingHourListComponent implements OnInit {
       });
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  public isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRowsMinushasBeenPrinted = this.dataSource.data.filter(
-      (row) => !row.hasBeenPrinted
-    ).length;
-
-    return numSelected === numRowsMinushasBeenPrinted;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
-
-    // this.dataSource.data.forEach((row) => this.selection.select(row));
-    this.dataSource.data.forEach((row) => {
-      if (!row.hasBeenPrinted) {
-        this.selection.select(row);
-      }
-    });
-  }
-
   private updateWorkingHoursInFirestore(workingHours: IWorkingHour[]) {
     workingHours.forEach((workingHour) => {
-      workingHour.hasBeenPrinted = true;
       this.firestoreWorkingHourService
         .updateWorkingHour(workingHour.orderId, workingHour)
         .then(() => {

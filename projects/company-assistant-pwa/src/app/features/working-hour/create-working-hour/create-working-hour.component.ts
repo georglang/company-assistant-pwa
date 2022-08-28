@@ -83,8 +83,7 @@ export class CreateWorkingHourComponent implements OnInit {
       formInput.employee,
       formInput.workingHours,
       '',
-      '',
-      false
+      ''
     );
     workingHour.orderId = orderId;
     this.addWorkingHourToFirebaseWorkingHourTable(workingHour);

@@ -81,8 +81,7 @@ export class EditWorkingHourComponent implements OnInit {
                 workingHour.employee,
                 workingHour.workingHours,
                 workingHour.id,
-                workingHour.orderId,
-                workingHour.hasBeenPrinted
+                workingHour.orderId
               );
               this.setControl(this.workingHour);
             }
@@ -125,8 +124,7 @@ export class EditWorkingHourComponent implements OnInit {
       this.editWorkingHourForm.controls.employee.value,
       this.editWorkingHourForm.controls.workingHours.value,
       this.workingHourId,
-      this.orderId,
-      this.workingHour.hasBeenPrinted
+      this.orderId
     );
 
     this.submitted = true;

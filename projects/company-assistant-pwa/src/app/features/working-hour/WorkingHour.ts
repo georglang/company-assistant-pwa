@@ -9,7 +9,6 @@ export class WorkingHour implements IWorkingHour {
   public location: string;
   public id: string;
   public orderId: any;
-  public hasBeenPrinted: boolean;
 
   constructor(
     date: Timestamp,
@@ -17,8 +16,7 @@ export class WorkingHour implements IWorkingHour {
     employee: string,
     workingHours: number,
     id?: string,
-    orderId?: string,
-    hasBeenPrinted?: boolean
+    orderId?: string
   ) {
     this.date = date;
     this.description = description;
@@ -26,6 +24,5 @@ export class WorkingHour implements IWorkingHour {
     this.workingHours = workingHours;
     this.id = id;
     this.orderId = orderId;
-    this.hasBeenPrinted = hasBeenPrinted;
   }
 }

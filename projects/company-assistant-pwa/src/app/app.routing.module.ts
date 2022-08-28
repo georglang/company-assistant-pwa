@@ -48,8 +48,8 @@ const routes: Routes = [
   //   component: ImpressumComponent
   // },
   { path: 'sign-in', component: SignInComponent },
-  { path: 'sign-up', component: SignUpComponent }
-  // { path: 'password-reset', component: ForgotpasswordComponent }
+  { path: 'sign-up', component: SignUpComponent },
+  { path: 'password-reset', component: ForgotpasswordComponent }
 ];
 
 @NgModule({

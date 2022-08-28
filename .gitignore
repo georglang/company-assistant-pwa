@@ -49,6 +49,3 @@ Thumbs.db
 
 # Firebase Credentials
 firebaseConfig.ts
-.firebaserc
-firebase.json
-.firebase

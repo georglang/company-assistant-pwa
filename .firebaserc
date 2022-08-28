@@ -9,6 +9,7 @@
     }
   },
   "projects": {
-    "staging": "company-assistent"
+    "staging": "company-assistent",
+    "default": "angular-pwa-98394"
   }
 }

@@ -15,6 +15,7 @@ import { IWorkingHour } from '../../../features/working-hour/IWorkingHour';
 import { UserOptions } from 'jspdf-autotable';
 import { autoTableConfig } from './autotable-config';
 import { companyDetailsPrint } from '../../../../assets/config/companyDetailsPrint';
+import { take } from 'rxjs/operators';
 
 interface jsPDFWithPlugin extends jsPDF {
   autoTable: (options: UserOptions) => jsPDF;
@@ -153,6 +154,7 @@ export class PrintService {
   private getMaterials(orderId: string, categoriesToPrint: IPrintCategory) {
     this.materialService
       .getMaterialsByOrderId(orderId)
+      .pipe(take(1))
       .subscribe((materials: IMaterial[]) => {
         if (materials.length > 0) {
           this.materials = materials;
@@ -172,9 +174,8 @@ export class PrintService {
         this.notes = notes;
         this.autoTableNotes(this.notes);
       } else {
-        return;
+        this.generatePdf();
       }
-      this.generatePdf();
     });
   }
 

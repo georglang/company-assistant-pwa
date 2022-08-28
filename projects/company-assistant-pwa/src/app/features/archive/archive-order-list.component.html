@@ -1,4 +1,4 @@
-<!-- <div id="archive-order-list-component-wrapper">
+<div id="order-list-component-wrapper">
   <app-sub-navigation
     [title]="subNavTitle"
     [enableBackBtn]="enableSubNavBackBtn"
@@ -6,6 +6,67 @@
   </app-sub-navigation>
 
   <div style="overflow-x: hidden; width: 100%">
+    <div *ngFor="let order of orders">
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title
+              >{{ order?.companyName }} - {{ order?.contactPerson }}
+              {{ order?.date?.toDate() | date: 'dd.MM.yyyy' }}</mat-panel-title
+            >
+          </mat-expansion-panel-header>
+
+          <h3><strong>Arbeitsstunden</strong></h3>
+
+          <div
+            class="list-item"
+            *ngFor="let workingHours of order.workingHours"
+          >
+            <div mat-line class="date">
+              {{ workingHours?.date?.toDate() | date: 'dd.MM.yyyy' }}
+            </div>
+            Stunden: <br />
+            {{ workingHours.workingHours }} <br />
+            Beschreibung <br />
+            {{ workingHours.description }} <br />
+            {{ workingHours.location }} <br />
+            <p>Arbeiter:</p>
+            <span *ngFor="let employee of workingHours?.employee">
+              {{ employee }},
+            </span>
+          </div>
+
+          <div class="material-wrapper">
+            <h3><strong>Material</strong></h3>
+            <div class="list-item" *ngFor="let material of order?.materials">
+              <div mat-line class="date">
+                {{ material?.date?.toDate() | date: 'dd.MM.yyyy' }}
+              </div>
+              Material: <br />
+              <div mat-line>{{ material?.material }}</div>
+              Menge <br />
+              <div mat-line>{{ material?.amount }}</div>
+              {{ material.location }} <br />
+              <p>Einheit:</p>
+              <div mat-line>{{ material?.unit }}</div>
+            </div>
+          </div>
+
+          <h3>Notizen</h3>
+
+          <div *ngFor="let note of order.notes">
+            {{ note.notice }} <br />
+            <img width="100px" height="100px" src="{{ note.imageUrl }}" />
+            <br />
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <div class="no-orders-archived" *ngIf="orders.length < 1">
+      <h3>Keine Aufträge archiviert</h3>
+    </div>
+
     <mat-selection-list
       [multiple]="false"
       [(ngModel)]="selectedOptions"
@@ -78,4 +139,4 @@
       <i class="material-icons">add</i>
     </button>
   </div>
-</div> -->
+</div>

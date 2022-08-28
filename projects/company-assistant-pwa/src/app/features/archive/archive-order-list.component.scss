@@ -1,0 +1,223 @@
+@use 'variables';
+
+.settings-btn {
+  text-align: right;
+  margin-top: 15px;
+  margin-right: 15px;
+}
+
+#search-wrapper {
+  background: #fff;
+  box-shadow: 0px 2px 15px 0px rgb(0 0 0 / 12%);
+  top: 64px;
+}
+
+#search-input {
+  margin-top: -42px;
+  margin-left: 4px;
+}
+
+#search {
+  height: 50px;
+  border: 0;
+  font-size: 16px;
+  color: #696969;
+  margin-left: 30px;
+  padding-top: 3px;
+  width: 70%;
+}
+
+.search-icon {
+  margin-top: 15px;
+  margin-left: 6px;
+}
+
+table {
+  width: 100%;
+  box-shadow: none;
+  .mat-header-row {
+    display: none;
+  }
+  mat-icon {
+    font-size: 24px;
+    margin-top: 6px;
+  }
+}
+
+.location {
+  font-size: 90%;
+  margin-right: 2%;
+}
+
+.mat-row:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+#no-orders-found {
+  margin-left: 30px;
+}
+
+#bottom-nav {
+  background-color: variables.$color-white;
+  height: 50px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.12);
+  z-index: 2;
+  right: 0px;
+}
+
+#create-order-btn {
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
+#create-order-delete-btn {
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 78px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
+#create-order-edit-btn {
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 141px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
+.create-order-edit-btn-if-delete-btn-is-active {
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 141px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
+.create-order-edit-btn {
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 78px;
+  .material-icons {
+    color: variables.$color-white;
+  }
+}
+
+.create-watch-btn-if-delete-btn-is-active {
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 204px;
+  .material-icons {
+    color: variables.$color-white;
+  }
+}
+
+.create-order-watch-btn {
+  background-color: variables.$primary-color;
+  color: variables.$color-white;
+  position: absolute;
+  right: 16px;
+  bottom: 141px;
+  .material-icons {
+    color: #fff;
+  }
+}
+
+.mat-row.highlighted {
+  background: variables.$light-grey;
+  color: variables.$color-white;
+}
+
+#order-list-wrapper {
+  margin-top: 35px;
+}
+
+#create-order-btn {
+  z-index: 2000;
+  position: absolute;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  z-index: 11;
+  transition: all 250ms ease-in-out;
+}
+.main-header {
+  @extend header;
+  &.hidden {
+    opacity: 0;
+  }
+}
+.search-block {
+  width: 0%;
+  right: 0;
+  @extend header;
+  background: #fff;
+  &.active {
+    width: 100%;
+  }
+  .search-control {
+    flex: 1;
+    font-size: 1rem;
+    border: 0;
+    outline: none;
+    padding-left: 10px;
+  }
+}
+
+.mat-list-item {
+  border-bottom: solid #e0e0e0 1px;
+}
+
+.date {
+  font-size: 14px !important;
+  text-align: right;
+  margin-right: 10px !important;
+}
+
+.company-name {
+  font-weight: bold !important;
+  font-size: 15px !important;
+}
+
+.mat-expansion-panel {
+  border-radius: 0px !important;
+}
+
+.list-item {
+  padding: 16px 16px;
+  border-bottom: solid 1px #dcdcdc;
+}
+
+.material-wrapper {
+  margin-top: 18px;
+}
+
+.no-orders-archived {
+  text-align: center;
+  margin-top: 16px;
+}

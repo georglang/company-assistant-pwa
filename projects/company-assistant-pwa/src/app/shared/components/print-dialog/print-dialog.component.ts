@@ -13,17 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 import { IOrder } from '../../../features/order/Order';
 import { MatSelect } from '@angular/material/select';
 import { FirestoreOrderService } from '../../../features/order/services/firestore-order-service/firestore-order.service';
-
-interface PrintAndArchiveDialogReturnValue {
-  categoriesToPrint: {
-    materials: boolean;
-    notes: boolean;
-    workingHours: boolean;
-  };
-  ordersToArchive: IOrder[];
-  orderToPrint: IOrder;
-  shouldPrint: boolean;
-}
+import { PrintAndArchiveDialogReturnValue } from './PrintAndArchiveReturnValue';
 
 @Component({
   selector: 'app-print-dialog',

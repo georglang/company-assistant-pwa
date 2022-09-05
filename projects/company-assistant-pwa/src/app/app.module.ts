@@ -3,14 +3,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import {
-  AngularFireFunctionsModule,
-  USE_EMULATOR
-} from '@angular/fire/functions';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+
+import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
 
 /* NgRx*/
 import { StoreModule } from '@ngrx/store';
@@ -23,7 +21,6 @@ import { AppComponent } from './app/app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
-import { reducers, metaReducers } from './state/app.state';
 import { AuthEffects } from './core/auth/state/auth.effects';
 
 import { AuthService } from './core/auth/auth.service';
@@ -52,10 +49,11 @@ import { HeaderComponent } from './app/header/header.component';
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
-    AngularMaterialModule,
     // Init Firestore
+
     AngularFireModule.initializeApp(firebaseConfig.firebase),
     // Auth
+
     AngularFireAuthModule,
     AngularFirestoreModule,
     // Firestorage
@@ -68,13 +66,13 @@ import { HeaderComponent } from './app/header/header.component';
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     // NgRx
-    StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([AuthEffects]),
-    StoreDevtoolsModule.instrument({
-      name: 'company-assistant-pwa App DevTools',
-      maxAge: 25,
-      logOnly: environment.production
-    }),
+    // StoreModule.forRoot(reducers, { metaReducers }),
+    // EffectsModule.forRoot([AuthEffects])
+    // StoreDevtoolsModule.instrument({
+    //   name: 'company-assistant-pwa App DevTools',
+    //   maxAge: 25,
+    //   logOnly: environment.production
+    // }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     })

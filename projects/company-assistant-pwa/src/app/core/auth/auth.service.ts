@@ -1,9 +1,9 @@
 import { Injectable, NgZone } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
   AngularFirestoreDocument
-} from '@angular/fire/firestore';
+} from '@angular/fire/compat/firestore';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { IUser, User } from './user';

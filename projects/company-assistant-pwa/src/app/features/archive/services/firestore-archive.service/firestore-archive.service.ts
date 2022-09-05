@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from '@angular/fire/firestore';
+} from '@angular/fire/compat/firestore';
 import { DocumentReference } from '@firebase/firestore-types';
 import { IOrder } from '../../../order/Order';
 import { map, take } from 'rxjs/operators';

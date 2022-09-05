@@ -3,8 +3,7 @@ import {
   AngularFireStorage,
   AngularFireStorageReference,
   AngularFireUploadTask
-} from '@angular/fire/storage';
-
+} from '@angular/fire/compat/storage';
 import { last, mergeMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 

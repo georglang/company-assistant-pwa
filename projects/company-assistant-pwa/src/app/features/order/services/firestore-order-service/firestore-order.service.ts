@@ -4,7 +4,7 @@ import { IOrder } from '../../Order';
 import {
   AngularFirestore,
   AngularFirestoreCollection
-} from '@angular/fire/firestore';
+} from '@angular/fire/compat/firestore';
 
 import { Observable, from } from 'rxjs';
 import { map, take, switchMap } from 'rxjs/operators';

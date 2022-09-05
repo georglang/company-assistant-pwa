@@ -9,7 +9,7 @@ import {
 } from '@angular/router';
 import { tap, map, take, switchMap } from 'rxjs/operators';
 import { MessageService } from '../../../shared/services/message-service/message.service';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({ providedIn: 'root' })
 export class AdminGuard implements CanActivate {

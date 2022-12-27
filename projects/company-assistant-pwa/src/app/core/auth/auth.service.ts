@@ -101,7 +101,6 @@ export class AuthService {
 
   logout(): Promise<void> {
     return this.auth.signOut().then(() => {
-      debugger;
       this.localStorageService.removeItem('user');
       this.changeUserState(null);
       this.router.navigate(['sign-in']);
@@ -122,7 +121,6 @@ export class AuthService {
   }
 
   signUp(email: string, password: string, roles: IRoles, displayName: string) {
-    debugger;
     return this.auth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
@@ -152,7 +150,6 @@ export class AuthService {
       )
       .subscribe((firebaseUserDb) => {
         if (this.isEmptyObject(firebaseUserDb)) {
-          debugger;
           this.createNewUserInDB(userRef, firebaseUser, roles, displayName);
         } else if (!firebaseUserDb.roles) {
           const rolesNoCustomObject = {

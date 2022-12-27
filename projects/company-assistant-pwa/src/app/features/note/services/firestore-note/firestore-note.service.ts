@@ -109,9 +109,7 @@ export class FirestoreNoteService {
       .collection('notes')
       .doc(note.id)
       .update(note)
-      .then((data) => {
-        debugger;
-      });
+      .then((data) => {});
   }
 
   private compareIfNoteIsOnline(newNote: INote, notes): boolean {

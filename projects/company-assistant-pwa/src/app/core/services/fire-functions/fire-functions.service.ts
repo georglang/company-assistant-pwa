@@ -36,7 +36,6 @@ export class FireFunctionsService {
     const obs = callable({ coolMsg: 'test' });
 
     obs.subscribe(async (res) => {
-      debugger;
     });
   }
 }

@@ -109,7 +109,6 @@ export class MaterialListComponent implements OnInit {
   }
 
   public showActionButtons(selectedMaterial: IMaterial[]): void {
-    debugger;
     this.selectedMaterial = selectedMaterial[0];
     if (selectedMaterial.length == 0) {
       this.showButtonsIfMaterialIsSelected = false;

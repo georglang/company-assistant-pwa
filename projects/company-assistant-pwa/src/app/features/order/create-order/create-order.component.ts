@@ -17,7 +17,7 @@ export class CreateOrderComponent {
   createOrderForm: UntypedFormGroup;
   orders: any[]; // IOrder coudn´t be used because of firebase auto generated id,
   submitted = false;
-  subNavTitle = 'Arbeitsstunden bearbeiten';
+  subNavTitle = 'Auftrag anlegen';
   enableSubNavBackBtn = true;
 
   constructor(
